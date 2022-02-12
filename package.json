@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon index.js",
     "db:create": "createdb chat_app_database",
     "db:destroy": "dropdb chat_app_database",
     "db:init": "psql -f rooms.sql chat_app_database",
@@ -18,5 +19,8 @@
     "ejs": "^3.1.6",
     "express": "^4.17.2",
     "pg-promise": "^10.11.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
