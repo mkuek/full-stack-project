@@ -26,6 +26,20 @@ newChat.addEventListener("submit", (e) => {
   inputBox.focus();
 });
 
+//input box for sending a message (to those in the the same room)
+const messageSubmitButton = document.querySelector(".message-submit-button");
+messageSubmitButton.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const messageInput = document.querySelector(".message-input");
+  const msg = messageInput.value;
+  console.log(msg);
+  //send message to the server
+  socket.emit("chatMessage", msg);
+  //clear the chat input box, and focus on the box after button click
+  inputBox.value = "";
+  inputBox.focus();
+});
+
 //generate a random invite room Id to email to someone
 const inviteButton = document.querySelector(".invite-button");
 inviteButton.addEventListener("click", () => {
@@ -56,5 +70,3 @@ function outputMessage(message) {
             <p class="message-text">${message.text}</p>`;
   document.querySelector(".chat-window").appendChild(div);
 }
-
-module.exports = outputMessage;

@@ -11,7 +11,7 @@
     <h1>Welcome <%= dashboardUsername %></h1>
     <div class="sideboard-left">
       <div>
-        <button class="new-chat">New chat</button>
+        <!-- <button class="new-chat">New chat</button> -->
         <form class="chat-code-input">
           <label for="">Have an id?</label>
           <input type="text" name="room" />
@@ -29,7 +29,12 @@
     <div class="chat-window">
       <!-- populates based on conversation selected -->
     </div>
-    <div class="chat-input"></div>
+    <div class="chat-input">
+      <form>
+        <input type="text" name="text" class="message-input" />
+        <button type="submit" class="message-submit-button">Send</button>
+      </form>
+    </div>
     <div class="sideboard-right-bottom">
       <div class="invite">
         <div>Invite</div>

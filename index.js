@@ -44,21 +44,22 @@ io.on("connection", (socket) => {
       "message",
       formatMessage(chatBot, `Hi ${username}, welcome to the chat!`)
     );
-  });
-  //4a.emits (sends) message from server to the single client
-  // socket.emit(
-  //   "message",
-  //   formatMessage(chatBot, `welcome to chatCord ${user.username}`)
-  // );
 
-  //5a.broadcast (emits message to all users except the one that is connecting) when a user connects
-  // socket.broadcast
-  //   .to(user.room)
-  //   //6a
-  //   .emit(
-  //     "message",
-  //     formatMessage(chatBot, `${user.username} has joined the chat`)
-  //   );
+    //test-> broadcasting (sends message to all in room except the user connecting) when a user connects
+    socket.broadcast
+      .to(user.roomID)
+      .emit(
+        "message",
+        formatMessage(chatBot, `${username} has joined the chat`)
+      );
+  });
+
+  //receives chat message, formats it, and sends it to all clients in the same room
+  socket.on("chatMessage", (msg) => {
+    //post request - save chat to database
+    io.to(user.roomID).emit("message", formatMessage(user.username, msg));
+    console.log(msg);
+  });
 });
 
 //
