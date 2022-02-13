@@ -13,10 +13,10 @@ const username = "matthew";
 // const roomID = "1c474a76-5fac-48bf-939a-d02d76f9f57f";
 
 //input box for pasting a roomID shared with you
-const newChat = document.querySelector(".new-chat-input");
+const newChat = document.querySelector(".chat-code-input");
 newChat.addEventListener("submit", (e) => {
   e.preventDefault();
-  const inputBox = document.querySelector(".new-chat-input > input");
+  const inputBox = document.querySelector(".chat-code-input > input");
   const roomID = inputBox.value;
   console.log(roomID);
   //join room (w/username)

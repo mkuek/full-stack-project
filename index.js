@@ -38,9 +38,12 @@ io.on("connection", (socket) => {
   socket.on("joinRoom", ({ username, roomID }) => {
     // makes user object (w/id, username, room), and joins the selected room
     const user = userJoinObject(socket.id, username, roomID);
-
     //this socket joins this particular room
     socket.join(user.roomID);
+    socket.emit(
+      "message",
+      formatMessage(chatBot, `Hi ${username}, welcome to the chat!`)
+    );
   });
   //4a.emits (sends) message from server to the single client
   // socket.emit(
