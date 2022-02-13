@@ -15,7 +15,7 @@ const io = socketio(server);
 
 const formatMessage = require("./modules/formatMessage");
 
-const chatBot = "Chat bot";
+const chatBot = "Chatbot";
 
 io.on("connection", (socket) => {
   //confirm websocket connection
@@ -30,7 +30,7 @@ io.on("connection", (socket) => {
     //emits greeting message
     socket.emit(
       "message",
-      formatMessage(ChatBot, `Hi ${username}, welcome to the chat`)
+      formatMessage(chatBot, `Hi ${username}, welcome to the chat!`)
     );
   });
 
