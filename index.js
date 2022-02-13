@@ -13,17 +13,28 @@ const http = require("http");
 const server = http.createServer(app);
 const io = socketio(server);
 
+const formatMessage = require("./modules/formatMessage");
+
+const chatBot = "Chat bot";
+
 io.on("connection", (socket) => {
   //confirm websocket connection
   console.log("new websocket connection");
 
-  //get invite code when clicked
-  socket.on("get-invite-code", () => {
+  //get invite code when clicked (also sets up a new room)
+  socket.on("get-invite-code", (username) => {
     const inviteCode = uuidV4();
     console.log(inviteCode);
+    //joins room that code was generated for
+    socket.join(inviteCode);
+    //emits greeting message
+    socket.emit(
+      "message",
+      formatMessage(ChatBot, `Hi ${username}, welcome to the chat`)
+    );
   });
 
-  //!!join room (gets triggered when url is pasted and when you generate an invite roomcode for someone else)
+  //join room (gets triggered when url is pasted)
   socket.on("joinRoom", ({ username, roomID }) => {
     // makes user object (w/id, username, room), and joins the selected room
     const user = userJoinObject(socket.id, username, roomID);
