@@ -8,9 +8,10 @@
 
 const socket = io();
 
-//hardcoded right now, this will change(added on login)
-const username = "matthew";
-// const roomID = "1c474a76-5fac-48bf-939a-d02d76f9f57f";
+//userID obtained from rendered dashboard home page
+// const userID = document.querySelector(".id");
+const username = document.querySelector(".name > span").innerHTML;
+console.log(username);
 
 //input box for pasting a roomID shared with you
 const newChat = document.querySelector(".chat-code-input");
@@ -21,10 +22,22 @@ newChat.addEventListener("submit", (e) => {
   console.log(roomID);
   //join room (w/username)
   socket.emit("joinRoom", { username, roomID });
+  //calls function to write username and roomID to the "active chat" side-bar;
+  writeActiveChats(username, roomID);
   //clear the chat input box, and focus on the box after button click
   inputBox.value = "";
   inputBox.focus();
 });
+
+//writes new chats in the sidebar, sends info to the server about the created room.
+function writeActiveChats(username, roomID) {
+  const activeChats = document.querySelector(".active-chats");
+  const newChat = document.createElement("div");
+  console.log(username);
+  newChat.textContent = `${username}`;
+  activeChats.appendChild(newChat);
+  socket.emit("new-room-created", { username, roomID });
+}
 
 //input box for sending a message (to those in the the same room)
 const messageSubmitButton = document.querySelector(".message-submit-button");

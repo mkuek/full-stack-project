@@ -10,17 +10,18 @@ const express = require("express"),
   pgp = require("pg-promise")(),
   db = pgp(config);
 
-let dashboardUsername = "";
+let userID = "";
 
 router.get("/", async (req, res) => {
   try {
-    //query database for the user id( return object with all info about the user to render the home page)
-    console.log(dashboardUsername);
-    res.render("home", { dashboardUsername: dashboardUsername });
+    //!query database for the user id( return object with all info about the user to render the home page)
+    console.log(userID);
+    //!so this will be the user.name (for example)
+    res.render("home", { userID: userID });
   } catch (error) {
     console.log(error);
   }
-  dashboardUsername = "";
+  // userID = "";
 });
 
 router.post("/", async (req, res) => {
@@ -57,8 +58,8 @@ router.post("/login", async (req, res) => {
       (username == usernameA || username == usernameB) &&
       (password == passwordA || password == passwordB)
     ) {
-      //actually want a unique user id assigned here (i.e. dashboardUsername should be userId)
-      dashboardUsername = username;
+      //want a unique user id assigned here (i.e. dashboardUsername should be userId)
+      userID = username;
       res.redirect("/");
     }
   } catch (error) {

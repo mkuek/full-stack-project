@@ -54,8 +54,13 @@ io.on("connection", (socket) => {
       );
   });
 
+  socket.on("new-room-created", (username, roomID) => {
+    //store this info somewhere
+  });
+
   //receives chat message, formats it, and sends it to all clients in the same room
   socket.on("chatMessage", (msg) => {
+    console.log(msg);
     //post request - save chat to database
     io.to(user.roomID).emit("message", formatMessage(user.username, msg));
     console.log(msg);

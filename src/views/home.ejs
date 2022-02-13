@@ -8,7 +8,13 @@
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
-    <h1>Welcome <%= dashboardUsername %></h1>
+    <h1>Welcome <%= userID %></h1>
+    <div class="user-info">
+      <!-- these will be dirrent things, including maybe the actual user ID#, for JS to grab -->
+      <div class="name">Name: <span><%= userID %></span></div>
+      <div class="email">Email: <span><%= userID %></span></div>
+      <div class="id">UserID: <span><%= userID %></span></div>
+    </div>
     <div class="sideboard-left">
       <div>
         <!-- <button class="new-chat">New chat</button> -->
