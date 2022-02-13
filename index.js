@@ -1,21 +1,43 @@
-const express = require("express"),
-  app = express(),
-  port = 3000;
-// const path = require("path");
-// const bodyParser = require("body-parser");
+const config = {
+  host: "localhost",
+  port: 5432,
+  database: "chat_app_database",
+  user: "postgres",
+};
+const pgp = require("pg-promise")();
+const db = pgp(config);
+const express = require("express");
+const app = express();
+const path = require("path");
+const bodyParser = require("body-parser");
 
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-app.use("/css", express.static(__dirname + "/views/css"));
-app.use("/js", express.static(__dirname + "/views/js"));
-
+app.use(bodyParser.json());
 app.set("view engine", "ejs");
-app.set("views", "./src/views/");
+app.set("views", path.join(__dirname, "views"));
 
-const router = require("./src/routes/router");
-app.use("/", router);
+//ADD TASK
+app.post("/chat", (req, res) => {
+  roomID = req.body.roomID;
+  db.none("INSERT INTO rooms (title) VALUES ($1)", newTaskTitle).then(() => {
+    console.log(`Task ${newTaskTitle} was created`);
+    res.redirect("/chat");
+  });
+});
 
-app.listen(port, () => {
-  console.log(`listening at port ${port}`);
+//GET ALL TASKS
+app.get("/chat", (req, res) => {
+  db.any("SELECT * FROM rooms ORDER BY roomID")
+    .then((results) => {
+      // res.render("home", { results });
+      res.send("it worked");
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+});
+
+app.listen(3000, () => {
+  console.log("listening on port 3000");
 });
