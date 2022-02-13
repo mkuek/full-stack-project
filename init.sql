@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS messages;
 CREATE TABLE users (
   userID SERIAL NOT NULL,
   chatID INT,
-  date_stamp TIMESTAMP,
+  created TIMESTAMP NOT NULL DEFAULT now(),
   userName varchar(15) NOT NULL,
   chatText varchar(255),
   PRIMARY KEY(userID)
@@ -18,7 +18,7 @@ CREATE TABLE users (
 CREATE TABLE rooms (
   roomID SERIAL,
   userID INT NOT NULL,
-  date_created TIMESTAMP,
+  created TIMESTAMP NOT NULL DEFAULT now(),
   roomName varchar(255),
   PRIMARY KEY (roomID),
   CONSTRAINT fk_room
