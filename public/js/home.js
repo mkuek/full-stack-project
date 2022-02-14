@@ -13,6 +13,11 @@ const socket = io();
 const username = document.querySelector(".name > span").innerHTML;
 console.log(username);
 
+//write active chats to the sidebar using userMessagesObject
+socket.on("write-active-chats", (userMessagesData) => {
+  console.log(userMessagesData); //coming up empty for some reason
+});
+
 //input box for pasting a roomID shared with you
 const newChat = document.querySelector(".chat-code-input");
 newChat.addEventListener("submit", (e) => {
@@ -36,6 +41,7 @@ function writeActiveChats(username, roomID) {
   console.log(username);
   newChat.textContent = `${username}`;
   activeChats.appendChild(newChat);
+  //not sure what to do with this yet
   socket.emit("new-room-created", { username, roomID });
 }
 

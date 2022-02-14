@@ -4,7 +4,7 @@ const express = require("express"),
 // const path = require("path");
 // const bodyParser = require("body-parser");
 
-//calling the v4 function(renamed as uuidV4) gives us a unique url
+//calling the v4 function(renamed as uuidV4) makes unique id
 const { v4: uuidV4 } = require("uuid");
 
 //set up socket.io
@@ -14,12 +14,16 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 const formatMessage = require("./modules/formatMessage");
+const manageUsers = require("./modules/manageUsers");
+const router = require("./src/routes/router");
 
 const chatBot = "Chatbot";
 
+//setup socket connection
 io.on("connection", (socket) => {
-  //confirm websocket connection
-  console.log("new websocket connection");
+  //send object with all users active chat data (to be written to the sidebar)
+  console.log(router.userMessagesData);
+  socket.emit("write-active-chats", router.userMessagesData);
 
   //get invite code when clicked (also sets up a new room)
   socket.on("get-invite-code", (username) => {
@@ -33,16 +37,18 @@ io.on("connection", (socket) => {
       formatMessage(chatBot, `Hi ${username}, welcome to the chat!`)
     );
   });
-
+  //user object variable
+  let user = {};
   //join room (gets triggered when url is pasted)
   socket.on("joinRoom", ({ username, roomID }) => {
     // makes user object (w/id, username, room), and joins the selected room
-    const user = userJoinObject(socket.id, username, roomID);
+    user = manageUsers.userJoinObject(socket.id, username, roomID);
     //this socket joins this particular room
+    console.log(user);
     socket.join(user.roomID);
     socket.emit(
       "message",
-      formatMessage(chatBot, `Hi ${username}, welcome to the chat!`)
+      formatMessage(chatBot, `Hi ${user.username}, welcome to the chat!`)
     );
 
     //test-> broadcasting (sends message to all in room except the user connecting) when a user connects
@@ -50,10 +56,11 @@ io.on("connection", (socket) => {
       .to(user.roomID)
       .emit(
         "message",
-        formatMessage(chatBot, `${username} has joined the chat`)
+        formatMessage(chatBot, `${user.username} has joined the chat`)
       );
   });
 
+  //called when active chats name was added to sidebar(should this info go somewhere?)
   socket.on("new-room-created", (username, roomID) => {
     //store this info somewhere
   });
@@ -67,18 +74,6 @@ io.on("connection", (socket) => {
   });
 });
 
-//
-//imagine that this is a list of users in the room (not sure about this one yet)
-const users = [];
-
-//join user to chat
-const userJoinObject = (id, username, roomID) => {
-  const user = { id, username, roomID };
-  users.push(user);
-  return user;
-};
-//
-
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -89,8 +84,7 @@ app.use("/js", express.static(__dirname + "/views/js"));
 app.set("view engine", "ejs");
 app.set("views", "./src/views/");
 
-const router = require("./src/routes/router");
-app.use("/", router);
+app.use("/", router.router);
 
 server.listen(port, () => {
   console.log(`listening at port ${port}`);
