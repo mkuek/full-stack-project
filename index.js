@@ -14,16 +14,16 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 const formatMessage = require("./modules/formatMessage");
-const manageUsers = require("./modules/manageUsers");
+const userJoinObject = require("./modules/manageUsers");
 const router = require("./src/routes/router");
 
 const chatBot = "Chatbot";
 
 //setup socket connection
 io.on("connection", (socket) => {
-  //
-  app.locals.socket = socket;
-  app.locals.io = io;
+  //was not working
+  // app.locals.socket = socket;
+  // app.locals.io = io;
 
   //send object with all users active chat data (to be written to the sidebar)
   // console.log(`line 25: ${router.userMessagesData}`);
@@ -46,7 +46,7 @@ io.on("connection", (socket) => {
   //join room (gets triggered when url is pasted)
   socket.on("joinRoom", ({ username, roomID }) => {
     // makes user object (w/id, username, room), and joins the selected room
-    user = manageUsers.userJoinObject(socket.id, username, roomID);
+    user = userJoinObject(socket.id, username, roomID);
     //this socket joins this particular room
     console.log(user);
     socket.join(user.roomID);

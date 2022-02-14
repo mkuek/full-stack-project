@@ -33,6 +33,9 @@ newChat.addEventListener("submit", (e) => {
   //join room (w/username)
   socket.emit("joinRoom", { username, roomID });
   //calls function to write username and roomID to the "active chat" side-bar;
+  //!sketchy section, needs to be integrated with how the active chats are rendered on page load
+  //!update database with userRoomID, then re-render sidebar
+
   writeActiveChats(username, roomID);
   //clear the chat input box, and focus on the box after button click
   inputBox.value = "";
@@ -40,6 +43,7 @@ newChat.addEventListener("submit", (e) => {
 });
 
 //writes new chats in the sidebar, sends info to the server about the created room.
+//!same as above
 function writeActiveChats(username, roomID) {
   const activeChats = document.querySelector(".active-chats");
   const newChat = document.createElement("div");

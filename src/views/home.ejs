@@ -27,10 +27,11 @@
       <div class="active-chats">
         <div>Active chats</div>
         <!-- unique to user -->
-        <% userMessagesData.forEach(chatroom => { %>
-        <div>
-          <span id=" <%= chatroom.roomID  %> "><%=chatroom.guest %></span>
-        </div>
+        <% userMessagesData.forEach(chatroom => { for (let i = 0; i <
+        chatroom.length - 1; i++) { %>
+        <span><%=chatroom[i] %></span>
+        <% } %>
+        <div id=" <%= chatroom[chatroom.length-1] %> ">roomID</div>
         <%}) %>
       </div>
     </div>

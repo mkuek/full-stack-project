@@ -5,9 +5,9 @@ const buildUserMessagesObject = (userID) => {
   //! {username: Matthew, guest1: Bill, guest2: Bill, roomID: 789} ]
   //! dummy data below to be replaced
   return [
-    { guest: "John", roomID: 123 },
-    { guest: "Tom", roomID: 456 },
-    { guest: "Bill", roomID: 789 },
+    ["Jim", 123],
+    ["Tom", 456],
+    ["Gina", 789],
   ];
 };
 
