@@ -51,8 +51,8 @@ newChat.addEventListener("submit", (e) => {
 //   socket.emit("new-room-created", { username, roomID });
 // }
 
-//
 let currentRoom = "";
+let roomChange = "";
 
 //input box for sending a message (to those in the the same room)
 const messageSubmitButton = document.querySelector(".message-submit-button");
@@ -76,18 +76,21 @@ inviteButton.addEventListener("click", () => {
 });
 
 //on receiving a formatted message, calls function to output message to the browser chat window
-socket.on("message", (formattedMessage) => {
+socket.on("message", (formattedMessage, roomID) => {
   console.log(`line 80`);
   console.log(formattedMessage);
   //writes messages received from the server in the clients browser
-  outputMessage(formattedMessage);
+  outputMessage(formattedMessage, roomID);
   //autoscrolls messages down
   const chatWindow = document.querySelector(".chat-window");
   chatWindow.scrollTop = chatWindow.scrollHeight;
 });
 
+//
+
 //outputs message to the chat window
-function outputMessage(message) {
+function outputMessage(message, roomID) {
+  // console.log(`line 91, client-side: ${roomID}`);
   const div = document.createElement("div");
   //assign messages as "own" or "other"
   if (message.username === username) {
@@ -98,7 +101,19 @@ function outputMessage(message) {
   div.classList.add("message");
   div.innerHTML = `<p class="message-username">${message.username} <span>${message.time}</span></p>
             <p class="message-text">${message.text}</p>`;
-  document.querySelector(".chat-window").appendChild(div);
+  console.log(`line 104, room change is: ${roomChange}`);
+  if (roomChange === "false") {
+    // console.log(`roomID = ${roomID}`);
+    // console.log(`current room = ${currentRoom}`);
+    // console.log("roomID == currentRoom");
+    document.querySelector(".chat-window").appendChild(div);
+  } else {
+    // console.log(currentRoom[0]);
+    // console.log("roomID !== currentRoom");
+    document.querySelector(".chat-window").replaceChildren(div);
+    roomChange = "false";
+    console.log(`room change: ${roomChange}`);
+  }
 }
 
 //not sure if this is needed
@@ -113,9 +128,23 @@ function outputMessage(message) {
 const chat = document.querySelectorAll(".chat");
 chat.forEach((chat) => {
   chat.addEventListener("click", (event) => {
-    console.log(` line 115:${event.target.id}`);
     const roomID = event.target.id;
-    currentRoom = roomID;
-    socket.emit("joinRoom", { username, roomID });
+    // currentRoom = roomID;
+    // console.log(` line 115:${event.target.id}`);
+    console.log(`line 131, current room is ${currentRoom}`);
+    if (roomID === currentRoom) {
+      currentRoom = roomID;
+      roomChange = "false";
+      console.log(`room changed to ${roomChange}`);
+      socket.emit("joinRoom", { username, roomID, roomChange });
+      // window.location.reload();
+    } else {
+      currentRoom = roomID;
+      roomChange = "true";
+      console.log(`room changed to ${roomChange}`);
+      // console.log(`directly after push: ${currentRoom}`);
+      socket.emit("joinRoom", { username, roomID, roomChange });
+    }
+    // currentRoom.shift();
   });
 });

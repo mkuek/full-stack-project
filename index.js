@@ -39,13 +39,14 @@ io.on("connection", (socket) => {
     //emits greeting message
     socket.emit(
       "message",
-      formatMessage(chatBot, `Hi ${username}, welcome to the chat!`)
+      formatMessage(chatBot, `Hi ${username}, welcome to the chat!`),
+      inviteCode
     );
   });
   //user object variable
   let user = {};
   //join room (gets triggered when url is pasted)
-  socket.on("joinRoom", ({ username, roomID }) => {
+  socket.on("joinRoom", ({ username, roomID, roomChange }) => {
     console.log(`line 49, server: ${roomID}`);
     //!update database with users RoomID (after inputting invite code), then make a post request to ("/) to redirect to home page and re-render sidebar
     async () => {
@@ -70,7 +71,9 @@ io.on("connection", (socket) => {
       formatMessage(
         chatBot,
         `Hi ${user.username}, welcome! You've entered a chat with ...`
-      )
+      ),
+      user.roomID,
+      roomChange
     );
 
     //test-> broadcasting (sends message to all in room except the user connecting) when a user connects
@@ -79,7 +82,9 @@ io.on("connection", (socket) => {
       .emit(
         "message",
         formatMessage(chatBot, `${user.username} has joined the conversation`)
-      );
+      ),
+      user.roomID,
+      roomChange;
   });
 
   //not sure if needed currently
@@ -94,7 +99,11 @@ io.on("connection", (socket) => {
     //post request - save chat to database
     console.log(`line 92 chat to room id: ${currentRoom}`); //undefined currently (need to get selected roomID in here)
     console.log(`line 92 chat to room using username: ${user.username}`);
-    io.to(currentRoom).emit("message", formatMessage(user.username, msg));
+    io.to(currentRoom).emit(
+      "message",
+      formatMessage(user.username, msg),
+      currentRoom
+    );
     console.log(msg);
   });
 });
