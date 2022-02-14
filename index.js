@@ -46,7 +46,7 @@ io.on("connection", (socket) => {
   let user = {};
   //join room (gets triggered when url is pasted)
   socket.on("joinRoom", ({ username, roomID }) => {
-    //!update database with users RoomID, then make a post request to ("/) to redirect to home page and re-render sidebar
+    //!update database with users RoomID (after inputting invite code), then make a post request to ("/) to redirect to home page and re-render sidebar
     async () => {
       try {
         const res = await fetch("http://localhost:3000/", {
@@ -64,7 +64,10 @@ io.on("connection", (socket) => {
     socket.join(user.roomID);
     socket.emit(
       "message",
-      formatMessage(chatBot, `Hi ${user.username}, welcome to the chat!`)
+      formatMessage(
+        chatBot,
+        `Hi ${user.username}, welcome! You've entered a chat with ... and ...`
+      )
     );
 
     //test-> broadcasting (sends message to all in room except the user connecting) when a user connects
@@ -72,14 +75,15 @@ io.on("connection", (socket) => {
       .to(user.roomID)
       .emit(
         "message",
-        formatMessage(chatBot, `${user.username} has joined the chat`)
+        formatMessage(chatBot, `${user.username} has joined the conversation`)
       );
   });
 
+  //not sure if needed currently
   //called when active chats name was added to sidebar(should this info go somewhere?)
-  socket.on("new-room-created", (username, roomID) => {
-    //store this info somewhere
-  });
+  // socket.on("new-room-created", (username, roomID) => {
+  //store this info somewhere
+  // });
 
   //receives chat message, formats it, and sends it to all clients in the same room
   socket.on("chatMessage", (msg) => {

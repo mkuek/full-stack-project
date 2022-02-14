@@ -32,8 +32,6 @@ newChat.addEventListener("submit", (e) => {
   console.log(roomID);
   //join room (w/username)
   socket.emit("joinRoom", { username, roomID });
-  //calls function to write username and roomID to the "active chat" side-bar;
-  //!update database with users RoomID, then make a post request to ("/) to redirect to home page and re-render sidebar
 
   // writeActiveChats(username, roomID);
   //clear the chat input box, and focus on the box after button click
@@ -42,7 +40,7 @@ newChat.addEventListener("submit", (e) => {
 });
 
 //writes new chats in the sidebar, sends info to the server about the created room.
-//!same as above
+//same as above
 // function writeActiveChats(username, roomID) {
 //   const activeChats = document.querySelector(".active-chats");
 //   const newChat = document.createElement("div");
@@ -55,16 +53,17 @@ newChat.addEventListener("submit", (e) => {
 
 //input box for sending a message (to those in the the same room)
 const messageSubmitButton = document.querySelector(".message-submit-button");
-messageSubmitButton.addEventListener("submit", (e) => {
+messageSubmitButton.addEventListener("click", (e) => {
   e.preventDefault();
+  console.log("click");
   const messageInput = document.querySelector(".message-input");
   const msg = messageInput.value;
-  console.log(msg);
+  console.log(`line 60 ${msg}`);
   //send message to the server
   socket.emit("chatMessage", msg);
   //clear the chat input box, and focus on the box after button click
-  inputBox.value = "";
-  inputBox.focus();
+  messageInput.value = "";
+  messageInput.focus();
 });
 
 //generate a random invite room Id to email to someone
