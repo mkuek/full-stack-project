@@ -6,6 +6,7 @@ const config = {
 };
 
 const express = require("express"),
+  app = express(),
   router = express.Router(),
   pgp = require("pg-promise")(),
   db = pgp(config),
@@ -18,7 +19,9 @@ router.get("/", async (req, res) => {
     console.log(userID);
     //!4query database for the user id( return object with all info about the user (i.e. {id, username, email}, to render the home page)
     //!should be called something like "userInfo" rather than userID
-    res.render("home", { userID: userID });
+    //!5a.function which queries database to find all rooms which user is a member, and all other users with these rooms
+    userMessagesData = buildUserMessagesObject(userID);
+    res.render("home", { userID: userID, userMessagesData: userMessagesData });
   } catch (error) {
     console.log(error);
   }
@@ -50,7 +53,7 @@ const passwordB = 1234;
 //
 
 //checks username and password against the database and brings user to unique dashboard home page
-let userMessagesData = [];
+// let userMessagesData = [];
 router.post("/login", async (req, res) => {
   try {
     //!1.database query => if username and password are found (go to unique dashboard(home page) - send over username)
@@ -64,8 +67,15 @@ router.post("/login", async (req, res) => {
     ) {
       //!2.want a unique user id assigned here (i.e. should be an actual userId, not username)
       userID = username;
-      //!3a.function which queries database to find all rooms which user is a member, and all other users with these rooms
-      userMessagesData = buildUserMessagesObject(userID);
+      //3a.function which queries database to find all rooms which user is a member, and all other users with these rooms
+      // userMessagesData = buildUserMessagesObject(userID);
+      // console.log(`line 70:${userMessagesData}`); //object logged here
+      // app.locals.socket.emit("userMessagesData", userMessagesData);
+      // const socket = req.app.locals.socket;
+      // socket.emit("userMessagesData", userMessagesData);
+
+      // io.emit("my event", { my: "data" }); //emit to everyone
+
       res.redirect("/");
     }
   } catch (error) {
@@ -73,4 +83,4 @@ router.post("/login", async (req, res) => {
   }
 });
 
-module.exports = { router, userMessagesData };
+module.exports = router;

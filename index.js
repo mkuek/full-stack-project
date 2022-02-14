@@ -21,9 +21,13 @@ const chatBot = "Chatbot";
 
 //setup socket connection
 io.on("connection", (socket) => {
+  //
+  app.locals.socket = socket;
+  app.locals.io = io;
+
   //send object with all users active chat data (to be written to the sidebar)
-  console.log(router.userMessagesData);
-  socket.emit("write-active-chats", router.userMessagesData);
+  // console.log(`line 25: ${router.userMessagesData}`);
+  // socket.emit("write-active-chats", router.userMessagesData);
 
   //get invite code when clicked (also sets up a new room)
   socket.on("get-invite-code", (username) => {
@@ -84,7 +88,7 @@ app.use("/js", express.static(__dirname + "/views/js"));
 app.set("view engine", "ejs");
 app.set("views", "./src/views/");
 
-app.use("/", router.router);
+app.use("/", router);
 
 server.listen(port, () => {
   console.log(`listening at port ${port}`);

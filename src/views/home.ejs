@@ -27,9 +27,11 @@
       <div class="active-chats">
         <div>Active chats</div>
         <!-- unique to user -->
-        <div class="Mike"></div>
-        <div class="John"></div>
-        <div class="Tina"></div>
+        <% userMessagesData.forEach(chatroom => { %>
+        <div>
+          <span id=" <%= chatroom.roomID  %> "><%=chatroom.guest %></span>
+        </div>
+        <%}) %>
       </div>
     </div>
     <div class="chat-window">

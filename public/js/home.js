@@ -8,15 +8,20 @@
 
 const socket = io();
 
-//userID obtained from rendered dashboard home page
+//userID obtained from rendered dashboard home page(not sure this is needed for anything)
 // const userID = document.querySelector(".id");
 const username = document.querySelector(".name > span").innerHTML;
 console.log(username);
 
+//cannot get this to work
+
 //write active chats to the sidebar using userMessagesObject
-socket.on("write-active-chats", (userMessagesData) => {
-  console.log(userMessagesData); //coming up empty for some reason
-});
+// socket.on("write-active-chats", (userMessagesData) => {
+//   console.log(userMessagesData); //coming up empty for some reason
+// });
+// socket.on("userMessagesData", (userMessagesData) => {
+//   console.log(`home.js ${userMessagesData}`); //coming up empty for some reason
+// });
 
 //input box for pasting a roomID shared with you
 const newChat = document.querySelector(".chat-code-input");
@@ -89,3 +94,10 @@ function outputMessage(message) {
             <p class="message-text">${message.text}</p>`;
   document.querySelector(".chat-window").appendChild(div);
 }
+
+//event listeners for the active chats in sidebar
+const activeChats = document.querySelector(".active-chats");
+activeChats.addEventListener("click", (e) => {
+  //would like to click on this and write the dom with all the chats for this particular room"
+  //i think i would also like to "join" all the rooms for which I have active chats
+});
