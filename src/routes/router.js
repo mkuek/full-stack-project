@@ -30,6 +30,7 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
+    res.redirect("/");
     //post to database
   } catch (error) {
     console.log(error);

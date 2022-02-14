@@ -16,6 +16,7 @@ const io = socketio(server);
 const formatMessage = require("./modules/formatMessage");
 const userJoinObject = require("./modules/manageUsers");
 const router = require("./src/routes/router");
+const fetch = require("node-fetch");
 
 const chatBot = "Chatbot";
 
@@ -45,6 +46,17 @@ io.on("connection", (socket) => {
   let user = {};
   //join room (gets triggered when url is pasted)
   socket.on("joinRoom", ({ username, roomID }) => {
+    //!update database with users RoomID, then make a post request to ("/) to redirect to home page and re-render sidebar
+    async () => {
+      try {
+        const res = await fetch("http://localhost:3000/", {
+          method: "POST",
+          body: "",
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
     // makes user object (w/id, username, room), and joins the selected room
     user = userJoinObject(socket.id, username, roomID);
     //this socket joins this particular room
