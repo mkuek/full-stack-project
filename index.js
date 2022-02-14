@@ -62,11 +62,12 @@ io.on("connection", (socket) => {
     //this socket joins this particular room
     console.log(user);
     socket.join(user.roomID);
+    //console.log(`line 65: ${io.sockets.clients(roomID)}`);
     socket.emit(
       "message",
       formatMessage(
         chatBot,
-        `Hi ${user.username}, welcome! You've entered a chat with ... and ...`
+        `Hi ${user.username}, welcome! You've entered a chat with ...`
       )
     );
 

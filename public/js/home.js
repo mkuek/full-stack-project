@@ -103,3 +103,12 @@ activeChats.addEventListener("click", (e) => {
   //would like to click on this and write the dom with all the chats for this particular room"
   //i think i would also like to "join" all the rooms for which I have active chats
 });
+
+const chat = document.querySelectorAll(".chat");
+chat.forEach((chat) => {
+  chat.addEventListener("click", (event) => {
+    console.log(event.target.id);
+    const targetChatId = event.target.id;
+    socket.emit("joinRoom", { username, targetChatId });
+  });
+});
