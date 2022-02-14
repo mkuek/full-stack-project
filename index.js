@@ -46,6 +46,7 @@ io.on("connection", (socket) => {
   let user = {};
   //join room (gets triggered when url is pasted)
   socket.on("joinRoom", ({ username, roomID }) => {
+    console.log(`line 49, server: ${roomID}`);
     //!update database with users RoomID (after inputting invite code), then make a post request to ("/) to redirect to home page and re-render sidebar
     async () => {
       try {
@@ -60,9 +61,10 @@ io.on("connection", (socket) => {
     // makes user object (w/id, username, room), and joins the selected room
     user = userJoinObject(socket.id, username, roomID);
     //this socket joins this particular room
+    console.log(`line 63`);
     console.log(user);
     socket.join(user.roomID);
-    //console.log(`line 65: ${io.sockets.clients(roomID)}`);
+    // console.log(`line 65: ${io.sockets.clients(roomID)}`);
     socket.emit(
       "message",
       formatMessage(
@@ -87,10 +89,12 @@ io.on("connection", (socket) => {
   // });
 
   //receives chat message, formats it, and sends it to all clients in the same room
-  socket.on("chatMessage", (msg) => {
+  socket.on("chatMessage", (msg, currentRoom) => {
     console.log(msg);
     //post request - save chat to database
-    io.to(user.roomID).emit("message", formatMessage(user.username, msg));
+    console.log(`line 92 chat to room id: ${currentRoom}`); //undefined currently (need to get selected roomID in here)
+    console.log(`line 92 chat to room using username: ${user.username}`);
+    io.to(currentRoom).emit("message", formatMessage(user.username, msg));
     console.log(msg);
   });
 });

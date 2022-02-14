@@ -29,7 +29,7 @@ newChat.addEventListener("submit", (e) => {
   e.preventDefault();
   const inputBox = document.querySelector(".chat-code-input > input");
   const roomID = inputBox.value;
-  console.log(roomID);
+  console.log(`line 32: ${roomID}`);
   //join room (w/username)
   socket.emit("joinRoom", { username, roomID });
 
@@ -51,6 +51,9 @@ newChat.addEventListener("submit", (e) => {
 //   socket.emit("new-room-created", { username, roomID });
 // }
 
+//
+let currentRoom = "";
+
 //input box for sending a message (to those in the the same room)
 const messageSubmitButton = document.querySelector(".message-submit-button");
 messageSubmitButton.addEventListener("click", (e) => {
@@ -60,7 +63,7 @@ messageSubmitButton.addEventListener("click", (e) => {
   const msg = messageInput.value;
   console.log(`line 60 ${msg}`);
   //send message to the server
-  socket.emit("chatMessage", msg);
+  socket.emit("chatMessage", msg, currentRoom);
   //clear the chat input box, and focus on the box after button click
   messageInput.value = "";
   messageInput.focus();
@@ -74,6 +77,7 @@ inviteButton.addEventListener("click", () => {
 
 //on receiving a formatted message, calls function to output message to the browser chat window
 socket.on("message", (formattedMessage) => {
+  console.log(`line 80`);
   console.log(formattedMessage);
   //writes messages received from the server in the clients browser
   outputMessage(formattedMessage);
@@ -97,18 +101,21 @@ function outputMessage(message) {
   document.querySelector(".chat-window").appendChild(div);
 }
 
-//event listeners for the active chats in sidebar
-const activeChats = document.querySelector(".active-chats");
-activeChats.addEventListener("click", (e) => {
-  //would like to click on this and write the dom with all the chats for this particular room"
-  //i think i would also like to "join" all the rooms for which I have active chats
-});
+//not sure if this is needed
+// //event listeners for the active chats in sidebar
+// const activeChats = document.querySelector(".active-chats");
+// activeChats.addEventListener("click", (e) => {
+//   //would like to click on this and write the dom with all the chats for this particular room"
+//   //i think i would also like to "join" all the rooms for which I have active chats
+// });
 
+//event listener for chat groups sidebar, joins specific room on button click (also sets current room to determine what is shown in the DOM)
 const chat = document.querySelectorAll(".chat");
 chat.forEach((chat) => {
   chat.addEventListener("click", (event) => {
-    console.log(event.target.id);
-    const targetChatId = event.target.id;
-    socket.emit("joinRoom", { username, targetChatId });
+    console.log(` line 115:${event.target.id}`);
+    const roomID = event.target.id;
+    currentRoom = roomID;
+    socket.emit("joinRoom", { username, roomID });
   });
 });
