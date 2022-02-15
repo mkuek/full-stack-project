@@ -1,8 +1,6 @@
 const express = require("express"),
   app = express(),
   port = 3000;
-// const path = require("path");
-// const bodyParser = require("body-parser");
 
 //calling the v4 function(renamed as uuidV4) makes unique id
 const { v4: uuidV4 } = require("uuid");
@@ -22,28 +20,13 @@ const chatBot = "Chatbot";
 
 //setup socket connection
 io.on("connection", (socket) => {
-  //was not working
-  // app.locals.socket = socket;
-  // app.locals.io = io;
-
-  //send object with all users active chat data (to be written to the sidebar)
-  // console.log(`line 25: ${router.userMessagesData}`);
-  // socket.emit("write-active-chats", router.userMessagesData);
-
   //get invite code when clicked (also sets up a new room)
   socket.on("get-invite-code", (username) => {
     const inviteCode = uuidV4();
     console.log(inviteCode);
     //!add this invite code (roomID) to the user's own (i.e. add roomID to username being passed = will need to pass an id (not a username))
-    //   //joins room that code was generated for
-    //   socket.join(inviteCode);
-    //   //emits greeting message
-    //   socket.emit(
-    //     "message",
-    //     formatMessage(chatBot, `Hi ${username}, welcome to the chat!`),
-    //     inviteCode
-    //   );
   });
+
   //user object variable
   let user = {};
   //join room (gets triggered when url is pasted)
@@ -66,7 +49,6 @@ io.on("connection", (socket) => {
     console.log(`line 63`);
     console.log(user);
     socket.join(user.roomID);
-    // console.log(`line 65: ${io.sockets.clients(roomID)}`);
     socket.emit(
       "message",
       formatMessage(
@@ -77,7 +59,7 @@ io.on("connection", (socket) => {
       roomChange
     );
 
-    //test-> broadcasting (sends message to all in room except the user connecting) when a user connects
+    //broadcasting (sends message to all in room except the user connecting) when a user connects
     socket.broadcast
       .to(user.roomID)
       .emit(
@@ -88,16 +70,10 @@ io.on("connection", (socket) => {
       roomChange;
   });
 
-  //not sure if needed currently
-  //called when active chats name was added to sidebar(should this info go somewhere?)
-  // socket.on("new-room-created", (username, roomID) => {
-  //store this info somewhere
-  // });
-
   //receives chat message, formats it, and sends it to all clients in the same room
   socket.on("chatMessage", (msg, currentRoom) => {
     console.log(msg);
-    //post request - save chat to database
+    //!post request - save chat to database
     console.log(`line 92 chat to room id: ${currentRoom}`); //undefined currently (need to get selected roomID in here)
     console.log(`line 92 chat to room using username: ${user.username}`);
     io.to(currentRoom).emit(

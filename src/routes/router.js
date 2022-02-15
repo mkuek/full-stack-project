@@ -25,13 +25,12 @@ router.get("/", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-  // userID = "";
 });
 
 router.post("/", async (req, res) => {
   try {
     res.redirect("/");
-    //post to database
+    //!location where we can post to database
   } catch (error) {
     console.log(error);
   }
@@ -51,7 +50,6 @@ const usernameA = "Matthew";
 const passwordA = 1234;
 const usernameB = "John";
 const passwordB = 1234;
-//
 
 //checks username and password against the database and brings user to unique dashboard home page
 // let userMessagesData = [];
@@ -68,15 +66,7 @@ router.post("/login", async (req, res) => {
     ) {
       //!2.want a unique user id assigned here (i.e. should be an actual userId, not username)
       userID = username;
-      //3a.function which queries database to find all rooms which user is a member, and all other users with these rooms
-      // userMessagesData = buildUserMessagesObject(userID);
-      // console.log(`line 70:${userMessagesData}`); //object logged here
-      // app.locals.socket.emit("userMessagesData", userMessagesData);
-      // const socket = req.app.locals.socket;
-      // socket.emit("userMessagesData", userMessagesData);
-
-      // io.emit("my event", { my: "data" }); //emit to everyone
-
+      //!3a.function which queries database to find all rooms which user is a member, and all other users with these rooms
       res.redirect("/");
     }
   } catch (error) {
