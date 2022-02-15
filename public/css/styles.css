@@ -1,15 +1,55 @@
-h1 {
-  color: red;
+:root {
+  font-size: 1.2em;
 }
+
+/* h1 {
+  color: red;
+} */
 
 * + * {
   margin-top: 1.5em;
+}
+
+body {
+  margin: 1em;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.box {
+  background-color: #f3f6fc;
+  border-radius: 0.5em;
+}
+
+.left-flexbox {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid gray;
+  width: 24%;
+}
+
+.center-flexbox {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid gray;
+  width: 48%;
+}
+
+.active-chats {
+  border: solid 1px red;
 }
 
 .message {
   background-color: beige;
 }
 
-.active-chats {
-  border: solid 1px red;
+.right-flexbox {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid gray;
+  width: 24%;
 }

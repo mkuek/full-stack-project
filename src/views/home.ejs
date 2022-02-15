@@ -8,46 +8,56 @@
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
-    <h1>Welcome <%= userID %></h1>
-    <div class="user-info">
-      <!-- these will be dirrent things, including maybe the actual user ID#, for JS to grab -->
-      <div class="name">Name: <span><%= userID %></span></div>
-      <div class="email">Email: <span><%= userID %></span></div>
-      <div class="id">UserID: <span><%= userID %></span></div>
-    </div>
-    <div class="sideboard-left">
-      <div>
-        <!-- <button class="new-chat">New chat</button> -->
-        <form class="chat-code-input">
-          <label for="">Have an id?</label>
-          <input type="text" name="room" />
-          <button type="submit">submit</button>
-        </form>
+    <!-- <h1>Welcome <%= userID %></h1> -->
+    <div class="container">
+      <div class="left-flexbox box">
+        <div class="user-info">
+          <!-- these will be dirrent things, including maybe the actual user ID#, for JS to grab -->
+          <div class="name">Name: <span><%= userID %></span></div>
+          <div class="email">Email: <span><%= userID %></span></div>
+          <div class="id">UserID: <span><%= userID %></span></div>
+        </div>
+        <div class="sideboard-left">
+          <div class="box">
+            <!-- <button class="new-chat">New chat</button> -->
+            <form class="chat-code-input">
+              <label for="">Have an id?</label>
+              <input type="text" name="room" />
+              <button type="submit">submit</button>
+            </form>
+          </div>
+          <div class="active-chats box">
+            <div>Contacts</div>
+            <!-- unique to user -->
+            <% userMessagesData.forEach(chatroom => { for (let i = 0; i <
+            chatroom.length - 1; i++) { %>
+            <span><%=chatroom[i] %></span>
+            <% } %>
+            <div class="chat" id=" <%= chatroom[chatroom.length-1] %> ">
+              roomID
+            </div>
+            <%}) %>
+          </div>
+        </div>
       </div>
-      <div class="active-chats">
-        <div>Contacts</div>
-        <!-- unique to user -->
-        <% userMessagesData.forEach(chatroom => { for (let i = 0; i <
-        chatroom.length - 1; i++) { %>
-        <span><%=chatroom[i] %></span>
-        <% } %>
-        <div class="chat" id=" <%= chatroom[chatroom.length-1] %> ">roomID</div>
-        <%}) %>
+      <div class="center-flexbox box">
+        <div class="chat-window">
+          <!-- populates based on conversation selected -->
+        </div>
+        <div class="chat-input">
+          <form>
+            <input type="text" name="text" class="message-input" />
+            <button type="submit" class="message-submit-button">Send</button>
+          </form>
+        </div>
       </div>
-    </div>
-    <div class="chat-window">
-      <!-- populates based on conversation selected -->
-    </div>
-    <div class="chat-input">
-      <form>
-        <input type="text" name="text" class="message-input" />
-        <button type="submit" class="message-submit-button">Send</button>
-      </form>
-    </div>
-    <div class="sideboard-right-bottom">
-      <div class="invite">
-        <div>Invite</div>
-        <button class="invite-button">Invite</button>
+      <div class="right-flexbox">
+        <div class="sideboard-right-bottom box">
+          <div class="invite">
+            <div>Invite</div>
+            <button class="invite-button">Invite</button>
+          </div>
+        </div>
       </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.10.3/qs.min.js"></script>
