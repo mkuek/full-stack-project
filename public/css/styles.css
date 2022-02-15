@@ -22,11 +22,11 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  gap: 3%;
+  gap: 1.85em;
   max-width: 1080px;
   margin: 0 auto;
   background-color: #ffffff;
-  padding: 1.5em;
+  padding: 1.6em;
   border-radius: 0.5em;
   box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.1);
 }
@@ -44,7 +44,6 @@ body {
   flex-direction: column;
   border: 1px solid gray;
   width: 25%;
-  gap: 2%;
 }
 
 .code-input {
@@ -73,7 +72,38 @@ body {
 }
 
 .chat-input {
-  border: solid 1px red;
+  margin-top: auto;
+  background-color: white;
+  border-radius: 0.5em;
+  padding: 1em;
+  height: 7%;
+}
+
+.chat-input > form {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  align-content: center;
+}
+
+.message-input {
+  flex: 1;
+  height: 2em;
+}
+
+.message-submit-button {
+  margin-top: 0;
+  margin-left: 1em;
+  background-color: #034dfc;
+  padding: 0.5em 1em;
+  color: white;
+  border-radius: 0.5em;
+  border: 1px solid #034dfc;
+}
+
+.message-submit-button:hover {
+  background-color: white;
+  color: #034dfc;
 }
 
 .message {
@@ -86,4 +116,12 @@ body {
   border: 1px solid gray;
   width: 25%;
   margin-top: 0;
+}
+
+.logo-image {
+  flex: 2;
+}
+
+.contact-info {
+  text-align: center;
 }
