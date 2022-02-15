@@ -42,33 +42,28 @@ body {
 .left-flexbox {
   display: flex;
   flex-direction: column;
-  border: 1px solid gray;
   width: 25%;
 }
 
 .code-input {
-  border: 1px solid red;
 }
 
 .user-info {
-  border: solid 1px red;
   text-align: center;
 }
 
 .active-chats {
-  border: solid 1px red;
 }
 
 .center-flexbox {
   display: flex;
   flex-direction: column;
-  border: 1px solid gray;
   width: 50%;
   margin-top: 0;
 }
 
 .chat-window {
-  border: solid 1px red;
+  /* border: solid 1px red; */
 }
 
 .chat-input {
@@ -76,14 +71,10 @@ body {
   background-color: white;
   border-radius: 0.5em;
   padding: 1em;
-  height: 7%;
-}
-
-.chat-input > form {
+  height: 8%;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  align-content: center;
+  align-items: center;
 }
 
 .message-input {
@@ -95,7 +86,7 @@ body {
   margin-top: 0;
   margin-left: 1em;
   background-color: #034dfc;
-  padding: 0.5em 1em;
+  padding: 0.65em 1.2em;
   color: white;
   border-radius: 0.5em;
   border: 1px solid #034dfc;
@@ -107,13 +98,14 @@ body {
 }
 
 .message {
-  background-color: beige;
+  background-color: #c3cee6;
+  border-radius: 0.5em;
+  padding: 1em;
 }
 
 .right-flexbox {
   display: flex;
   flex-direction: column;
-  border: 1px solid gray;
   width: 25%;
   margin-top: 0;
 }
