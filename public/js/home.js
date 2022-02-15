@@ -9,7 +9,7 @@
 const socket = io();
 
 //userID obtained from rendered dashboard home page(not sure this is needed for anything)
-// const userID = document.querySelector(".id");
+//! const userID = document.querySelector(".id");
 const username = document.querySelector(".name > span").innerHTML;
 console.log(username);
 
@@ -69,9 +69,10 @@ messageSubmitButton.addEventListener("click", (e) => {
   messageInput.focus();
 });
 
-//generate a random invite room Id to email to someone
+//generate a random invite room Id to email to someone (would be best to set this up to actually email someone)
 const inviteButton = document.querySelector(".invite-button");
 inviteButton.addEventListener("click", () => {
+  //!send userID here (go to top of page - requires database query at login) rather than username(as seen below)
   socket.emit("get-invite-code", username);
 });
 

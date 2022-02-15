@@ -34,14 +34,15 @@ io.on("connection", (socket) => {
   socket.on("get-invite-code", (username) => {
     const inviteCode = uuidV4();
     console.log(inviteCode);
-    //joins room that code was generated for
-    socket.join(inviteCode);
-    //emits greeting message
-    socket.emit(
-      "message",
-      formatMessage(chatBot, `Hi ${username}, welcome to the chat!`),
-      inviteCode
-    );
+    //!add this invite code (roomID) to the user's own (i.e. add roomID to username being passed = will need to pass an id (not a username))
+    //   //joins room that code was generated for
+    //   socket.join(inviteCode);
+    //   //emits greeting message
+    //   socket.emit(
+    //     "message",
+    //     formatMessage(chatBot, `Hi ${username}, welcome to the chat!`),
+    //     inviteCode
+    //   );
   });
   //user object variable
   let user = {};
