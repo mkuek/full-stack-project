@@ -12,7 +12,8 @@
 }
 
 body {
-  margin: 2.5em 2em;
+  margin-left: 2em;
+  margin-right: 2em;
   font-family: Arial, Helvetica, sans-serif;
   background-color: #f8f9fd;
 }
@@ -24,7 +25,8 @@ body {
   justify-content: space-between;
   gap: 1.85em;
   max-width: 1080px;
-  margin: 0 auto;
+  height: 82vh; /* not great because bottom not consistent */
+  margin: 2.5em auto;
   background-color: #ffffff;
   padding: 1.6em;
   border-radius: 0.5em;
@@ -52,7 +54,23 @@ body {
   text-align: center;
 }
 
+.user-image-container {
+  border: 1px solid rgb(114, 224, 255);
+  border-radius: 50%;
+  height: 4.5em;
+  width: 4.5em;
+  margin: 0 auto;
+}
+
 .active-chats {
+  flex: 1;
+}
+
+.chatroom {
+  /* display: block; */
+}
+.hidden-roomId {
+  border: 1px solid red;
 }
 
 .center-flexbox {
@@ -63,7 +81,7 @@ body {
 }
 
 .chat-window {
-  /* border: solid 1px red; */
+  overflow: scroll;
 }
 
 .chat-input {
@@ -116,4 +134,12 @@ body {
 
 .contact-info {
   text-align: center;
+}
+
+.contact-image-container {
+  border: 1px solid rgb(239, 161, 247);
+  border-radius: 50%;
+  height: 4.5em;
+  width: 4.5em;
+  margin: 0 auto;
 }

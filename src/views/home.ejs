@@ -22,6 +22,9 @@
 
         <div class="user-info box">
           <!-- these will be dirrent things, including maybe the actual user ID#, for JS to grab -->
+          <div class="user-image-container">
+            <img src="" alt="" class="" />
+          </div>
           <div class="name">My Name: <span><%= userID %></span></div>
           <div class="email">My Email: <span><%= userID %></span></div>
           <div class="id">My UserId: <span><%= userID %></span></div>
@@ -32,9 +35,9 @@
           <!-- unique to user -->
           <% userMessagesData.forEach(chatroom => { for (let i = 0; i <
           chatroom.length - 1; i++) { %>
-          <span><%=chatroom[i] %></span>
+          <span class="contact"><%=chatroom[i] %></span>
           <% } %>
-          <div class="chat" id=" <%= chatroom[chatroom.length-1] %> ">
+          <div class="hidden-roomId" id=" <%= chatroom[chatroom.length-1] %> ">
             roomID
           </div>
           <%}) %>
@@ -56,6 +59,9 @@
         </div>
         <div class="contact-info box">
           <!-- these will be dirrent things, including maybe the actual user ID#, for JS to grab -->
+          <div class="contact-image-container">
+            <img src="" alt="" class="" />
+          </div>
           <div class="name">Contact Name: <span><%= userID %></span></div>
           <div class="email">Contact Email: <span><%= userID %></span></div>
           <div class="id">Constact UserId: <span><%= userID %></span></div>
