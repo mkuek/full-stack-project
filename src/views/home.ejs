@@ -21,15 +21,18 @@
         </div>
 
         <div class="user-info box">
-          <!-- these will be dirrent things, including maybe the actual user ID#, for JS to grab -->
+          <!-- these will be different things, including maybe the actual user ID#, for JS to grab -->
           <div class="user-image-container">
             <img src="" alt="" class="" />
           </div>
-          <div class="name">My Name: <span><%= userID %></span></div>
-          <div class="email">My Email: <span><%= userID %></span></div>
-          <div class="id">My UserId: <span><%= userID %></span></div>
+          <div class="user-details">
+            <div class="name">
+              <strong> My Name <span><%= userID %></span> </strong>
+            </div>
+            <div class="email">Email <span><%= userID %></span></div>
+            <div class="id">UserId <span><%= userID %></span></div>
+          </div>
         </div>
-
         <div class="active-chats box">
           <div>Contacts</div>
           <!-- unique to user -->
@@ -62,14 +65,28 @@
           <div class="contact-image-container">
             <img src="" alt="" class="" />
           </div>
-          <div class="name">Contact Name: <span><%= userID %></span></div>
-          <div class="email">Contact Email: <span><%= userID %></span></div>
-          <div class="id">Constact UserId: <span><%= userID %></span></div>
+          <div class="contact-details">
+            <div class="name">Contact Name: <span><%= userID %></span></div>
+            <div class="email">Contact Email: <span><%= userID %></span></div>
+          </div>
         </div>
         <div class="sideboard-right-bottom box">
           <div class="invite">
-            <div>Invite</div>
-            <button class="invite-button">Invite</button>
+            <form>
+              <div class="send-email-invite">
+                <div>Send email invite</div>
+                <div>Recipient info</div>
+                labe
+                <input type="text" class="invite-name" />
+                <input type="text" class="invite-email" />
+              </div>
+              <hr />
+              <div class="copy-code">
+                <div>Copy invite code</div>
+                <button class="invite-button">Invite</button>
+                <div>Share this code to create a new group chat</div>
+              </div>
+            </form>
           </div>
         </div>
       </div>

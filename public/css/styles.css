@@ -1,6 +1,6 @@
 :root {
   box-sizing: border-box;
-  font-size: 1.2em;
+  font-size: 1.2rem;
 }
 
 /* h1 {
@@ -37,7 +37,7 @@ body {
 .box {
   background-color: #f3f6fc;
   border-radius: 0.5em;
-  padding: 1em;
+  padding: 1.2em;
 }
 
 /* left flexbox */
@@ -60,6 +60,14 @@ body {
   height: 4.5em;
   width: 4.5em;
   margin: 0 auto;
+}
+
+.user-details div {
+  margin-top: 1.1em;
+}
+
+.user-details div + div {
+  font-size: 0.8rem;
 }
 
 .active-chats {
@@ -142,4 +150,9 @@ body {
   height: 4.5em;
   width: 4.5em;
   margin: 0 auto;
+}
+
+.contact-details div {
+  margin-top: 1.1em;
+  font-size: 0.8rem;
 }

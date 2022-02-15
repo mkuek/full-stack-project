@@ -126,7 +126,7 @@ function outputMessage(message, roomID) {
 // });
 
 //event listener for chat groups sidebar, joins specific room on button click (also sets current room to determine what is shown in the DOM)
-const chat = document.querySelectorAll(".chat");
+const chat = document.querySelectorAll(".hidden-roomId");
 chat.forEach((chat) => {
   chat.addEventListener("click", (event) => {
     const roomID = event.target.id;
