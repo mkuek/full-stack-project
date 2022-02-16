@@ -9,11 +9,16 @@
 // const path = require("path");
 // const bodyParser = require("body-parser");
 
+//added from michael
+// const path = require("path");
+// const bodyParser = require("body-parser");
+
 const express = require("express"),
   app = express(),
   router = express.Router(),
   pgp = require("pg-promise")(),
   // db = pgp(config),
+
   buildUserMessagesObject = require("../../modules/userMessages.js");
 
 //render dashboard (homepage) using user specific data
@@ -25,10 +30,12 @@ router.get("/", async (req, res) => {
     //!should be called something like "userInfo" rather than userID
     //!5a.function which queries database to find all rooms which user is a member, and all other users with these rooms
     userMessagesData = buildUserMessagesObject(userID);
+
     // const results = await db.any("SELECT * FROM rooms ORDER BY roomName");
+
     res.render("home", { userID: userID, userMessagesData: userMessagesData });
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 });
 
