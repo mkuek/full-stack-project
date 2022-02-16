@@ -5,12 +5,15 @@
 //   user: "postgres",
 // };
 
+//added from michael
+// const path = require("path");
+// const bodyParser = require("body-parser");
+
 const express = require("express"),
   app = express(),
   router = express.Router(),
   pgp = require("pg-promise")(),
   // db = pgp(config),
-
   buildUserMessagesObject = require("../../modules/userMessages.js");
 
 //render dashboard (homepage) using user specific data
@@ -22,16 +25,15 @@ router.get("/", async (req, res) => {
     //!should be called something like "userInfo" rather than userID
     //!5a.function which queries database to find all rooms which user is a member, and all other users with these rooms
     userMessagesData = buildUserMessagesObject(userID);
-
     // const results = await db.any("SELECT * FROM rooms ORDER BY roomName");
-
     res.render("home", { userID: userID, userMessagesData: userMessagesData });
   } catch (error) {
     console.log(error);
   }
 });
 
-router.post("/", async (req, res) => {
+//CREATE ROOM
+router.post("/", async (req, res, next) => {
   try {
     res.redirect("/");
     //location where we can post to database
@@ -98,8 +100,25 @@ router.post("/:roomName", async (req, res, next) => {
     );
     res.send(`Chatroom ${roomName} was deleted`);
   } catch (error) {
-    console.log(error);
+    next(error);
   }
+});
+
+//NOT COMPLETE OLD CODE
+app.post("/user", (req, res) => {
+  const { userID, userName } = req.body;
+  db.none("INSERT INTO users (userID, userName) VALUES ($1, $2)", [
+    userID,
+    userName,
+  ]).then(() => {
+    console.log(`User ${userName} was created`);
+    res.send("User created");
+  });
+});
+
+//ERROR HANDLING
+app.use((err, req, res, next) => {
+  res.send("something went wrong");
 });
 
 module.exports = router;
