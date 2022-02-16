@@ -52,11 +52,13 @@ io.on("connection", (socket) => {
     console.log(user);
     console.log(user.roomID);
     console.log(user.id);
+    // console.log(socket.rooms);
     socket.join(user.roomID);
+    console.log(socket.rooms); //confirms that socket is in the room
 
     //send user socket.id info to client (to disconnect from a socket when changing rooms)
     socket.emit("userSocketId", user);
-
+    //!these messages seem to not be emitting after a room change
     socket.emit(
       "message",
       formatMessage(
@@ -97,9 +99,10 @@ io.on("connection", (socket) => {
 
   //disconnects the user (socket)
   socket.on("disconnectSocket", function (userInfoForReset) {
-    console.log("before disconnect");
-    socket.disconnect(userInfoForReset.id);
-    console.log("after disconnect");
+    // console.log("before disconnect");
+    // socket.disconnect(userInfoForReset.id);
+    // console.log("after disconnect");
+    socket.leave(user.roomID);
   });
 
   //notification (server-side) that user has been disconnected

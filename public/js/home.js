@@ -33,7 +33,7 @@ messageSubmitButton.addEventListener("click", (e) => {
   const msg = messageInput.value;
   console.log(`line 60 ${msg}`);
   //send message to the server
-  console.log(currentRoom);
+  console.log(`this is the current room ${currentRoom}`);
   socket.emit("chatMessage", msg, currentRoom);
   //clear the chat input box, and focus on the box after button click
   messageInput.value = "";
@@ -49,7 +49,9 @@ inviteButton.addEventListener("click", () => {
 
 //on receiving a formatted message, calls function to output message to the browser chat window
 socket.on("message", (formattedMessage, roomID) => {
-  console.log(`line 80`);
+  //!message does not get received here after room change
+
+  console.log(`line 52 - message received`);
   console.log(formattedMessage);
   //writes messages received from the server in the clients browser
   outputMessage(formattedMessage, roomID);
@@ -108,19 +110,22 @@ chat.forEach((chat) => {
         console.log(`room changed to ${roomChange}`);
         socket.emit("joinRoom", { username, roomID, roomChange });
       } else {
+        currentRoom = roomID;
+        roomChange = "true";
         console.log(
           `selected a new room section, client line 106 ${userInfoForReset.id}`
         );
         //disconnects the user (socket) after clicking a new contact to chat with (passes user info, specifically the socket id)
         socket.emit("disconnectSocket", userInfoForReset);
-        socket.on("disconnect", function () {
-          console.log("disconnected from socket client side!!!!");
-        });
-        //reconnect to the server (set up a new socket), and report re-connection
-        socket = io("http://localhost:3000/");
-        socket.on("connect", () => {
-          console.log("socket reconnected");
-        });
+        // socket.on("disconnect", function () {
+        //   console.log("disconnected from socket client side!!!!");
+        // });
+        // //reconnect to the server (set up a new socket), and report re-connection
+        // socket = io("http://localhost:3000/");
+        // socket.on("connect", () => {
+        //   console.log("socket reconnected");
+        // });
+        console.log(`username ${username}, roomID ${roomID}, ${roomChange}`);
         socket.emit("joinRoom", { username, roomID, roomChange });
       }
     }
