@@ -3,21 +3,22 @@ DROP DATABASE IF EXISTS chat_app_database
 CREATE DATABASE chat_app_database;
 \c chat_app_database;
 DROP TABLE IF EXISTS rooms;
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS messages;
 
 CREATE TABLE users (
-  userID INT NOT NULL,
-  chatID INT NOT NULL,
-  date_stamp TIMESTAMP,
+  userID SERIAL NOT NULL,
+  chatID INT,
+  created TIMESTAMP NOT NULL DEFAULT now(),
   userName varchar(15) NOT NULL,
-  chatText varchar(255) NOT NULL,
+  chatText varchar(255),
   PRIMARY KEY(userID)
 );
+
 CREATE TABLE rooms (
   roomID SERIAL,
   userID INT NOT NULL,
-  date_created TIMESTAMP,
+  created TIMESTAMP NOT NULL DEFAULT now(),
   roomName varchar(255),
   PRIMARY KEY (roomID),
   CONSTRAINT fk_room
