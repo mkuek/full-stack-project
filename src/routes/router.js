@@ -5,27 +5,30 @@ const config = {
   user: "postgres",
 };
 
+//added from michael
+// const path = require("path");
+// const bodyParser = require("body-parser");
+
 const express = require("express"),
+  app = express(),
   router = express.Router(),
   pgp = require("pg-promise")(),
-  db = pgp(config);
-const app = express();
-const path = require("path");
-const bodyParser = require("body-parser");
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(bodyParser.json());
+  db = pgp(config),
+  buildUserMessagesObject = require("../../modules/userMessages.js");
 
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
-
-//GET ROOM NAMES
-router.get("/", async (req, res, next) => {
+//render dashboard (homepage) using user specific data
+let userID = "";
+router.get("/", async (req, res) => {
   try {
-    //db call stored as a variable then sent out to render page
-    const results = await db.any("SELECT * FROM rooms ORDER BY roomName");
-    res.send(results);
+    console.log(userID);
+    //!4query database for the user id( return object with all info about the user (i.e. {id, username, email}, to render the home page)
+    //!should be called something like "userInfo" rather than userID
+    //!5a.function which queries database to find all rooms which user is a member, and all other users with these rooms
+    userMessagesData = buildUserMessagesObject(userID);
+     const results = await db.any("SELECT * FROM rooms ORDER BY roomName");
+    res.render("home", { userID: userID, userMessagesData: userMessagesData });
+
   } catch (error) {
     next(error);
   }
@@ -34,14 +37,61 @@ router.get("/", async (req, res, next) => {
 //CREATE ROOM
 router.post("/", async (req, res, next) => {
   try {
-    //post to database
-    console.log(req.body);
-    const { roomName, userID, created = "now()" } = req.body;
-    const results = await db.none(
-      "INSERT INTO rooms (userID, created,roomName) VALUES ($1, $2, $3)",
-      [userID, created, roomName]
-    );
-    res.send(`Chatroom ${roomName} was created`);
+
+    res.redirect("/");
+    //!location where we can post to database
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.get("/login", async (req, res) => {
+  try {
+    //db call stored as a variable then sent out to render page
+    res.render("login");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+//check username and password (hard coded for now, this will happen with a database query below)
+const usernameA = "Matthew";
+const passwordA = 1234;
+const usernameB = "John";
+const passwordB = 1234;
+
+//checks username and password against the database and brings user to unique dashboard home page
+// let userMessagesData = [];
+router.post("/login", async (req, res) => {
+  try {
+    //!1.database query => if username and password are found (go to unique dashboard(home page) - send over username)
+    const username = req.body.username;
+    const password = req.body.password;
+    console.log(username);
+    console.log(password);
+    if (
+      (username == usernameA || username == usernameB) &&
+      (password == passwordA || password == passwordB)
+    ) {
+      //!2.want a unique user id assigned here (i.e. should be an actual userId, not username)
+      userID = username;
+      //!3a.function which queries database to find all rooms which user is a member, and all other users with these rooms
+     
+      
+//        //post to database
+//     console.log(req.body);
+//     const { roomName, userID, created = "now()" } = req.body;
+//     const results = await db.none(
+//       "INSERT INTO rooms (userID, created,roomName) VALUES ($1, $2, $3)",
+//       [userID, created, roomName]
+//     );
+//     res.send(`Chatroom ${roomName} was created`);
+      
+      
+      
+      res.redirect("/");
+    }
+
   } catch (error) {
     next(error);
   }
