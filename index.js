@@ -20,6 +20,7 @@ const chatBot = "Chatbot";
 
 //setup socket connection
 io.on("connection", (socket) => {
+  console.log(`connected (server-side) with socketId ${socket.id}`);
   //get invite code when clicked (also sets up a new room)
   socket.on("get-invite-code", (username) => {
     const inviteCode = uuidV4();
@@ -46,9 +47,16 @@ io.on("connection", (socket) => {
     // makes user object (w/id, username, room), and joins the selected room
     user = userJoinObject(socket.id, username, roomID);
     //this socket joins this particular room
+
     console.log(`line 63`);
     console.log(user);
+    console.log(user.roomID);
+    console.log(user.id);
     socket.join(user.roomID);
+
+    //send user socket.id info to client (to disconnect from a socket when changing rooms)
+    socket.emit("userSocketId", user);
+
     socket.emit(
       "message",
       formatMessage(
@@ -76,6 +84,9 @@ io.on("connection", (socket) => {
     //!post request - save chat to database
     console.log(`line 92 chat to room id: ${currentRoom}`); //undefined currently (need to get selected roomID in here)
     console.log(`line 92 chat to room using username: ${user.username}`);
+    // io.sockets
+    //   .to(currentRoom)
+    //   .emit("message", formatMessage(user.username, msg), currentRoom);
     io.to(currentRoom).emit(
       "message",
       formatMessage(user.username, msg),
@@ -83,10 +94,49 @@ io.on("connection", (socket) => {
     );
     console.log(msg);
   });
+
+  //disconnects the user (socket)
+  socket.on("disconnectSocket", function (userInfoForReset) {
+    console.log("before disconnect");
+    socket.disconnect(userInfoForReset.id);
+    console.log("after disconnect");
+  });
+
+  //notification (server-side) that user has been disconnected
+  socket.on("disconnect", () => {
+    console.log("socket disconnected - confirmed server side");
+  });
+
+  // io.sockets.sockets.forEach((socket) => {
+  //   // If given socket id is exist in list of all sockets, kill it
+  //   if (userInfoForReset.id);
+  //   socket.disconnect(true);
+  // });
+  // io.sockets.connected[userInfoForReset.id].disconnect();
+  //io.sockets.sockets[].disconnect();
+
+  // //removes user from the users array
+  // // userLeave(socket.id);
+  // //10a
+  // io.to(user.room).emit(
+  //   "message",
+  //   formatMessage(chatBot, `${user.username} has left the chat`)
+  // );
+  //});
 });
 
-app.use(express.urlencoded({ extended: false }));
+// io.on("disconnect", () => {
+//   console.log(`disconnect read on the server`);
+//   socket.connect();
+
+//   // else the socket will automatically try to reconnect
+// });
+
+const routes = require("./src/routes/router");
+const bodyParser = require("body-parser");
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(bodyParser.json());
 
 app.use(express.static("./public/"));
 app.use("/css", express.static(__dirname + "/views/css"));

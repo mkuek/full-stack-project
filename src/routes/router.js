@@ -1,15 +1,16 @@
-const config = {
-  host: "localhost",
-  port: 5432,
-  database: "chat_app_database",
-  user: "postgres",
-};
+// const config = {
+//   host: "localhost",
+//   port: 5432,
+//   database: "chat_app_database",
+//   user: "postgres",
+// };
 
 const express = require("express"),
   app = express(),
   router = express.Router(),
   pgp = require("pg-promise")(),
-  db = pgp(config),
+  // db = pgp(config),
+
   buildUserMessagesObject = require("../../modules/userMessages.js");
 
 //render dashboard (homepage) using user specific data
@@ -21,6 +22,9 @@ router.get("/", async (req, res) => {
     //!should be called something like "userInfo" rather than userID
     //!5a.function which queries database to find all rooms which user is a member, and all other users with these rooms
     userMessagesData = buildUserMessagesObject(userID);
+
+    // const results = await db.any("SELECT * FROM rooms ORDER BY roomName");
+
     res.render("home", { userID: userID, userMessagesData: userMessagesData });
   } catch (error) {
     console.log(error);
@@ -30,7 +34,7 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     res.redirect("/");
-    //!location where we can post to database
+    //location where we can post to database
   } catch (error) {
     console.log(error);
   }
@@ -38,7 +42,7 @@ router.post("/", async (req, res) => {
 
 router.get("/login", async (req, res) => {
   try {
-    //db call stored as a variable then sent out to render page
+    //!db call stored as a variable then sent out to render page
     res.render("login");
   } catch (error) {
     console.log(error);
@@ -67,8 +71,32 @@ router.post("/login", async (req, res) => {
       //!2.want a unique user id assigned here (i.e. should be an actual userId, not username)
       userID = username;
       //!3a.function which queries database to find all rooms which user is a member, and all other users with these rooms
+
+      //        //post to database
+      //     console.log(req.body);
+      //     const { roomName, userID, created = "now()" } = req.body;
+      //     const results = await db.none(
+      //       "INSERT INTO rooms (userID, created,roomName) VALUES ($1, $2, $3)",
+      //       [userID, created, roomName]
+      //     );
+      //     res.send(`Chatroom ${roomName} was created`);
+
       res.redirect("/");
     }
+  } catch (error) {
+    console.log(`sorry password not found, ${error}`);
+  }
+});
+
+//DELETE ROOM
+router.post("/:roomName", async (req, res, next) => {
+  try {
+    const { roomName } = req.params;
+    const results = await db.none(
+      "DELETE FROM rooms WHERE roomName=($1)",
+      roomName
+    );
+    res.send(`Chatroom ${roomName} was deleted`);
   } catch (error) {
     console.log(error);
   }

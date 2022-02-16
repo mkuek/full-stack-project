@@ -1,4 +1,4 @@
-const socket = io();
+let socket = io();
 
 //userID obtained from rendered dashboard home page
 //! const userID = document.querySelector(".id");
@@ -21,6 +21,8 @@ newChat.addEventListener("submit", (e) => {
 
 let currentRoom = "";
 let roomChange = "";
+let userSocketId = "";
+let userInfoForReset = "";
 
 //input box for sending a message (to those in the the same room)
 const messageSubmitButton = document.querySelector(".message-submit-button");
@@ -31,6 +33,7 @@ messageSubmitButton.addEventListener("click", (e) => {
   const msg = messageInput.value;
   console.log(`line 60 ${msg}`);
   //send message to the server
+  console.log(currentRoom);
   socket.emit("chatMessage", msg, currentRoom);
   //clear the chat input box, and focus on the box after button click
   messageInput.value = "";
@@ -78,6 +81,12 @@ function outputMessage(message, roomID) {
   }
 }
 
+socket.on("userSocketId", (user) => {
+  console.log(user.id);
+  userSocketId = user.id;
+  userInfoForReset = user;
+});
+
 //event listener for chat groups sidebar, joins specific room on button click (also sets current room to determine what is shown in the DOM)
 const chat = document.querySelectorAll(".hidden-roomId");
 chat.forEach((chat) => {
@@ -90,10 +99,30 @@ chat.forEach((chat) => {
       console.log(`room changed to ${roomChange}`);
       socket.emit("joinRoom", { username, roomID, roomChange });
     } else {
-      currentRoom = roomID;
-      roomChange = "true";
-      console.log(`room changed to ${roomChange}`);
-      socket.emit("joinRoom", { username, roomID, roomChange });
+      //!disconnect socket for that room, passing user info to re-connect to new room
+
+      // socket.emit("disconnectSocket", userInfoForReset);
+      if (currentRoom == "") {
+        currentRoom = roomID;
+        roomChange = "true";
+        console.log(`room changed to ${roomChange}`);
+        socket.emit("joinRoom", { username, roomID, roomChange });
+      } else {
+        console.log(
+          `selected a new room section, client line 106 ${userInfoForReset.id}`
+        );
+        //disconnects the user (socket) after clicking a new contact to chat with (passes user info, specifically the socket id)
+        socket.emit("disconnectSocket", userInfoForReset);
+        socket.on("disconnect", function () {
+          console.log("disconnected from socket client side!!!!");
+        });
+        //reconnect to the server (set up a new socket), and report re-connection
+        socket = io("http://localhost:3000/");
+        socket.on("connect", () => {
+          console.log("socket reconnected");
+        });
+        socket.emit("joinRoom", { username, roomID, roomChange });
+      }
     }
   });
 });
