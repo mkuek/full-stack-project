@@ -1,3 +1,4 @@
+
 const express = require("express"),
   app = express(),
   port = 3000;
@@ -85,8 +86,12 @@ io.on("connection", (socket) => {
   });
 });
 
-app.use(express.urlencoded({ extended: false }));
+
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(bodyParser.json());
+const routes = require("./src/routes/router");
+
 
 app.use(express.static("./public/"));
 app.use("/css", express.static(__dirname + "/views/css"));
@@ -99,4 +104,6 @@ app.use("/", router);
 
 server.listen(port, () => {
   console.log(`listening at port ${port}`);
+
+
 });
