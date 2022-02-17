@@ -144,6 +144,7 @@ app.use(bodyParser.json());
 app.use(express.static("./public/"));
 app.use("/css", express.static(__dirname + "/views/css"));
 app.use("/js", express.static(__dirname + "/views/js"));
+app.use("/images", express.static(__dirname + "/views/images"));
 
 app.set("view engine", "ejs");
 app.set("views", "./src/views/");
