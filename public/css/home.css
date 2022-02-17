@@ -154,6 +154,7 @@ body {
 .chat-input {
   margin-top: auto;
   background-color: white;
+  font-size: 1rem;
   border-radius: 0.5em;
   padding: 1em;
   height: 8%;
