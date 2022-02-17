@@ -58,6 +58,15 @@ router.get("/login", async (req, res) => {
   }
 });
 
+router.get("/signup", async (req, res) => {
+  try {
+    //!db call stored as a variable then sent out to render page
+    res.render("signup");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 //check username and password (hard coded for now, this will happen with a database query below)
 const usernameA = "Matthew";
 const passwordA = 1234;
