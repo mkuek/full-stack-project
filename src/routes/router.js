@@ -24,7 +24,7 @@ router.get("/", async (req, res, next) => {
     //!5a.function which queries database to find all rooms which user is a member, and all other users with these rooms
     userMessagesData = buildUserMessagesObject(userID);
     // const results = await db.any("SELECT * FROM rooms ORDER BY roomName");
-    res.render("home", { userID: userID, userMessagesData: userMessagesData });
+    res.render("home");
   } catch (error) {
     next(error);
   }

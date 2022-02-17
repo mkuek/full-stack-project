@@ -47,6 +47,12 @@ body {
   width: 25%;
 }
 
+.successAlert {
+  display: flex;
+  background-color: red;
+  height: 100%;
+}
+
 .code-input {
 }
 
