@@ -63,15 +63,16 @@ socket.on("message", (formattedMessage, roomID) => {
 //outputs message to the chat window
 function outputMessage(message, roomID) {
   const div = document.createElement("div");
-  //assign messages as "own" or "other"
+  //assign messages as "own" or "other" (would want way to select additional colors for more than 2 people in chatroom)
   if (message.username === username) {
     div.classList.add("own-message");
   } else {
     div.classList.add("other-message");
   }
   div.classList.add("message");
-  div.innerHTML = `<p class="message-username">${message.username} <span>${message.time}</span></p>
-            <p class="message-text">${message.text}</p>`;
+  div.innerHTML = `<p class="message-username">${message.username}<button id = "close"></button></p>
+            <p class="message-text">${message.text}</p>
+            <p class = "message-time">${message.time}</p>`;
   console.log(`line 104, room change is: ${roomChange}`);
   //overwrites the chat window contents when a new room (chatroom) is entered
   if (roomChange === "false") {
