@@ -8,8 +8,11 @@
     <link rel="stylesheet" href="./css/home.css" />
   </head>
   <body>
-    <!-- <h1>Welcome <%= userID %></h1> -->
+    <!-- <h1>Welcome </h1> -->
     <div class="container">
+      <div class="successAlert">
+        <div><%= success %></div>
+      </div>
       <div class="left-flexbox">
         <div class="code-input box">
           <!-- <button class="new-chat">New chat</button> -->
@@ -27,10 +30,17 @@
           </div>
           <div class="user-details">
             <div class="name">
-              <strong> My Name <span><%= userID %></span> </strong>
+                <% if (typeof currentUser=='undefined') { %> 
+                  <strong></strong>
+                  <div><a href="/login">Login</a></div>
+                  <div><a href="/register">Register</a></div>
+                <% } else { %>
+                  <strong><%= currentUser.username %></strong>
+                  <div class="email">Email <span></span></div>
+                  <a href="/logout">Logout</a> 
+                  <% } %> 
+       
             </div>
-            <div class="email">Email <span><%= userID %></span></div>
-            <div class="id">UserId <span><%= userID %></span></div>
           </div>
         </div>
         <div class="active-chats box">
@@ -66,8 +76,8 @@
             <img src="" alt="" class="" />
           </div>
           <div class="contact-details">
-            <div class="name">Contact Name: <span><%= userID %></span></div>
-            <div class="email">Contact Email: <span><%= userID %></span></div>
+            <div class="name">Contact Name: <span></span></div>
+            <div class="email">Contact Email: <span></span></div>
           </div>
         </div>
         <div class="sideboard-right-bottom box">
