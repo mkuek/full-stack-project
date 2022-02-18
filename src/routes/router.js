@@ -16,7 +16,7 @@
 const express = require("express"),
   app = express(),
   router = express.Router(),
-  pgp = require("pg-promise")(),
+  // pgp = require("pg-promise")(),
   // db = pgp(config),
 
   buildUserMessagesObject = require("../../modules/userMessages.js");
