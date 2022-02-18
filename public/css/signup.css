@@ -176,6 +176,10 @@ form input {
   font-size: 1rem;
 }
 
+.small-character-image > img {
+  width: 30%;
+}
+
 .sign-in-button {
   display: block;
   font-size: 1rem;

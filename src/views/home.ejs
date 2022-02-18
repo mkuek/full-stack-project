@@ -12,14 +12,25 @@
     <div class="container">
       <div class="left-flexbox">
         <div class="code-input box">
-          <!-- <button class="new-chat">New chat</button> -->
-          <form class="chat-code-input">
-            <label for="">Have an id?</label>
+          <form class="code-input-form">
+            <img src="./images/chat_bubble.png" alt="" />
+            <div>Have an id?</div>
             <input type="text" name="room" />
             <button type="submit">submit</button>
           </form>
         </div>
-
+        <div class="sideboard-right-bottom box">
+          <div class="invite">
+            <form>
+              <div class="copy-code">
+                <div>Copy invite code</div>
+                <button class="invite-button">Invite</button>
+                <div>Share this code to create a new group chat</div>
+                <img src="./images/paper_airplane.png" alt="" />
+              </div>
+            </form>
+          </div>
+        </div>
         <div class="user-info box">
           <!-- these will be different things, including maybe the actual user ID#, for JS to grab -->
           <div class="user-image-container">
@@ -33,19 +44,11 @@
             <div class="id">UserId <span><%= userID %></span></div>
           </div>
         </div>
-        <div class="active-chats box">
-          <div>Contacts</div>
-          <!-- unique to user -->
-          <% userMessagesData.forEach(chatroom => { for (let i = 0; i <
-          chatroom.length - 1; i++) { %>
-          <span class="contact"><%=chatroom[i] %></span>
-          <% } %>
-          <div class="hidden-roomId" id=" <%= chatroom[chatroom.length-1] %> ">
-            roomID
-          </div>
-          <%}) %>
+        <div class="logo-image box">
+          <div>Worm-chat</div>
         </div>
       </div>
+
       <div class="center-flexbox box">
         <div class="chat-window">
           <!-- populates based on conversation selected -->
@@ -57,9 +60,6 @@
         </form>
       </div>
       <div class="right-flexbox">
-        <div class="logo-image box">
-          <div>Worm-chat</div>
-        </div>
         <div class="contact-info box">
           <!-- these will be dirrent things, including maybe the actual user ID#, for JS to grab -->
           <div class="contact-image-container">
@@ -70,24 +70,17 @@
             <div class="email">Contact Email: <span><%= userID %></span></div>
           </div>
         </div>
-        <div class="sideboard-right-bottom box">
-          <div class="invite">
-            <form>
-              <div class="send-email-invite">
-                <div>Send email invite</div>
-                <div>Recipient info</div>
-                labe
-                <input type="text" class="invite-name" />
-                <input type="text" class="invite-email" />
-              </div>
-              <hr />
-              <div class="copy-code">
-                <div>Copy invite code</div>
-                <button class="invite-button">Invite</button>
-                <div>Share this code to create a new group chat</div>
-              </div>
-            </form>
+        <div class="active-chats">
+          <div>Contacts</div>
+          <!-- unique to user -->
+          <% userMessagesData.forEach(chatroom => { for (let i = 0; i <
+          chatroom.length - 1; i++) { %>
+          <span class="contact"><%=chatroom[i] %></span>
+          <% } %>
+          <div class="hidden-roomId" id=" <%= chatroom[chatroom.length-1] %> ">
+            roomID
           </div>
+          <%}) %>
         </div>
       </div>
     </div>
