@@ -3,10 +3,6 @@
   font-size: 1.2rem;
 }
 
-/* h1 {
-  color: red;
-} */
-
 * + * {
   margin-top: 1.5em;
 }
@@ -38,6 +34,7 @@ body {
   background-color: #f3f6fc;
   border-radius: 0.5em;
   padding: 1.2em;
+  border: 1px solid #eceef2;
 }
 
 /* left flexbox */
@@ -94,13 +91,76 @@ body {
   margin-top: 0;
 }
 
-.chat-window {
-  overflow: scroll;
+.message {
+  border-radius: 0.5em;
+  padding: 1em;
+  margin-top: 0.8em;
+  display: inline-block;
+}
+
+.own-message {
+  background-color: #c3cee6;
+  max-width: 75%;
+  float: right;
+}
+
+.other-message {
+  background-color: rgb(237, 177, 177);
+  max-width: 75%;
+}
+
+.message-username {
+  margin: 0;
+}
+
+.message-time {
+  float: right;
+  color: white;
+}
+
+.message-text {
+  margin: 0.8em 0em 0em 0em;
+  line-height: 1.5em;
+}
+
+#close {
+  position: relative;
+  border: none;
+  float: right;
+  top: -16px;
+  padding: 0;
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  margin: 0;
+}
+
+#close:hover {
+  background-color: rgba(130, 130, 130, 0.1);
+}
+
+#close:before,
+#close:after {
+  position: absolute;
+  left: calc(50% - 0.0625em);
+  width: 0.125em;
+  height: 70%;
+  border-radius: 0.125em;
+  transform: rotate(45deg);
+  background: black;
+  content: "";
+}
+
+#close:after {
+  transform: rotate(-45deg);
 }
 
 .chat-input {
   margin-top: auto;
   background-color: white;
+  font-size: 1rem;
   border-radius: 0.5em;
   padding: 1em;
   height: 8%;
@@ -127,12 +187,6 @@ body {
 .message-submit-button:hover {
   background-color: white;
   color: #034dfc;
-}
-
-.message {
-  background-color: #c3cee6;
-  border-radius: 0.5em;
-  padding: 1em;
 }
 
 .right-flexbox {

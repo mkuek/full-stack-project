@@ -1,9 +1,13 @@
-const config = {
-  host: "localhost",
-  port: 5432,
-  database: "chat_app_database",
-  user: "postgres",
-};
+// const config = {
+//   host: "localhost",
+//   port: 5432,
+//   database: "chat_app_database",
+//   user: "postgres",
+// };
+
+//added from michael
+// const path = require("path");
+// const bodyParser = require("body-parser");
 
 //added from michael
 // const path = require("path");
@@ -34,20 +38,29 @@ router.get("/", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     res.redirect("/");
-    //!location where we can post to database
+    //location where we can post to database
   } catch (error) {
     console.log(error);
   }
 });
 
-// router.get("/login", async (req, res) => {
-//   try {
-//     //db call stored as a variable then sent out to render page
-//     res.render("login");
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
+router.get("/login", async (req, res) => {
+  try {
+    //!db call stored as a variable then sent out to render page
+    res.render("login");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.get("/signup", async (req, res) => {
+  try {
+    //!db call stored as a variable then sent out to render page
+    res.render("signup");
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 //check username and password (hard coded for now, this will happen with a database query below)
 const usernameA = "Matthew";
