@@ -2,17 +2,18 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require("passport-local-mongoose");
 
-const UserSchema = new Schema(
+const RoomSchema = new Schema(
   {
-    username: {
+    roomName: {
       type: String,
       required: true,
       unique: true,
     },
+    members: [],
   },
   { timestamps: true }
 );
 
-UserSchema.plugin(passportLocalMongoose);
+RoomSchema.plugin(passportLocalMongoose);
 
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model("Room", RoomSchema);

@@ -148,17 +148,25 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const flash = require("connect-flash");
 const userRoutes = require("./src/routes/users");
-
-//DB MODEL
 const User = require("./models/user");
 
-mongoose.connect("mongodb://localhost:27017/chat-app");
+//DB MODEL
 
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", () => {
-  console.log("Database connected");
+const { MongoClient, ServerApiVersion } = require("mongodb");
+const uri =
+  "mongodb+srv://chatApp:chatApp123@cluster0.t7h9m.mongodb.net/chat-app?retryWrites=true&w=majority";
+mongoose.connect(uri);
+
+mongoose.connection.on("connected", () => {
+  console.log("connected to MongoAtlas");
 });
+// mongoose.connect("mongodb://localhost:27017/chat-app");
+
+// const db = mongoose.connection;
+// db.on("error", console.error.bind(console, "connection error:"));
+// db.once("open", () => {
+//   console.log("Database connected");
+// });
 
 const sessionConfig = {
   secret: "thisshouldbeabettersecret!",

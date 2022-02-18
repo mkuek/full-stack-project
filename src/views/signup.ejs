@@ -5,27 +5,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="./css/signup.css">
+    <link rel="stylesheet" href="./css/signup.css" />
   </head>
   <body>
-    
-      <div class="main-flexbox">
-        <div class="left-flexbox">
-          <div class="image-container">
-            <img src="./images/worm.png" alt="">
-          </div>
+    <div class="main-flexbox">
+      <div class="left-flexbox">
+        <div class="image-container">
+          <img src="./images/worm.png" alt="" />
         </div>
-        <div class="right-flexbox">
-          <div class="greeting">Welcome to chat-worm!</div>
-          <form action="http://localhost:3000/login" method="post">
-            <div>Create Account</div>
-            <input type="text" name="username" placeholder="Username" required />
-            <input type="email" name="email" placeholder="Email" required/>
-            <input type="password" name="password" placeholder="Password" required/>
-            <button class = "sign-in-button" type="submit">Sign up</button>
-          </form>
-        </div>
-
-    <script src="./js/signup.js"></script>
+      </div>
+      <div class="right-flexbox">
+        <div class="greeting">Welcome to chat-worm!</div>
+        <form action="/register" method="POST">
+          <div>Create Account</div>
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required />
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required />
+          <button class="sign-in-button" type="submit">Sign up</button>
+        </form>
+      </div>
+    </div>
   </body>
+  <script src="./js/signup.js"></script>
 </html>

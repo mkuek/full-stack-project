@@ -13,6 +13,7 @@ router.post("/register", async (req, res) => {
     const user = new User({ username });
     const registeredUser = await User.register(user, password);
     console.log(`${registeredUser} success`);
+    res.redirect("/login");
   } catch (e) {
     console.log(e.message);
     res.send(e.message);
