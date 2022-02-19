@@ -53,6 +53,10 @@ messageSubmitButton.addEventListener("click", (e) => {
 const inviteButton = document.querySelector(".invite-button");
 inviteButton.addEventListener("click", () => {
   //!send userID here (go to top of page - requires database query at login) rather than username(as seen below)
+  const inviteCode = uuidV4();
+  const newChat = document.querySelector(".chat-code-input");
+  newChat.value = inviteCode;
+  console.log(inviteCode);
   socket.emit("get-invite-code", username);
 });
 

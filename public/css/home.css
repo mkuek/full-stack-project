@@ -115,6 +115,7 @@ body {
 .copy-code img {
   width: 40%;
   float: right;
+}
 
 .successAlert {
   display: flex;
