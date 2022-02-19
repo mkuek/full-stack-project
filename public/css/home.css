@@ -46,6 +46,7 @@ body {
   width: 25%;
 }
 
+
 .chat-bubble-flex {
   display: flex;
   justify-content: space-between;
@@ -114,7 +115,14 @@ body {
 .copy-code img {
   width: 40%;
   float: right;
+
+.successAlert {
+  display: flex;
+  background-color: red;
+  height: 100%;
 }
+
+
 
 .user-info {
   text-align: center;

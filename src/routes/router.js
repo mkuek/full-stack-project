@@ -16,24 +16,19 @@
 const express = require("express"),
   app = express(),
   router = express.Router(),
-  // pgp = require("pg-promise")(),
-  // db = pgp(config),
-
   buildUserMessagesObject = require("../../modules/userMessages.js");
 
 //render dashboard (homepage) using user specific data
 let userID = "";
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
   try {
     console.log(userID);
     //!4query database for the user id( return object with all info about the user (i.e. {id, username, email}, to render the home page)
     //!should be called something like "userInfo" rather than userID
     //!5a.function which queries database to find all rooms which user is a member, and all other users with these rooms
     userMessagesData = buildUserMessagesObject(userID);
-
     // const results = await db.any("SELECT * FROM rooms ORDER BY roomName");
-
-    res.render("home", { userID: userID, userMessagesData: userMessagesData });
+    res.render("home");
   } catch (error) {
     next(error);
   }
@@ -75,50 +70,50 @@ const passwordB = 1234;
 
 //checks username and password against the database and brings user to unique dashboard home page
 // let userMessagesData = [];
-router.post("/login", async (req, res) => {
-  try {
-    //!1.database query => if username and password are found (go to unique dashboard(home page) - send over username)
-    const username = req.body.username;
-    const password = req.body.password;
-    console.log(username);
-    console.log(password);
-    if (
-      (username == usernameA || username == usernameB) &&
-      (password == passwordA || password == passwordB)
-    ) {
-      //!2.want a unique user id assigned here (i.e. should be an actual userId, not username)
-      userID = username;
-      //!3a.function which queries database to find all rooms which user is a member, and all other users with these rooms
+// router.post("/login", async (req, res) => {
+//   try {
+//     //!1.database query => if username and password are found (go to unique dashboard(home page) - send over username)
+//     const username = req.body.username;
+//     const password = req.body.password;
+//     console.log(username);
+//     console.log(password);
+//     if (
+//       (username == usernameA || username == usernameB) &&
+//       (password == passwordA || password == passwordB)
+//     ) {
+//       //!2.want a unique user id assigned here (i.e. should be an actual userId, not username)
+//       userID = username;
+//       //!3a.function which queries database to find all rooms which user is a member, and all other users with these rooms
 
-      //        //post to database
-      //     console.log(req.body);
-      //     const { roomName, userID, created = "now()" } = req.body;
-      //     const results = await db.none(
-      //       "INSERT INTO rooms (userID, created,roomName) VALUES ($1, $2, $3)",
-      //       [userID, created, roomName]
-      //     );
-      //     res.send(`Chatroom ${roomName} was created`);
+//       //        //post to database
+//       //     console.log(req.body);
+//       //     const { roomName, userID, created = "now()" } = req.body;
+//       //     const results = await db.none(
+//       //       "INSERT INTO rooms (userID, created,roomName) VALUES ($1, $2, $3)",
+//       //       [userID, created, roomName]
+//       //     );
+//       //     res.send(`Chatroom ${roomName} was created`);
 
-      res.redirect("/");
-    }
-  } catch (error) {
-    console.log(`sorry password not found, ${error}`);
-  }
-});
+//       res.redirect("/");
+//     }
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 //DELETE ROOM
-router.post("/:roomName", async (req, res, next) => {
-  try {
-    const { roomName } = req.params;
-    const results = await db.none(
-      "DELETE FROM rooms WHERE roomName=($1)",
-      roomName
-    );
-    res.send(`Chatroom ${roomName} was deleted`);
-  } catch (error) {
-    next(error);
-  }
-});
+// router.post("/:roomName", async (req, res, next) => {
+//   try {
+//     const { roomName } = req.params;
+//     const results = await db.none(
+//       "DELETE FROM rooms WHERE roomName=($1)",
+//       roomName
+//     );
+//     res.send(`Chatroom ${roomName} was deleted`);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 //NOT COMPLETE OLD CODE
 app.post("/user", (req, res) => {
