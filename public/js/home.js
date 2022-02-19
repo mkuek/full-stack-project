@@ -1,5 +1,14 @@
 let socket = io();
 
+const chatBubbleFlex = document.querySelector(".chat-bubble-flex");
+
+chatBubbleFlex.addEventListener("click", (e) => {
+  const codeSubmitDropdown = document.querySelector(".code-submit-dropdown");
+  // codeSubmitDropdown.setAttribute("id", "visible");
+  // codeSubmitDropdown.id = "visible";
+  console.log("click");
+});
+
 //userID obtained from rendered dashboard home page
 //! const userID = document.querySelector(".id");
 const username = document.querySelector(".name > span").innerHTML;

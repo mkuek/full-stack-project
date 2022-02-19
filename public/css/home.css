@@ -46,17 +46,26 @@ body {
   width: 25%;
 }
 
-.code-input {
-  font-size: 1.4rem;
-  font-weight: bold;
-}
-
 .chat-bubble-flex {
   display: flex;
   justify-content: space-between;
   align-items: center;
   border: 1px solid red;
 }
+
+.chat-bubble-flex > div {
+  margin-top: 0;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.code-submit-dropdown {
+  display: hidden;
+}
+
+/* #visible {
+  display: visible;
+} */
 
 .code-input-form img {
   width: 25%;
