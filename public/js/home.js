@@ -4,7 +4,7 @@ const chatBubbleFlex = document.querySelector(".chat-bubble-flex");
 
 chatBubbleFlex.addEventListener("click", (e) => {
   const codeSubmitDropdown = document.querySelector(".code-submit-dropdown");
-  // codeSubmitDropdown.setAttribute("id", "visible");
+  codeSubmitDropdown.setAttribute("id", "visible");
   // codeSubmitDropdown.id = "visible";
   console.log("click");
 });
