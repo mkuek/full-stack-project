@@ -8,24 +8,33 @@
     <link rel="stylesheet" href="./css/signup.css" />
   </head>
   <body>
-    <div class="main-flexbox">
-      <div class="left-flexbox">
-        <div class="image-container">
-          <img src="./images/worm.png" alt="" />
+      <div class="main-flexbox">
+        <div class="left-flexbox">
+          <div class="image-container">
+            <img class="image1" src="./images/1.jpg" alt="">
+            <img class="image2" src="./images/2.jpg" alt="">
+            <img class="image3" src="./images/3.jpg" alt="">
+            <img class="image4" src="./images/4.jpg" alt="">
+            <img class="image5" src="./images/5.jpg" alt="">
+            <img class="image6" src="./images/6.jpg" alt="">
+            <img class="image7" src="./images/7.jpg" alt="">
+            <img class="image8" src="./images/8.jpg" alt="">
+            <img class="image9" src="./images/9.jpg" alt="">
+          </div>
         </div>
-      </div>
-      <div class="right-flexbox">
-        <div class="greeting">Welcome to chat-worm!</div>
-        <form action="/register" method="POST">
-          <div>Create Account</div>
-          <label for="username">Username</label>
-          <input type="text" id="username" name="username" required />
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" required />
-          <button class="sign-in-button" type="submit">Sign up</button>
-        </form>
-      </div>
-    </div>
+        <div class="right-flexbox">
+          <div class="greeting">Welcome to chat-worm!</div>
+          <form action="http://localhost:3000/login" method="post">
+            <div>Create Account</div>
+            <input type="text" name="username" placeholder="Username" required />
+            <input type="email" name="email" placeholder="Email" required/>
+            <input type="password" name="password" placeholder="Password" required/>
+            <div>Select character<span class="small-character-image"></span></div>
+            <button class = "sign-in-button" type="submit">Sign up</button>
+          </form>
+        </div>
+
+    <script src="./js/signup.js"></script>
   </body>
   <script src="./js/signup.js"></script>
 </html>
