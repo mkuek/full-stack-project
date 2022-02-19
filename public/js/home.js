@@ -22,7 +22,7 @@ newChat.addEventListener("submit", (e) => {
   const roomID = inputBox.value;
   console.log(`line 32: ${roomID}`);
   //join room (w/username)
-  socket.emit("joinRoom", { username, roomID });
+  socket.emit("joinRoom", { username, roomID, });
   //clear the chat input box, and focus on the box after button click
   inputBox.value = "";
   inputBox.focus();
