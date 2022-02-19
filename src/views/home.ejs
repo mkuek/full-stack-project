@@ -28,24 +28,26 @@
         </div>
         <div class="user-info box">
           <!-- these will be different things, including maybe the actual user ID#, for JS to grab -->
-          <div class="user-image-container">
-            <img src="" alt="" class="" />
-          </div>
           <div class="user-details">
             <div class="name">
-                <% if (typeof currentUser=='undefined') { %> 
-                  <strong></strong>
-                  <div><a href="/login">Login</a></div>
-                  <div><a href="/register">Register</a></div>
-                <% } else { %>
-                  <strong><%= currentUser.username %></strong>
-                  <div class="email">Email <span></span></div>
-                  <a href="/logout">Logout</a> 
-                  <% } %> 
-       
+              <% if (typeof currentUser=='undefined') { %>
+              <div class="user-image-container">
+                <img src="./images/1.jpg" alt="" class="" />
+              </div>
+              <div><a href="/login">Login</a></div>
+              <div><a href="/register">Register</a></div>
+              <% } else { %>
+              <div class="user-image-container">
+                <img src="<%= currentUser.pic %> " alt="" class="" />
+              </div>
+              <strong><%= currentUser.username %></strong>
+              <div class="email"><%= currentUser.email %> <span></span></div>
+              <a href="/logout">Logout</a>
+              <% } %>
             </div>
           </div>
         </div>
+
         <div class="sideboard-right-bottom box">
           <div class="invite">
             <form>
@@ -89,14 +91,16 @@
         <div class="active-chats">
           <div>Contacts</div>
           <!-- unique to user -->
-          <% userMessagesData.forEach(chatroom => { for (let i = 0; i <
-          chatroom.length - 1; i++) { %>
-          <span class="contact"><%=chatroom[i] %></span>
+             <!-- unique to user -->
+          <% for ( let userMessages of userMessagesData) {%>
+            <% for (let i=0;i<1;i++) {%> 
+            <li><% if(userMessages.users[i].username==currentUser.username){ %>
+              <%= userMessages.users[i+1].username %>
+              <% } else { %>
+                <%= userMessages.users[i].username %>
+              <% } %>
+            <% } %>
           <% } %>
-          <div class="hidden-roomId" id=" <%= chatroom[chatroom.length-1] %> ">
-            roomID
-          </div>
-          <%}) %>
         </div>
       </div>
     </div>

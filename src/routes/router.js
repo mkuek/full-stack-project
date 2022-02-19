@@ -17,20 +17,43 @@ const express = require("express"),
   app = express(),
   router = express.Router(),
   buildUserMessagesObject = require("../../modules/userMessages.js");
-
+const passport = require("passport");
+const User = require("../../models/user");
+const Rooms = require("../../models/room");
+const axios = require("axios");
+async function getConvo() {
+  try {
+    const resp = await axios.get(
+      "http://localhost:3000/chats/620fd991022538b6555934e3"
+    );
+    return resp.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+Rooms.find()
+  .populate("users")
+  .then((p) => console.log(p));
 //render dashboard (homepage) using user specific data
 let userID = "";
 router.get("/", async (req, res, next) => {
   try {
-    console.log(userID);
+    const username = req.user;
+    // const data = await getConvo();
+    // console.log(data);
+    const userInfo = await User.findById(username._id);
+    // console.log(userInfo._id);
+    userMessagesData = await getConvo();
+
+    console.log("userID: " + userID);
     //!4query database for the user id( return object with all info about the user (i.e. {id, username, email}, to render the home page)
     //!should be called something like "userInfo" rather than userID
     //!5a.function which queries database to find all rooms which user is a member, and all other users with these rooms
-    userMessagesData = buildUserMessagesObject(userID);
     // const results = await db.any("SELECT * FROM rooms ORDER BY roomName");
-    res.render("home");
+    res.render("home", { userID, userMessagesData, userInfo });
   } catch (error) {
-    next(error);
+    console.log(error);
+    res.redirect("/login");
   }
 });
 
@@ -44,14 +67,14 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.get("/login", async (req, res) => {
-  try {
-    //!db call stored as a variable then sent out to render page
-    res.render("login");
-  } catch (error) {
-    console.log(error);
-  }
-});
+// router.get("/login", async (req, res) => {
+//   try {
+//     //!db call stored as a variable then sent out to render page
+//     res.render("login");
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
 
 router.get("/signup", async (req, res) => {
   try {
