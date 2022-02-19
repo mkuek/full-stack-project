@@ -1,15 +1,16 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require("passport-local-mongoose");
+const { v4: uuidV4 } = require("uuid");
 
 const RoomSchema = new Schema(
   {
     roomName: {
       type: String,
-      required: true,
-      unique: true,
+      default: uuidV4(),
     },
-    members: [],
+    lastMessage: { type: Schema.Types.ObjectId, ref: "Chat" },
+    users: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }
 );

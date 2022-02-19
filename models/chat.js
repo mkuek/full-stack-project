@@ -4,10 +4,10 @@ const passportLocalMongoose = require("passport-local-mongoose");
 
 const chatSchema = new Schema(
   {
-    msgFrom: { type: String, default: "", required: true },
-    msgTo: { type: String, default: "", required: true },
-    msg: { type: String, default: "", required: true },
-    room: { type: String, default: "", required: true },
+    sender: { type: Schema.Types.ObjectId, ref: "User" },
+    msg: { type: String, required: true },
+    room: { type: Schema.Types.ObjectId, ref: "Room" },
+    users: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }
 );

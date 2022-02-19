@@ -148,6 +148,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const flash = require("connect-flash");
 const userRoutes = require("./src/routes/users");
+const roomRoutes = require("./src/routes/rooms");
 const User = require("./models/user");
 
 //DB MODEL
@@ -197,6 +198,7 @@ app.use((req, res, next) => {
 
 app.use("/", router);
 app.use("/", userRoutes);
+app.use("/", roomRoutes);
 
 server.listen(port, () => {
   console.log(`listening at port ${port}`);

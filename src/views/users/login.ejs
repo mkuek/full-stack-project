@@ -14,49 +14,61 @@
     <link rel="stylesheet" href="./css/login.css" />
   </head>
   <body>
-    <div class="main-flexbox">
-      <div class="left-flexbox">
-        <div class="image-container">
-          <img src="./images/worm.png" alt="" />
+    <div class="container h-100">
+      <div class="row align-items-center h-100 shadow p-3 mb-5 bg-body rounded">
+        <div class="col-6">
+          <img class="img-fluid" src="./images/worm.png" alt="" />
         </div>
-      </div>
-      <div class="right-flexbox">
-        <div class="greeting">Welcome to chat-worm!</div>
-        <% if(success && success.length) { %>
-        <div class="alert alert-success alert-dismissible fade show">
-          <%= success %>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-          ></button>
-        </div>
-        <% } else if (error && error.length){ %>
-        <div class="alert alert-danger alert-dismissible fade show">
-          <%= error %>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-          ></button>
-        </div>
-        <% } %>
-        <form action="/login" method="POST">
-          <div>
-            <h5>
-              <label for="username">Username</label>
-              <input type="text" id="username" name="username" required />
-            </h5>
-            <h5>
-              <label for="password">Password</label>
-              <input type="password" id="password" name="password" required />
-            </h5>
+        <div class="col-5 offset-1">
+          <div class="greeting mb-3">Welcome to chat-worm!</div>
+          <% if(success && success.length) { %>
+          <div class="alert alert-success alert-dismissible fade show">
+            <%= success %>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
           </div>
-          <button class="sign-in-button" type="submit">Login</button>
-        </form>
-        <a href="/register">Create an account</a>
+          <% } else if (error && error.length){ %>
+          <div class="alert alert-danger alert-dismissible fade show">
+            <%= error %>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
+          </div>
+          <% } %>
+          <form action="/login" method="POST">
+            <div>
+              <h5>
+                <label for="username">Username</label>
+                <input
+                  class="mt-0"
+                  type="text"
+                  id="username"
+                  name="username"
+                  required
+                />
+              </h5>
+              <h5>
+                <label for="password">Password</label>
+                <input
+                  class="mt-0"
+                  type="password"
+                  id="password"
+                  name="password"
+                  required
+                />
+              </h5>
+            </div>
+            <button class="sign-in-button mb-3" type="submit">Login</button>
+          </form>
+          <a href="/register">Create an account</a>
+        </div>
       </div>
     </div>
   </body>
