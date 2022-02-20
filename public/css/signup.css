@@ -176,8 +176,15 @@ form input {
   font-size: 1rem;
 }
 
+/* would like to have an empty box for selected character, difficult to size */
+/* .small-character-image {
+  border: black dotted 2px;
+  width: auto;
+  height: 2.8em;
+} */
+
 .small-character-image > img {
-  width: 30%;
+  width: 35%;
 }
 
 .sign-in-button {
