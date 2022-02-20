@@ -10,9 +10,7 @@
   <body>
     <!-- <h1>Welcome </h1> -->
     <div class="container">
-      <div class="successAlert">
-        <div><%= success %></div>
-      </div>
+      <!-- <div class="loginSuccessful"><%= success %></div> -->
       <div class="left-flexbox">
         <div class="code-input box">
           <form class="code-input-form">
@@ -32,7 +30,6 @@
           </form>
         </div>
         <div class="user-info box">
-          <!-- these will be different things, including maybe the actual user ID#, for JS to grab -->
           <div class="user-details">
             <div class="name">
               <% if (typeof currentUser=='undefined') { %>
@@ -45,9 +42,16 @@
               <div class="user-image-container">
                 <img src="<%= currentUser.pic %> " alt="" class="" />
               </div>
-              <strong><%= currentUser.username %></strong>
-              <div class="email"><%= currentUser.email %> <span></span></div>
-              <a href="/logout">Logout</a>
+              <div class="user-name-flex">
+                <img class="user-icon" src="./images/person_icon.png" alt="" />
+                <div><%= currentUser.username %></div>
+              </div>
+              <div class="user-email-flex">
+                <img class="envelope" src="./images/envelope.png" alt="" />
+                <div class="email"><%= currentUser.email %></div>
+              </div>
+              <div class="logout"><a href="/logout">Logout</a></div>
+
               <% } %>
             </div>
           </div>
