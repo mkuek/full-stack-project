@@ -81,6 +81,14 @@ router.get("/signup", async (req, res) => {
   }
 });
 
+router.get("/currentuser", async (req, res, next) => {
+  try {
+    const username = req.user;
+    res.json(username);
+  } catch (error) {
+    console.log(error);
+  }
+});
 //check username and password (hard coded for now, this will happen with a database query below)
 const usernameA = "Matthew";
 const passwordA = 1234;

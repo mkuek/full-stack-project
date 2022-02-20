@@ -16,7 +16,10 @@ app.use(express.urlencoded({ extended: true }));
 
 router.post("/rooms/:sender", async (req, res) => {
   const id = req.params.sender;
+  roomName = req.body.roomName;
+  console.log("roomname!!!!!!" + roomName);
   const newRoom = new Room({
+    roomName,
     users: [id, id],
   });
   try {

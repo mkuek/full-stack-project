@@ -100,10 +100,10 @@
           <% for ( let userMessages of userMessagesData) {%> <% for (let
           i=0;i<1;i++) {%> <%
           if(userMessages.users[i].username==currentUser.username){ %>
-          <li><%= userMessages.users[i+1].username %></li>
+          <li class="hidden-roomId"><%= userMessages.users[i+1].username %></li>
           <% } else if( userMessages.users[i+1].username ==
           currentUser.username) {%>
-          <li><%= userMessages.users[i].username %></li>
+          <li class="hidden-roomId"><%= userMessages.users[i].username %></li>
           <% } else { %> <% i++ %> <% } %> <% } %> <% } %>
         </div>
       </div>
