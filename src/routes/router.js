@@ -16,40 +16,26 @@
 const express = require("express"),
   app = express(),
   router = express.Router(),
+  // pgp = require("pg-promise")(),
+  // db = pgp(config),
+
   buildUserMessagesObject = require("../../modules/userMessages.js");
-const passport = require("passport");
-const User = require("../../models/user");
-const Rooms = require("../../models/room");
-const axios = require("axios");
-async function getConvo(userNum) {
-  try {
-    const resp = await axios.get(`http://localhost:3000/chats/${userNum}`);
-    return resp.data;
-  } catch (error) {
-    console.log(error);
-  }
-}
 
 //render dashboard (homepage) using user specific data
 let userID = "";
-router.get("/", async (req, res, next) => {
+router.get("/", async (req, res) => {
   try {
-    const username = req.user;
-    // const data = await getConvo();
-    // console.log(data);
-    const userInfo = await User.findById(username._id);
-    // console.log(userInfo._id);
-    userMessagesData = await getConvo(username._id);
-
-    console.log("userID: " + userID);
+    console.log(userID);
     //!4query database for the user id( return object with all info about the user (i.e. {id, username, email}, to render the home page)
     //!should be called something like "userInfo" rather than userID
     //!5a.function which queries database to find all rooms which user is a member, and all other users with these rooms
+    userMessagesData = buildUserMessagesObject(userID);
+
     // const results = await db.any("SELECT * FROM rooms ORDER BY roomName");
-    res.render("home", { userID, userMessagesData, userInfo });
+
+    res.render("home", { userID: userID, userMessagesData: userMessagesData });
   } catch (error) {
-    console.log(error);
-    res.redirect("/login");
+    next(error);
   }
 });
 
@@ -63,14 +49,14 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-// router.get("/login", async (req, res) => {
-//   try {
-//     //!db call stored as a variable then sent out to render page
-//     res.render("login");
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
+router.get("/login", async (req, res) => {
+  try {
+    //!db call stored as a variable then sent out to render page
+    res.render("login");
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 router.get("/signup", async (req, res) => {
   try {
@@ -81,14 +67,6 @@ router.get("/signup", async (req, res) => {
   }
 });
 
-router.get("/currentuser", async (req, res, next) => {
-  try {
-    const username = req.user;
-    res.json(username);
-  } catch (error) {
-    console.log(error);
-  }
-});
 //check username and password (hard coded for now, this will happen with a database query below)
 const usernameA = "Matthew";
 const passwordA = 1234;
@@ -97,50 +75,50 @@ const passwordB = 1234;
 
 //checks username and password against the database and brings user to unique dashboard home page
 // let userMessagesData = [];
-// router.post("/login", async (req, res) => {
-//   try {
-//     //!1.database query => if username and password are found (go to unique dashboard(home page) - send over username)
-//     const username = req.body.username;
-//     const password = req.body.password;
-//     console.log(username);
-//     console.log(password);
-//     if (
-//       (username == usernameA || username == usernameB) &&
-//       (password == passwordA || password == passwordB)
-//     ) {
-//       //!2.want a unique user id assigned here (i.e. should be an actual userId, not username)
-//       userID = username;
-//       //!3a.function which queries database to find all rooms which user is a member, and all other users with these rooms
+router.post("/login", async (req, res) => {
+  try {
+    //!1.database query => if username and password are found (go to unique dashboard(home page) - send over username)
+    const username = req.body.username;
+    const password = req.body.password;
+    console.log(username);
+    console.log(password);
+    if (
+      (username == usernameA || username == usernameB) &&
+      (password == passwordA || password == passwordB)
+    ) {
+      //!2.want a unique user id assigned here (i.e. should be an actual userId, not username)
+      userID = username;
+      //!3a.function which queries database to find all rooms which user is a member, and all other users with these rooms
 
-//       //        //post to database
-//       //     console.log(req.body);
-//       //     const { roomName, userID, created = "now()" } = req.body;
-//       //     const results = await db.none(
-//       //       "INSERT INTO rooms (userID, created,roomName) VALUES ($1, $2, $3)",
-//       //       [userID, created, roomName]
-//       //     );
-//       //     res.send(`Chatroom ${roomName} was created`);
+      //        //post to database
+      //     console.log(req.body);
+      //     const { roomName, userID, created = "now()" } = req.body;
+      //     const results = await db.none(
+      //       "INSERT INTO rooms (userID, created,roomName) VALUES ($1, $2, $3)",
+      //       [userID, created, roomName]
+      //     );
+      //     res.send(`Chatroom ${roomName} was created`);
 
-//       res.redirect("/");
-//     }
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+      res.redirect("/");
+    }
+  } catch (error) {
+    console.log(`sorry password not found, ${error}`);
+  }
+});
 
 //DELETE ROOM
-// router.post("/:roomName", async (req, res, next) => {
-//   try {
-//     const { roomName } = req.params;
-//     const results = await db.none(
-//       "DELETE FROM rooms WHERE roomName=($1)",
-//       roomName
-//     );
-//     res.send(`Chatroom ${roomName} was deleted`);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+router.post("/:roomName", async (req, res, next) => {
+  try {
+    const { roomName } = req.params;
+    const results = await db.none(
+      "DELETE FROM rooms WHERE roomName=($1)",
+      roomName
+    );
+    res.send(`Chatroom ${roomName} was deleted`);
+  } catch (error) {
+    next(error);
+  }
+});
 
 //NOT COMPLETE OLD CODE
 app.post("/user", (req, res) => {

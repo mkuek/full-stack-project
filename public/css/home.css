@@ -116,12 +116,6 @@ body {
   float: right;
 }
 
-.successAlert {
-  display: flex;
-  background-color: red;
-  height: 100%;
-}
-
 .user-info {
   text-align: center;
 }
