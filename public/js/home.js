@@ -1,14 +1,5 @@
 let socket = io();
 
-const chatBubbleFlex = document.querySelector(".chat-bubble-flex");
-
-chatBubbleFlex.addEventListener("click", (e) => {
-  const codeSubmitDropdown = document.querySelector(".code-submit-dropdown");
-  codeSubmitDropdown.setAttribute("id", "visible");
-  // codeSubmitDropdown.id = "visible";
-  console.log("click");
-});
-
 //userID obtained from rendered dashboard home page
 //! const userID = document.querySelector(".id");
 const username = document.querySelector(".name > span").innerHTML;
@@ -22,7 +13,7 @@ newChat.addEventListener("submit", (e) => {
   const roomID = inputBox.value;
   console.log(`line 32: ${roomID}`);
   //join room (w/username)
-  socket.emit("joinRoom", { username, roomID });
+  socket.emit("joinRoom", { username, roomID, });
   //clear the chat input box, and focus on the box after button click
   inputBox.value = "";
   inputBox.focus();

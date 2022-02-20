@@ -21,19 +21,15 @@ const passport = require("passport");
 const User = require("../../models/user");
 const Rooms = require("../../models/room");
 const axios = require("axios");
-async function getConvo() {
+async function getConvo(userNum) {
   try {
-    const resp = await axios.get(
-      "http://localhost:3000/chats/620fd991022538b6555934e3"
-    );
+    const resp = await axios.get(`http://localhost:3000/chats/${userNum}`);
     return resp.data;
   } catch (error) {
     console.log(error);
   }
 }
-Rooms.find()
-  .populate("users")
-  .then((p) => console.log(p));
+
 //render dashboard (homepage) using user specific data
 let userID = "";
 router.get("/", async (req, res, next) => {
@@ -43,7 +39,7 @@ router.get("/", async (req, res, next) => {
     // console.log(data);
     const userInfo = await User.findById(username._id);
     // console.log(userInfo._id);
-    userMessagesData = await getConvo();
+    userMessagesData = await getConvo(username._id);
 
     console.log("userID: " + userID);
     //!4query database for the user id( return object with all info about the user (i.e. {id, username, email}, to render the home page)
@@ -85,6 +81,14 @@ router.get("/signup", async (req, res) => {
   }
 });
 
+router.get("/currentuser", async (req, res, next) => {
+  try {
+    const username = req.user;
+    res.json(username);
+  } catch (error) {
+    console.log(error);
+  }
+});
 //check username and password (hard coded for now, this will happen with a database query below)
 const usernameA = "Matthew";
 const passwordA = 1234;

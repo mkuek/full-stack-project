@@ -21,7 +21,12 @@
               <div>Start new chat</div>
             </div>
             <div class="code-submit-dropdown">
-              <input class="chat-code-input" type="text" name="room" />
+              <input
+                class="chat-code-input"
+                value="0"
+                type="text"
+                name="room"
+              />
               <button type="submit">submit</button>
             </div>
           </form>
@@ -91,16 +96,15 @@
         <div class="active-chats">
           <div>Contacts</div>
           <!-- unique to user -->
-             <!-- unique to user -->
-          <% for ( let userMessages of userMessagesData) {%>
-            <% for (let i=0;i<1;i++) {%> 
-            <li><% if(userMessages.users[i].username==currentUser.username){ %>
-              <%= userMessages.users[i+1].username %>
-              <% } else { %>
-                <%= userMessages.users[i].username %>
-              <% } %>
-            <% } %>
-          <% } %>
+          <!-- unique to user -->
+          <% for ( let userMessages of userMessagesData) {%> <% for (let
+          i=0;i<1;i++) {%> <%
+          if(userMessages.users[i].username==currentUser.username){ %>
+          <li class="hidden-roomId"><%= userMessages.users[i+1].username %></li>
+          <% } else if( userMessages.users[i+1].username ==
+          currentUser.username) {%>
+          <li class="hidden-roomId"><%= userMessages.users[i].username %></li>
+          <% } else { %> <% i++ %> <% } %> <% } %> <% } %>
         </div>
       </div>
     </div>
