@@ -22,7 +22,7 @@ router.post("/register", async (req, res) => {
 });
 
 router.get("/login", (req, res) => {
-  res.render("users/login");
+  res.render("login");
 });
 
 router.post(
