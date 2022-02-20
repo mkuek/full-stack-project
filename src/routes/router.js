@@ -1,25 +1,13 @@
-// const config = {
-//   host: "localhost",
-//   port: 5432,
-//   database: "chat_app_database",
-//   user: "postgres",
-// };
-
-//added from michael
-// const path = require("path");
-// const bodyParser = require("body-parser");
-
-//added from michael
-// const path = require("path");
-// const bodyParser = require("body-parser");
-
 const express = require("express"),
   app = express(),
   router = express.Router(),
-  // pgp = require("pg-promise")(),
-  // db = pgp(config),
+  buildUserMessagesObject = require("../../modules/userMessages.js"),
+  mongoose = require("mongoose"),
+  User = require("../../models/users");
 
-  buildUserMessagesObject = require("../../modules/userMessages.js");
+mongoose.connect(
+  "mongodb+srv://mvolny:47Bt988@chatappcluster.ia7qa.mongodb.net/chat_app_db?retryWrites=true&w=majority"
+);
 
 //render dashboard (homepage) using user specific data
 let userID = "";

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
-const User = new Schema({
+const UserSchema = new Schema({
   user: ObjectId,
   username: {
     type: String,
@@ -23,6 +23,8 @@ const User = new Schema({
   },
 });
 
-UserSchema.plugin(passportLocalMongoose);
+// UserSchema.plugin(passportLocalMongoose);
 
-module.exports = mongoose.model("User", UserSchema);
+const User = mongoose.model("User", UserSchema);
+
+module.exports = User;
