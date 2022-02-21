@@ -42,7 +42,6 @@ router.get("/", async (req, res, next) => {
     const userInfo = await User.findById(username._id);
     // console.log(userInfo._id);
     const { conversations, rooms } = await getConvo(username._id);
-    console.log(rooms[0].roomName);
     //!4query database for the user id( return object with all info about the user (i.e. {id, username, email}, to render the home page)
     //!should be called something like "userInfo" rather than userID
     //!5a.function which queries database to find all rooms which user is a member, and all other users with these rooms

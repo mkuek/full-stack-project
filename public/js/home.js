@@ -135,6 +135,7 @@
 const socket = io("http://localhost:3000/");
 const messages = document.querySelector(".chat-window");
 const msgForm = document.querySelector(".chat-input");
+const currentUser = document.querySelector(".user-details").id;
 
 socket.on("message", (data) => {
   console.log(data);
@@ -148,10 +149,12 @@ socket.on("output-messages", (data) => {
     });
   }
 });
-
+socket.on("disconnected", (data) => {
+  appendMessages(data);
+});
 msgForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  socket.emit("chatmessage", msgForm.msg.value);
+  socket.emit("chatmessage", msgForm.msg.value, currentUser);
   console.log("submit from msgfrom", msgForm.msg.value);
   msgForm.msg.value = "";
 });
@@ -163,7 +166,6 @@ function appendMessages(message) {
 const inviteButton = document.querySelector(".invite-button");
 inviteButton.addEventListener("click", (e) => {
   e.preventDefault();
-  const currentUser = document.querySelector(".user-details").id;
   socket.emit("get-invite-code", currentUser);
 });
 
@@ -192,12 +194,16 @@ socket.on("hello", (data) => {
 socket.on("hello-contact", (data) => {
   messages.innerHTML = "joined room with " + data;
 });
+socket.on("goodbye", (data) => {
+  messages.innerHTML = `User ${data} has left room`;
+});
 
 const contactBoxes = document.querySelectorAll(".hidden-roomId");
 for (let contactBox of contactBoxes) {
   contactBox.addEventListener("click", (e) => {
     const chatID = e.target.id;
     const targetUser = document.getElementById(chatID).innerHTML;
+    socket.emit("leave-room", chatID, targetUser);
     socket.emit("joinRoom-contact", chatID, targetUser);
   });
 }

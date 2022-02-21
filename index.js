@@ -172,6 +172,8 @@ const userRoutes = require("./src/routes/users");
 const roomRoutes = require("./src/routes/rooms");
 const User = require("./models/user");
 const Msg = require("./models/messages");
+const Chat = require("./models/chat");
+const Room = require("./models/room");
 
 //DB MODEL
 const { MongoClient, ServerApiVersion } = require("mongodb");
@@ -229,16 +231,27 @@ app.use((req, res, next) => {
 });
 
 io.on("connection", (socket) => {
-  Msg.find().then((result) => {
-    socket.emit("output-messages", result);
-  });
+  async function getMsg() {
+    let results = await Room.where("msg").exists(true);
+    try {
+      i = 0;
+      for (result of results) {
+        console.log(result.msg);
+      }
+      socket.emit("output-messages", results);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  getMsg();
   console.log("a user connected");
   socket.emit("message", "Hello world");
   socket.on("disconnect", () => {
+    socket.emit("disconnected", "User has left room");
     console.log("user disconnected");
   });
-  socket.on("chatmessage", (msg) => {
-    const message = new Msg({ msg });
+  socket.on("chatmessage", (msg, currentUser) => {
+    const message = new Room({ msg, users: [currentUser] });
     message.save().then(() => {
       io.emit("message", msg);
     });
@@ -278,15 +291,18 @@ io.on("connection", (socket) => {
     //Send this event to everyone in the room.
     io.sockets.in(roomID).emit("hello", "hello");
   });
-  console.log(socket.id);
 
   socket.on("joinRoom-contact", (roomID, targetUser) => {
     socket.join(roomID);
-    console.log("socketID IS: " + socket.roomID);
     //Send this event to everyone in the room.
     io.sockets.in(roomID).emit("hello-contact", targetUser);
   });
-  console.log(socket.id);
+
+  socket.on("leave-room", (chatID, targetUser) => {
+    socket.leave(chatID);
+    console.log(chatID);
+    io.sockets.in(chatID).emit("goodbye", targetUser);
+  });
 });
 
 app.use("/", router);
