@@ -154,8 +154,14 @@ socket.on("disconnected", (data) => {
 });
 msgForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  socket.emit("chatmessage", msgForm.msg.value, currentUser);
-  console.log("submit from msgfrom", msgForm.msg.value);
+
+  const message = {
+    sender: currentUser,
+    msg: msgForm.msg.value,
+    room: msgForm.id,
+  };
+  socket.emit("chatmessage", message);
+  console.log("submit from msgform", msgForm.msg.value);
   msgForm.msg.value = "";
 });
 
@@ -203,6 +209,7 @@ for (let contactBox of contactBoxes) {
   contactBox.addEventListener("click", (e) => {
     const chatID = e.target.id;
     const targetUser = document.getElementById(chatID).innerHTML;
+    msgForm.id = chatID;
     socket.emit("leave-room", chatID, targetUser);
     socket.emit("joinRoom-contact", chatID, targetUser);
   });

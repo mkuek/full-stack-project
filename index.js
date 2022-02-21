@@ -178,6 +178,8 @@ const Room = require("./models/room");
 //DB MODEL
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const res = require("express/lib/response");
+const { update } = require("./models/chat");
+const chat = require("./models/chat");
 const uri =
   "mongodb+srv://chatApp:chatApp123@cluster0.t7h9m.mongodb.net/chat-app?retryWrites=true&w=majority";
 mongoose.connect(uri);
@@ -231,30 +233,35 @@ app.use((req, res, next) => {
 });
 
 io.on("connection", (socket) => {
-  async function getMsg() {
-    let results = await Room.where("msg").exists(true);
-    try {
-      i = 0;
-      for (result of results) {
-        console.log(result.msg);
-      }
-      socket.emit("output-messages", results);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  getMsg();
   console.log("a user connected");
   socket.emit("message", "Hello world");
   socket.on("disconnect", () => {
     socket.emit("disconnected", "User has left room");
     console.log("user disconnected");
   });
-  socket.on("chatmessage", (msg, currentUser) => {
-    const message = new Room({ msg, users: [currentUser] });
-    message.save().then(() => {
-      io.emit("message", msg);
-    });
+  socket.on("chatmessage", (messageArray) => {
+    async function findRoomID() {
+      const roomID = await Room.find(
+        { roomName: messageArray.room },
+        "_id"
+      ).exec();
+      messageArray.room = roomID._id;
+      console.log(roomID);
+      try {
+        const updateMessage = new Chat(messageArray);
+        await updateMessage.save();
+      } catch (error) {
+        console.log(error);
+      }
+
+      // return updateMessage;
+    }
+    findRoomID();
+
+    // const message = new Chat(messageArray);
+    // message.save().then(() => {
+    io.emit("message", messageArray.msg);
+    // });
   });
   socket.on("get-invite-code", (currentUser) => {
     const inviteCode = uuidV4();
