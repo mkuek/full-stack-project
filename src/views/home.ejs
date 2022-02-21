@@ -21,19 +21,14 @@
               <div>Start new chat</div>
             </div>
             <div class="code-submit-dropdown">
-              <input
-                class="chat-code-input"
-                value="0"
-                type="text"
-                name="room"
-              />
-              <button type="submit">submit</button>
+              <input class="chat-code-input" type="text" name="room" />
+              <button class="chat-code-submit" type="submit">submit</button>
             </div>
           </form>
         </div>
         <div class="user-info box">
           <!-- these will be different things, including maybe the actual user ID#, for JS to grab -->
-          <div class="user-details">
+          <div class="user-details" id="<%= currentUser._id%>">
             <div class="name">
               <% if (typeof currentUser=='undefined') { %>
               <div class="user-image-container">
@@ -78,7 +73,7 @@
         </div>
 
         <form class="chat-input">
-          <input type="text" name="text" class="message-input" />
+          <input type="text" name="msg" class="message-input" />
           <button type="submit" class="message-submit-button">Send</button>
         </form>
       </div>
@@ -97,14 +92,21 @@
           <div>Contacts</div>
           <!-- unique to user -->
           <!-- unique to user -->
-          <% for ( let userMessages of userMessagesData) {%> <% for (let
-          i=0;i<1;i++) {%> <%
-          if(userMessages.users[i].username==currentUser.username){ %>
-          <li class="hidden-roomId"><%= userMessages.users[i+1].username %></li>
-          <% } else if( userMessages.users[i+1].username ==
-          currentUser.username) {%>
-          <li class="hidden-roomId"><%= userMessages.users[i].username %></li>
-          <% } else { %> <% i++ %> <% } %> <% } %> <% } %>
+          <% conversations.forEach((conversation,index) => {%> 
+          <% if(conversation.users.length>1) {%> 
+          <% for (let i=0;i<1;i++) {%> 
+          <% if(conversation.users[i].username==currentUser.username){ %>
+          <li class="hidden-roomId" id="<%=rooms[index].roomName%>">
+            <%= conversation.users[i+1].username %></li>
+          <% } else if( conversation.users[i+1].username ==currentUser.username) {%>
+          <li class="hidden-roomId" id="<%=rooms[index].roomName%>">
+            <%= conversation.users[i].username %></li>
+          <% } else { %> 
+            <% i++ %> 
+            <% } %> 
+            <% } %> 
+            <% } %> 
+            <% })%>
         </div>
       </div>
     </div>

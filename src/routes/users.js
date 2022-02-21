@@ -28,7 +28,6 @@ router.get("/login", (req, res) => {
 router.post(
   "/login",
   passport.authenticate("local", {
-    //change redirection to non-bootstrap page
     failureRedirect: "/login",
     failureFlash: true,
   }),

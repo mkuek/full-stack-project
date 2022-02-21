@@ -23,8 +23,10 @@ const Rooms = require("../../models/room");
 const axios = require("axios");
 async function getConvo(userNum) {
   try {
-    const resp = await axios.get(`http://localhost:3000/chats/${userNum}`);
-    return resp.data;
+    const conversations = await axios.get(
+      `http://localhost:3000/chats/${userNum}`
+    );
+    return conversations.data;
   } catch (error) {
     console.log(error);
   }
@@ -39,14 +41,13 @@ router.get("/", async (req, res, next) => {
     // console.log(data);
     const userInfo = await User.findById(username._id);
     // console.log(userInfo._id);
-    userMessagesData = await getConvo(username._id);
-
-    console.log("userID: " + userID);
+    const { conversations, rooms } = await getConvo(username._id);
+    console.log(rooms[0].roomName);
     //!4query database for the user id( return object with all info about the user (i.e. {id, username, email}, to render the home page)
     //!should be called something like "userInfo" rather than userID
     //!5a.function which queries database to find all rooms which user is a member, and all other users with these rooms
     // const results = await db.any("SELECT * FROM rooms ORDER BY roomName");
-    res.render("home", { userID, userMessagesData, userInfo });
+    res.render("home", { userID, conversations, userInfo, rooms });
   } catch (error) {
     console.log(error);
     res.redirect("/login");

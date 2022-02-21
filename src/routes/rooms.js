@@ -1,4 +1,6 @@
 const express = require("express");
+const mongoose = require("mongoose");
+
 //   app = express(),
 //   router = express.Router(),
 //   fetchChats = require("../../controllers/rooms");
@@ -17,14 +19,35 @@ app.use(express.urlencoded({ extended: true }));
 router.post("/rooms/:sender", async (req, res) => {
   const id = req.params.sender;
   roomName = req.body.roomName;
-  console.log("roomname!!!!!!" + roomName);
   const newRoom = new Room({
     roomName,
-    users: [id, id],
+    users: [id],
   });
   try {
     const saveRoom = await newRoom.save();
     console.log("room created");
+    res.redirect("/");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.post("/rooms/update/:receiver", async (req, res) => {
+  const id = req.params.receiver;
+  roomName = req.body.roomName;
+  console.log("roomname!!!!!!" + roomName);
+  console.log("ID!!!!!!" + id);
+  const newUser = { _id: id };
+
+  try {
+    // const saveRoom = await updateDB.save();
+    await Room.findOneAndUpdate(
+      { roomName: roomName },
+
+      { $push: { users: [id] } }
+    );
+
+    console.log("room updated");
     res.redirect("/");
   } catch (error) {
     console.log(error);
@@ -42,7 +65,8 @@ router.get("/chats/:userID", async (req, res) => {
           users: req.params.userID,
         })
       );
-    res.send(conversations);
+    const rooms = await Room.find({ users: req.params.userID });
+    res.send({ conversations, rooms });
   } catch (error) {
     console.log(error);
   }
