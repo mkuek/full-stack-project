@@ -99,7 +99,7 @@
           <li class="hidden-roomId" id="<%=rooms[0].roomName%>">
             <%= conversation.users[i+1].username %> </li>
           <%}else if(conversation.users[i+1].username ==currentUser.username){%>
-          <li class="hidden-roomId" id="<%=rooms[index].roomName%>">
+          <li class="hidden-roomId" id="<%=rooms[0].roomName%>">
             <%= conversation.users[i].username %>
           </li>
           <% } else { %> 

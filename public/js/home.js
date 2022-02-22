@@ -160,6 +160,7 @@ msgForm.addEventListener("submit", (e) => {
     msg: msgForm.msg.value,
     room: msgForm.id,
   };
+  console.log(message)
   socket.emit("chatmessage", message);
   console.log("submit from msgform", msgForm.msg.value);
   msgForm.msg.value = "";
@@ -172,10 +173,12 @@ function appendMessages(message) {
 const inviteButton = document.querySelector(".invite-button");
 inviteButton.addEventListener("click", (e) => {
   e.preventDefault();
+  socket.emit("joinRoom")
   socket.emit("get-invite-code", currentUser);
 });
 
 socket.on("response", (inviteCode) => {
+  msgForm.id=inviteCode
   console.log("INVITE CODE:" + inviteCode);
 });
 
