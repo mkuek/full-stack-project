@@ -10,6 +10,7 @@ const mongoose = require("mongoose");
 
 const Room = require("../../models/room");
 const User = require("../../models/user");
+const Chat = require("../../models/chat");
 const router = express.Router();
 const app = express();
 const { v4: uuidV4 } = require("uuid");
@@ -67,6 +68,24 @@ router.get("/chats/:userID", async (req, res) => {
       );
     const rooms = await Room.find({ users: req.params.userID });
     res.send({ conversations, rooms });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.get("/conversations/:id", async (req, res) => {
+  const conversationID = req.params.id;
+  try {
+    const conversations = await Chat.find().populate('room')
+    let found =[]
+      for (let i=0;i<conversations.length;i++) {
+        if (conversations[i].room.roomName==conversationID){
+          found.push(conversations[i].msg)
+        } else {
+          
+        }
+      }
+      res.json(found)
   } catch (error) {
     console.log(error);
   }

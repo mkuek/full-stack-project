@@ -145,7 +145,7 @@ socket.on("output-messages", (data) => {
   console.log(data);
   if (data.length) {
     data.forEach((message) => {
-      appendMessages(message.msg);
+      appendMessages(message);
     });
   }
 });
@@ -207,7 +207,7 @@ socket.on("goodbye", (data) => {
 const contactBoxes = document.querySelectorAll(".hidden-roomId");
 for (let contactBox of contactBoxes) {
   contactBox.addEventListener("click", (e) => {
-    const chatID = e.target.id;
+    let chatID = e.target.id;
     const targetUser = document.getElementById(chatID).innerHTML;
     msgForm.id = chatID;
     socket.emit("leave-room", chatID, targetUser);

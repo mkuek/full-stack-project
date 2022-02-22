@@ -180,6 +180,7 @@ const { MongoClient, ServerApiVersion } = require("mongodb");
 const res = require("express/lib/response");
 const { update } = require("./models/chat");
 const chat = require("./models/chat");
+const { emit } = require("process");
 const uri =
   "mongodb+srv://chatApp:chatApp123@cluster0.t7h9m.mongodb.net/chat-app?retryWrites=true&w=majority";
 mongoose.connect(uri);
@@ -239,29 +240,25 @@ io.on("connection", (socket) => {
     socket.emit("disconnected", "User has left room");
     console.log("user disconnected");
   });
+
+
   socket.on("chatmessage", (messageArray) => {
     async function findRoomID() {
       const roomID = await Room.find(
         { roomName: messageArray.room },
         "_id"
       ).exec();
-      messageArray.room = roomID._id;
-      console.log(roomID);
+      messageArray.room = roomID[0];
+      console.log("HERE" + messageArray);
       try {
         const updateMessage = new Chat(messageArray);
         await updateMessage.save();
       } catch (error) {
         console.log(error);
       }
-
-      // return updateMessage;
     }
     findRoomID();
-
-    // const message = new Chat(messageArray);
-    // message.save().then(() => {
     io.emit("message", messageArray.msg);
-    // });
   });
   socket.on("get-invite-code", (currentUser) => {
     const inviteCode = uuidV4();
@@ -301,6 +298,21 @@ io.on("connection", (socket) => {
 
   socket.on("joinRoom-contact", (roomID, targetUser) => {
     socket.join(roomID);
+    console.log("chat ID: " + roomID);
+    async function getChatHistory(roomID) {
+      try {
+        const conversations = await axios.get(
+          `http://localhost:3000/conversations/${roomID}`
+        );
+        console.log(conversations.data);
+        socket.emit("output-messages", conversations.data);
+        return conversations.data;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getChatHistory(roomID);
+
     //Send this event to everyone in the room.
     io.sockets.in(roomID).emit("hello-contact", targetUser);
   });
