@@ -171,7 +171,6 @@ const flash = require("connect-flash");
 const userRoutes = require("./src/routes/users");
 const roomRoutes = require("./src/routes/rooms");
 const User = require("./models/user");
-const Msg = require("./models/messages");
 const Chat = require("./models/chat");
 const Room = require("./models/room");
 
@@ -303,7 +302,7 @@ io.on("connection", (socket) => {
         const conversations = await axios.get(
           `http://localhost:3000/conversations/${roomID}`
         );
-        socket.emit("output-messages", conversations.data);
+        io.sockets.in(roomID).emit("output-messages", conversations.data);
         return conversations.data;
       } catch (error) {
         console.log(error);

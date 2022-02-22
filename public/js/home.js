@@ -167,7 +167,7 @@ msgForm.addEventListener("submit", (e) => {
 });
 
 function appendMessages(message) {
-  const html = `<div>${message}</div>`;
+  const html = `<div id="${currentUser.username}">${message}</div>`;
   messages.innerHTML += html;
 }
 const inviteButton = document.querySelector(".invite-button");
