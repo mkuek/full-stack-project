@@ -84,29 +84,26 @@
             <img src="" alt="" class="" />
           </div>
           <div class="contact-details">
-            <div class="name">Contact Name: <span></span></div>
-            <div class="email">Contact Email: <span></span></div>
+            <div>Contact Name: <span class="contact-name"></span></div>
+            <div>Contact Email: <span class="contact-email"></span></div>
           </div>
         </div>
         <div class="active-chats">
           <div>Contacts</div>
           <!-- unique to user -->
           <!-- unique to user -->
-          <% conversations.forEach((conversation,index) => {%> 
-          <% if(conversation.users.length>1) {%> 
-          <% for (let i=0;i<1;i++) {%> 
-          <% if(conversation.users[i].username==currentUser.username){ %>
+          <% conversations.forEach((conversation,index) => {%> <%
+          if(conversation.users.length>1) {%> <% for (let i=0;i<1;i++) {%> <%
+          if(conversation.users[i].username==currentUser.username){ %>
           <li class="hidden-roomId" id="<%=rooms[0].roomName%>">
-            <%= conversation.users[i+1].username %></li>
-          <% } else if( conversation.users[i+1].username ==currentUser.username) {%>
+            <%= conversation.users[i+1].username %>
+          </li>
+          <% } else if( conversation.users[i+1].username ==currentUser.username)
+          {%>
           <li class="hidden-roomId" id="<%=rooms[index].roomName%>">
-            <%= conversation.users[i].username %></li>
-          <% } else { %> 
-            <% i++ %> 
-            <% } %> 
-            <% } %> 
-            <% } %> 
-            <% })%>
+            <%= conversation.users[i].username %>
+          </li>
+          <% } else { %> <% i++ %> <% } %> <% } %> <% } %> <% })%>
         </div>
       </div>
     </div>

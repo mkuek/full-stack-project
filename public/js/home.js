@@ -208,9 +208,18 @@ const contactBoxes = document.querySelectorAll(".hidden-roomId");
 for (let contactBox of contactBoxes) {
   contactBox.addEventListener("click", (e) => {
     let chatID = e.target.id;
-    const targetUser = document.getElementById(chatID).innerHTML;
+    const targetUser = document.getElementById(chatID).innerText;
     msgForm.id = chatID;
     socket.emit("leave-room", chatID, targetUser);
+    socket.emit("get-target-user-info", targetUser);
     socket.emit("joinRoom-contact", chatID, targetUser);
   });
 }
+const contactPic = document.querySelector(".contact-image-container > img");
+const contactName = document.querySelector(".contact-name");
+const contactEmail = document.querySelector(".contact-email");
+socket.on("target-user-info", (targetInfo) => {
+  contactPic.src = targetInfo.pic;
+  contactName.innerHTML = targetInfo.username;
+  contactEmail.innerHTML = targetInfo.email;
+});

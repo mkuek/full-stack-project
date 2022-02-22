@@ -40,6 +40,16 @@ router.post(
   }
 );
 
+router.get("/user/:username", async (req, res) => {
+  const id = req.params.username;
+  try {
+    let foundUser = await User.find({ username: id });
+    res.json(foundUser);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 router.get("/logout", (req, res) => {
   req.logout();
   req.flash("success", "logged out");

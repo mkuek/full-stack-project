@@ -241,7 +241,6 @@ io.on("connection", (socket) => {
     console.log("user disconnected");
   });
 
-
   socket.on("chatmessage", (messageArray) => {
     async function findRoomID() {
       const roomID = await Room.find(
@@ -304,7 +303,6 @@ io.on("connection", (socket) => {
         const conversations = await axios.get(
           `http://localhost:3000/conversations/${roomID}`
         );
-        console.log(conversations.data);
         socket.emit("output-messages", conversations.data);
         return conversations.data;
       } catch (error) {
@@ -315,6 +313,20 @@ io.on("connection", (socket) => {
 
     //Send this event to everyone in the room.
     io.sockets.in(roomID).emit("hello-contact", targetUser);
+  });
+
+  socket.on("get-target-user-info", (username) => {
+    async function getTargetUser(username) {
+      try {
+        const targetInfo = await axios.get(
+          `http://localhost:3000/user/${username}`
+        );
+        socket.emit("target-user-info", targetInfo.data[0]);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getTargetUser(username);
   });
 
   socket.on("leave-room", (chatID, targetUser) => {

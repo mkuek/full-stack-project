@@ -142,18 +142,6 @@ const passwordB = 1234;
 //   }
 // });
 
-//NOT COMPLETE OLD CODE
-app.post("/user", (req, res) => {
-  const { userID, userName } = req.body;
-  db.none("INSERT INTO users (userID, userName) VALUES ($1, $2)", [
-    userID,
-    userName,
-  ]).then(() => {
-    console.log(`User ${userName} was created`);
-    res.send("User created");
-  });
-});
-
 //ERROR HANDLING
 app.use((err, req, res, next) => {
   res.send("something went wrong");
