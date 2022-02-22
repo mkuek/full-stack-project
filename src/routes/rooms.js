@@ -59,13 +59,15 @@ router.get("/chats/:userID", async (req, res) => {
   const currentUser = req.user;
   console.log(req.params.userID);
   try {
-    const conversations = await Room.find()
+    const convo = await Room.find()
       .populate("users")
-      .then(
-        Room.find({
-          users: req.params.userID,
-        })
-      );
+      let conversations = [];
+    for (let i = 0; i < convo.length; i++) {
+      if (convo[i].users[i]._id.toString() == req.params.userID) {
+        conversations.push(convo[i]);
+      } else {
+      }
+    }
     const rooms = await Room.find({ users: req.params.userID });
     res.send({ conversations, rooms });
   } catch (error) {
@@ -76,16 +78,16 @@ router.get("/chats/:userID", async (req, res) => {
 router.get("/conversations/:id", async (req, res) => {
   const conversationID = req.params.id;
   try {
-    const conversations = await Chat.find().populate('room')
-    let found =[]
-      for (let i=0;i<conversations.length;i++) {
-        if (conversations[i].room.roomName==conversationID){
-          found.push(conversations[i].msg)
-        } else {
-          
-        }
+    const conversations = await Chat.find().populate("room");
+    let found = [];
+    for (let i = 0; i < conversations.length; i++) {
+      console.log(conversations);
+      if (conversations[i].room.roomName == conversationID) {
+        found.push(conversations[i].msg);
+      } else {
       }
-      res.json(found)
+    }
+    res.json(found);
   } catch (error) {
     console.log(error);
   }

@@ -248,7 +248,7 @@ io.on("connection", (socket) => {
         "_id"
       ).exec();
       messageArray.room = roomID[0];
-      console.log("HERE" + messageArray);
+      console.log(messageArray);
       try {
         const updateMessage = new Chat(messageArray);
         await updateMessage.save();
