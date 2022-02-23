@@ -55,17 +55,35 @@ function appendMessages(message, time) {
   messages.innerHTML += html;
 }
 
+//invite button
 const inviteButton = document.querySelector(".invite-button");
 inviteButton.addEventListener("click", (e) => {
   e.preventDefault();
-  socket.emit("joinRoomDB");
   socket.emit("get-invite-code", currentUser);
+  socket.emit("joinRoomDB");
 });
 
+//receive invite code generated on server and copy it to the clipboard
 socket.on("response", (inviteCode) => {
+  console.log("response has been sent");
+  console.log(`invite code received ${inviteCode}`);
   msgForm.id = inviteCode;
-  alert("INVITE CODE:" + inviteCode);
+  // alert("INVITE CODE:" + inviteCode);
+  copyToClipboard(inviteCode);
 });
+
+// copies code to the users clipboard (execCommand is technically deprecated)
+function copyToClipboard(inviteCode) {
+  const hiddenInput = document.createElement("input");
+  hiddenInput.setAttribute("value", inviteCode);
+  document.body.appendChild(hiddenInput);
+  hiddenInput.select();
+  document.execCommand("copy");
+  document.body.removeChild(hiddenInput);
+  inviteButton.setAttribute("id", "copied");
+  const inviteButtonHeadline = document.querySelector(".copy-code-headline");
+  inviteButtonHeadline.textContent = "invite code copied";
+}
 
 const inputBox = document.querySelector(".chat-code-submit");
 inputBox.addEventListener("click", (e) => {

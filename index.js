@@ -256,6 +256,7 @@ io.on("connection", (socket) => {
     findRoomID();
     io.emit("message", messageArray, moment().format("h:mm a"));
   });
+
   socket.on("get-invite-code", (currentUser) => {
     const inviteCode = uuidV4();
     async function createRoom(userNum, inviteCode) {
