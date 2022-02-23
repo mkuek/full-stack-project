@@ -2,7 +2,7 @@ const socket = io("http://localhost:3000/");
 const messages = document.querySelector(".chat-window");
 const msgForm = document.querySelector(".chat-input");
 const currentUser = document.querySelector(".user-details").id;
-//!is this chat header needed, why not just post message in chat-window
+//!is this chat header needed, why not just post message in chat-window (above)
 const chatHeader = document.querySelector(".chat-header");
 
 //opens paste invite code dropdown menu
@@ -23,6 +23,9 @@ socket.on("output-messages", (data) => {
       appendMessages(message);
     });
   }
+  //not functioning in chat window with chat-header(?)
+  const chatWindow = document.querySelector(".chat-window");
+  chatWindow.scrollTop = chatWindow.scrollHeight;
 });
 socket.on("disconnected", (data) => {
   appendMessages(data);
