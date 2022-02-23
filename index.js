@@ -173,12 +173,10 @@ const roomRoutes = require("./src/routes/rooms");
 const User = require("./models/user");
 const Chat = require("./models/chat");
 const Room = require("./models/room");
-
+const moment = require("moment");
 //DB MODEL
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const res = require("express/lib/response");
-const { update } = require("./models/chat");
-const chat = require("./models/chat");
 const { emit } = require("process");
 const uri =
   "mongodb+srv://chatApp:chatApp123@cluster0.t7h9m.mongodb.net/chat-app?retryWrites=true&w=majority";
@@ -234,7 +232,7 @@ app.use((req, res, next) => {
 
 io.on("connection", (socket) => {
   console.log("a user connected");
-  socket.emit("message", "Hello world");
+  socket.emit("welcome", "Hello, Welcome to Worm-Chat!");
   socket.on("disconnect", () => {
     socket.emit("disconnected", "User has left room");
     console.log("user disconnected");
@@ -256,7 +254,7 @@ io.on("connection", (socket) => {
       }
     }
     findRoomID();
-    io.emit("message", messageArray.msg);
+    io.emit("message", messageArray, moment().format("h:mm a"));
   });
   socket.on("get-invite-code", (currentUser) => {
     const inviteCode = uuidV4();
@@ -275,7 +273,7 @@ io.on("connection", (socket) => {
     socket.emit("response", inviteCode);
   });
 
-  socket.on("joinRoom", (roomID, currentUser) => {
+  socket.on("joinRoomDB", (roomID, currentUser) => {
     // socket.join(roomID);
     console.log("socketID IS: " + socket.roomID);
     async function updateRoom(currentUser) {
@@ -290,8 +288,8 @@ io.on("connection", (socket) => {
       }
     }
     updateRoom(currentUser);
-    socket.emit('refresh-page')
-    //Send this event to everyone in the room.
+    socket.emit("refresh-page");
+    // this event to everyone in the room.
     // io.sockets.in(roomID).emit("hello", "hello");
   });
 
@@ -303,7 +301,7 @@ io.on("connection", (socket) => {
         const conversations = await axios.get(
           `http://localhost:3000/conversations/${roomID}`
         );
-        console.log(conversations.data)
+        console.log(conversations.data);
         io.sockets.in(roomID).emit("output-messages", conversations.data);
         return conversations.data;
       } catch (error) {
@@ -312,7 +310,7 @@ io.on("connection", (socket) => {
     }
     getChatHistory(roomID);
     //Send this event to everyone in the room.
-    io.sockets.in(roomID).emit("hello-contact", targetUser);
+    io.sockets.in(roomID).emit("hello", targetUser);
   });
 
   socket.on("get-target-user-info", (username) => {

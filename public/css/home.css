@@ -282,3 +282,10 @@ body {
   margin-top: 1.1em;
   font-size: 0.8rem;
 }
+
+.another-user {
+  background-color: red;
+}
+.current-user {
+  background-color: green;
+}
