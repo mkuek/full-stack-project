@@ -19,6 +19,7 @@ socket.on("message", (data, time) => {
   messages.scrollTop = messages.scrollHeight;
 });
 
+//displays stored messages in chat-window
 socket.on("output-messages", (data) => {
   console.log(data);
   if (data.length) {
@@ -26,8 +27,10 @@ socket.on("output-messages", (data) => {
       appendMessages(message);
     });
   }
+  messages.scrollTop = messages.scrollHeight;
 });
 
+//!not sure if this needs a window autoscroll
 socket.on("disconnected", (data) => {
   appendMessages(data);
 });
