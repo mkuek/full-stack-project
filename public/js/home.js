@@ -13,9 +13,13 @@ chatBubbleFlex.addEventListener("click", (e) => {
   console.log("click");
 });
 
+//appends messages to the chat-window and scrolls down
 socket.on("message", (data, time) => {
   appendMessages(data, time);
+  messages.scrollTop = messages.scrollHeight;
 });
+
+//displays stored messages in chat-window
 socket.on("output-messages", (data) => {
   console.log(data);
   if (data.length) {
@@ -23,12 +27,14 @@ socket.on("output-messages", (data) => {
       appendMessages(message);
     });
   }
-  //not functioning in chat window with chat-header(?)
-  messages.scrollTop = chatWindow.scrollHeight;
+  messages.scrollTop = messages.scrollHeight;
 });
+
+//!not sure if this needs a window autoscroll
 socket.on("disconnected", (data) => {
   appendMessages(data);
 });
+
 msgForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -51,7 +57,14 @@ function appendMessages(message, time) {
 
   !message.sent ? (sent = time) : (sent = message.sent);
 
-  const html = `<div class="${sender}" id="${message.sender}"><div >${message.msg}</div><div>${sent}</div></div>`;
+  const html = `<div class="message ${sender}" id="${message.sender}">
+  <p class="message-username" >
+    ${message.sender}
+    <button id="close"></button>
+  </p>
+  <p class="message-text">${message.msg}</p>
+  <p class="message-time">${sent}</p>
+</div>`;
   messages.innerHTML += html;
 }
 
@@ -81,7 +94,7 @@ function copyToClipboard(inviteCode) {
   document.execCommand("copy");
   document.body.removeChild(hiddenInput);
   inviteButton.setAttribute("id", "copied");
-  //!duration of this change is too short (render on page load for a momenet, or don't reload page after invite)
+  //!duration of this change is too short (render on page load for a little longer, or (maybe better solution) don't reload page after invite)
   const inviteButtonHeadline = document.querySelector(".copy-code-headline");
   inviteButtonHeadline.textContent = "invite code copied";
 }
