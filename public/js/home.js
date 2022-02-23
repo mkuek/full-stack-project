@@ -2,6 +2,7 @@ const socket = io("http://localhost:3000/");
 const messages = document.querySelector(".chat-window");
 const msgForm = document.querySelector(".chat-input");
 const currentUser = document.querySelector(".user-details").id;
+//!is this chat header needed, why not just post message in chat-window
 const chatHeader = document.querySelector(".chat-header");
 
 //opens paste invite code dropdown menu
@@ -40,6 +41,7 @@ msgForm.addEventListener("submit", (e) => {
   msgForm.msg.value = "";
 });
 
+//writing to the chat window
 function appendMessages(message, time) {
   message.sender == currentUser
     ? (sender = "current-user")
@@ -76,6 +78,7 @@ inputBox.addEventListener("click", (e) => {
   inputBox.focus();
 });
 
+//writing things to the chatHeader and chatWindow
 socket.on("hello", (data) => {
   chatHeader.innerHTML = "Chatting with: " + data;
 });
