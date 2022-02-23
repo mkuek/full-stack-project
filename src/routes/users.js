@@ -3,15 +3,17 @@ const router = express.Router();
 const passport = require("passport");
 const User = require("../../models/user");
 
+//!i believe this code is not needed
 router.get("/register", (req, res) => {
   res.render("users/register");
 });
 
+//!somewhere here we need to put that src into the database when signing up a new user
 router.post("/register", async (req, res) => {
   try {
-    const { username, password, email } = req.body;
-    const user = new User({ username, email });
-    const registeredUser = await User.register(user, password);
+    const { username, password, email, pic } = req.body;
+    const user = new User({ username, email, pic });
+    const registeredUser = await User.register(user, password, pic);
     console.log(`${registeredUser} success`);
     req.flash("success", "Successfully registered user! Log in below!");
     res.redirect("/login");
