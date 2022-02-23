@@ -24,8 +24,7 @@ socket.on("output-messages", (data) => {
     });
   }
   //not functioning in chat window with chat-header(?)
-  const chatWindow = document.querySelector(".chat-window");
-  chatWindow.scrollTop = chatWindow.scrollHeight;
+  messages.scrollTop = chatWindow.scrollHeight;
 });
 socket.on("disconnected", (data) => {
   appendMessages(data);
@@ -55,17 +54,37 @@ function appendMessages(message, time) {
   const html = `<div class="${sender}" id="${message.sender}"><div >${message.msg}</div><div>${sent}</div></div>`;
   messages.innerHTML += html;
 }
+
+//invite button
 const inviteButton = document.querySelector(".invite-button");
 inviteButton.addEventListener("click", (e) => {
   e.preventDefault();
-  socket.emit("joinRoomDB");
   socket.emit("get-invite-code", currentUser);
+  socket.emit("joinRoomDB");
 });
 
+//receive invite code generated on server and copy it to the clipboard
 socket.on("response", (inviteCode) => {
+  console.log("response has been sent");
+  console.log(`invite code received ${inviteCode}`);
   msgForm.id = inviteCode;
-  alert("INVITE CODE:" + inviteCode);
+  // alert("INVITE CODE:" + inviteCode);
+  copyToClipboard(inviteCode);
 });
+
+// copies code to the users clipboard (execCommand is technically deprecated)
+function copyToClipboard(inviteCode) {
+  const hiddenInput = document.createElement("input");
+  hiddenInput.setAttribute("value", inviteCode);
+  document.body.appendChild(hiddenInput);
+  hiddenInput.select();
+  document.execCommand("copy");
+  document.body.removeChild(hiddenInput);
+  inviteButton.setAttribute("id", "copied");
+  //!duration of this change is too short (render on page load for a momenet, or don't reload page after invite)
+  const inviteButtonHeadline = document.querySelector(".copy-code-headline");
+  inviteButtonHeadline.textContent = "invite code copied";
+}
 
 const inputBox = document.querySelector(".chat-code-submit");
 inputBox.addEventListener("click", (e) => {

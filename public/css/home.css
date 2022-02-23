@@ -118,6 +118,11 @@ body {
   width: 32px;
 }
 
+#copied {
+  background-color: lightgreen;
+  border: 1px solid lightgreen;
+}
+
 .copy-code p {
   font-size: 1em;
   margin-bottom: 0;
