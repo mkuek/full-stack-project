@@ -276,7 +276,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("joinRoom", (roomID, currentUser) => {
-    socket.join(roomID);
+    // socket.join(roomID);
     console.log("socketID IS: " + socket.roomID);
     async function updateRoom(currentUser) {
       try {
@@ -291,7 +291,7 @@ io.on("connection", (socket) => {
     }
     updateRoom(currentUser);
     //Send this event to everyone in the room.
-    io.sockets.in(roomID).emit("hello", "hello");
+    // io.sockets.in(roomID).emit("hello", "hello");
   });
 
   socket.on("joinRoom-contact", (roomID, targetUser) => {
@@ -309,7 +309,7 @@ io.on("connection", (socket) => {
       }
     }
     getChatHistory(roomID);
-
+    socket.emit('refresh-page')
     //Send this event to everyone in the room.
     io.sockets.in(roomID).emit("hello-contact", targetUser);
   });

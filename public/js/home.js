@@ -207,6 +207,9 @@ socket.on("hello-contact", (data) => {
 socket.on("goodbye", (data) => {
   messages.innerHTML = `User ${data} has left room`;
 });
+socket.on('refresh-page',()=>{
+  window.location.reload();
+})
 
 const contactBoxes = document.querySelectorAll(".hidden-roomId");
 for (let contactBox of contactBoxes) {
