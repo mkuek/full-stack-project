@@ -81,6 +81,7 @@ function copyToClipboard(inviteCode) {
   document.execCommand("copy");
   document.body.removeChild(hiddenInput);
   inviteButton.setAttribute("id", "copied");
+  //!duration of this change is too short (render on page load for a momenet, or don't reload page after invite)
   const inviteButtonHeadline = document.querySelector(".copy-code-headline");
   inviteButtonHeadline.textContent = "invite code copied";
 }
