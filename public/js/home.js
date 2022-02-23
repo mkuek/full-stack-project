@@ -143,6 +143,6 @@ const contactName = document.querySelector(".contact-name");
 const contactEmail = document.querySelector(".contact-email");
 socket.on("target-user-info", (targetInfo) => {
   contactPic.src = targetInfo.pic;
-  contactName.innerHTML = `Contact Name: <span>${targetInfo.username}</span>`;
-  contactEmail.innerHTML = `Contact Email: <span>${targetInfo.email}</span>`;
+  contactName.innerHTML = targetInfo.username;
+  contactEmail.innerHTML = targetInfo.email;
 });
