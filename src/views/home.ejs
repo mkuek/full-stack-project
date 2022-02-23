@@ -9,9 +9,9 @@
   </head>
   <body>
     <div class="container">
-      <div class="successAlert">
+      <!-- <div class="successAlert">
         <div><%= success %></div>
-      </div>
+      </div> -->
       <div class="left-flexbox">
         <div class="code-input box">
           <form class="code-input-form">
@@ -49,19 +49,20 @@
             </div>
           </div>
         </div>
-        <div class="sideboard-right-bottom box">
-          <div class="invite">
-            <form>
-              <div class="copy-code">
-                <div class="copy-code-headline">Copy invite code</div>
-                <button class="invite-button">
-                  <img src="./images/link_white.png" alt="" />
-                </button>
-                <p>Share this code to create a new group chat</p>
-                <img src="./images/paper_airplane.png" alt="" />
-              </div>
-            </form>
-          </div>
+        <div class="active-chats">
+          <div>Contacts</div>
+          <!-- unique to user -->
+          <% conversations.forEach((conversation,index) => {%>
+          <%if(conversation.users.length>1) {%> <% for (let i=0;i<1;i++) {%>
+          <%if(conversation.users[i].username==currentUser.username){ %>
+          <li class="hidden-roomId" id="<%=rooms[i].roomName%>">
+            <%= conversation.users[i+1].username %>
+          </li>
+          <%}else if(conversation.users[i+1].username ==currentUser.username){%>
+          <li class="hidden-roomId" id="<%=rooms[i].roomName%>">
+            <%= conversation.users[i].username %>
+          </li>
+          <% } else { %> <% i++ %> <% } %> <% } %> <% } %> <% })%>
         </div>
       </div>
 
@@ -92,20 +93,20 @@
             </div>
           </div>
         </div>
-        <div class="active-chats">
-          <div>Contacts</div>
-          <!-- unique to user -->
-          <% conversations.forEach((conversation,index) => {%>
-          <%if(conversation.users.length>1) {%> <% for (let i=0;i<1;i++) {%>
-          <%if(conversation.users[i].username==currentUser.username){ %>
-          <li class="hidden-roomId" id="<%=rooms[i].roomName%>">
-            <%= conversation.users[i+1].username %>
-          </li>
-          <%}else if(conversation.users[i+1].username ==currentUser.username){%>
-          <li class="hidden-roomId" id="<%=rooms[i].roomName%>">
-            <%= conversation.users[i].username %>
-          </li>
-          <% } else { %> <% i++ %> <% } %> <% } %> <% } %> <% })%>
+
+        <div class="sideboard-right-bottom box">
+          <div class="invite">
+            <form>
+              <div class="copy-code">
+                <div class="copy-code-headline">Copy invite code</div>
+                <button class="invite-button">
+                  <img src="./images/link_white.png" alt="" />
+                </button>
+                <p>Share this code to create a new group chat</p>
+                <img src="./images/paper_airplane.png" alt="" />
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
