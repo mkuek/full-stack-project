@@ -10,9 +10,7 @@
   <body>
     <!-- <h1>Welcome </h1> -->
     <div class="container">
-      <div class="successAlert">
-        <div><%= success %></div>
-      </div>
+      <!-- <div class="loginSuccessful"><%= success %></div> -->
       <div class="left-flexbox">
         <div class="code-input box">
           <form class="code-input-form">
@@ -40,27 +38,32 @@
               <div class="user-image-container">
                 <img src="<%= currentUser.pic %> " alt="" class="" />
               </div>
-              <strong><%= currentUser.username %></strong>
-              <div class="email"><%= currentUser.email %> <span></span></div>
-              <a href="/logout">Logout</a>
+              <div class="user-name-flex">
+                <img class="user-icon" src="./images/person_icon.png" alt="" />
+                <div><%= currentUser.username %></div>
+              </div>
+              <div class="user-email-flex">
+                <img class="envelope" src="./images/envelope.png" alt="" />
+                <div class="email"><%= currentUser.email %></div>
+              </div>
+              <div class="logout"><a href="/logout">Logout</a></div>
+
               <% } %>
             </div>
           </div>
         </div>
-
-        <div class="sideboard-right-bottom box">
-          <div class="invite">
-            <form>
-              <div class="copy-code">
-                <div class="copy-code-headline">Copy invite code</div>
-                <button class="invite-button">
-                  <img src="./images/link_white.png" alt="" />
-                </button>
-                <p>Share this code to create a new group chat</p>
-                <img src="./images/paper_airplane.png" alt="" />
-              </div>
-            </form>
-          </div>
+        <div class="active-chats">
+          <div>Contacts</div>
+          <!-- unique to user -->
+          <!-- unique to user -->
+          <% for ( let userMessages of userMessagesData) {%> <% for (let
+          i=0;i<1;i++) {%> <%
+          if(userMessages.users[i].username==currentUser.username){ %>
+          <li class="hidden-roomId"><%= userMessages.users[i+1].username %></li>
+          <% } else if( userMessages.users[i+1].username ==
+          currentUser.username) {%>
+          <li class="hidden-roomId"><%= userMessages.users[i].username %></li>
+          <% } else { %> <% i++ %> <% } %> <% } %> <% } %>
         </div>
         <!-- <div class="logo-image box">
           <div>Worm-chat</div>
@@ -80,9 +83,6 @@
       <div class="right-flexbox">
         <div class="contact-info box">
           <!-- these will be dirrent things, including maybe the actual user ID#, for JS to grab -->
-          <div class="contact-image-container">
-            <img src="" alt="" class="" />
-          </div>
           <div class="contact-details">
             <div>Contact Name: <span class="contact-name"></span></div>
             <div>Contact Email: <span class="contact-email"></span></div>
