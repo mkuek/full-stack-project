@@ -34,6 +34,7 @@ socket.on("output-messages", (data) => {
 socket.on("disconnected", (data) => {
   appendMessages(data);
 });
+
 msgForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -56,7 +57,14 @@ function appendMessages(message, time) {
 
   !message.sent ? (sent = time) : (sent = message.sent);
 
-  const html = `<div class="${sender}" id="${message.sender}"><div >${message.msg}</div><div>${sent}</div></div>`;
+  const html = `<div class="message ${sender}" id="${message.sender}">
+  <p class="message-username" >
+    ${message.sender}
+    <button id="close"></button>
+  </p>
+  <p class="message-text">${message.msg}</p>
+  <p class="message-time">${sent}</p>
+</div>`;
   messages.innerHTML += html;
 }
 

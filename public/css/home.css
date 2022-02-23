@@ -229,14 +229,16 @@ body {
 
 .another-user {
   background-color: rgb(237, 177, 177);
-  /* max-width: 75%;
-  margin-right: 27%; */
+  max-width: 75%;
+  margin-right: 27%;
+  margin-left: 3%;
 }
 .current-user {
   background-color: #c3cee6;
-  /* max-width: 75%;
+  max-width: 75%;
   float: right;
-  margin-left: 27%; */
+  margin-left: 27%;
+  margin-right: 3%;
 }
 
 .own-message {
