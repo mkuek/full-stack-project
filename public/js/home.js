@@ -73,7 +73,7 @@ const inviteButton = document.querySelector(".invite-button");
 inviteButton.addEventListener("click", (e) => {
   e.preventDefault();
   socket.emit("get-invite-code", currentUser);
-  socket.emit("joinRoomDB");
+  socket.emit("joinRoomInvite");
 });
 
 //receive invite code generated on server and copy it to the clipboard

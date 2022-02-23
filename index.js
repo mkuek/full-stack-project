@@ -294,6 +294,23 @@ io.on("connection", (socket) => {
     // io.sockets.in(roomID).emit("hello", "hello");
   });
 
+  //no page refresh needed on joining room from invite button
+  socket.on("joinRoomInvite", (roomID, currentUser) => {
+    console.log("socketID IS: " + socket.roomID);
+    async function updateRoom(currentUser) {
+      try {
+        const resp = await axios.post(
+          `http://localhost:3000/rooms/update/${currentUser}`,
+          { roomName: roomID }
+        );
+        return resp.data;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    updateRoom(currentUser);
+  });
+
   socket.on("joinRoom-contact", (roomID, targetUser) => {
     socket.join(roomID);
     console.log("chat ID: " + roomID);
