@@ -222,6 +222,18 @@ body {
   display: inline-block;
 }
 
+.another-user {
+  background-color: rgb(237, 177, 177);
+  /* max-width: 75%;
+  margin-right: 27%; */
+}
+.current-user {
+  background-color: #c3cee6;
+  /* max-width: 75%;
+  float: right;
+  margin-left: 27%; */
+}
+
 .own-message {
   background-color: #c3cee6;
   max-width: 75%;
