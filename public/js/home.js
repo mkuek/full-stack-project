@@ -24,8 +24,7 @@ socket.on("output-messages", (data) => {
     });
   }
   //not functioning in chat window with chat-header(?)
-  const chatWindow = document.querySelector(".chat-window");
-  chatWindow.scrollTop = chatWindow.scrollHeight;
+  messages.scrollTop = chatWindow.scrollHeight;
 });
 socket.on("disconnected", (data) => {
   appendMessages(data);
@@ -55,6 +54,7 @@ function appendMessages(message, time) {
   const html = `<div class="${sender}" id="${message.sender}"><div >${message.msg}</div><div>${sent}</div></div>`;
   messages.innerHTML += html;
 }
+
 const inviteButton = document.querySelector(".invite-button");
 inviteButton.addEventListener("click", (e) => {
   e.preventDefault();
