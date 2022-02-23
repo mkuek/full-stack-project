@@ -4,6 +4,14 @@ const msgForm = document.querySelector(".chat-input");
 const currentUser = document.querySelector(".user-details").id;
 const chatHeader = document.querySelector(".chat-header");
 
+//opens paste invite code dropdown menu
+const chatBubbleFlex = document.querySelector(".chat-bubble-flex");
+chatBubbleFlex.addEventListener("click", (e) => {
+  const codeSubmitDropdown = document.querySelector(".code-submit-dropdown");
+  codeSubmitDropdown.setAttribute("id", "visible");
+  console.log("click");
+});
+
 socket.on("message", (data, time) => {
   appendMessages(data, time);
 });
