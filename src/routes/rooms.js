@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 
 // router.route("/rooms").get(fetchChats);
 // module.exports = router;
-
+const moment = require("moment");
 const Room = require("../../models/room");
 const User = require("../../models/user");
 const Chat = require("../../models/chat");
@@ -92,7 +92,8 @@ router.get("/conversations/:id", async (req, res) => {
         conversations[i].room.roomName.length > 0 &&
         conversations[i].room.roomName == conversationID
       ) {
-        found.push(conversations[i].msg);
+        found.push({'sent':moment(conversations[i].createdAt).format("h:mm a"),
+        'msg':conversations[i].msg} );
       } else {
         i++;
       }

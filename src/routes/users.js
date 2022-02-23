@@ -33,7 +33,6 @@ router.post(
   }),
   function (req, res) {
     console.log("login success");
-    console.log(req.user.username);
     req.flash("success", "Successfully logged in");
     req.flash("error", "Incorrect username or password");
     res.redirect("/");

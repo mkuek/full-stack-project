@@ -167,7 +167,7 @@ msgForm.addEventListener("submit", (e) => {
 });
 
 function appendMessages(message) {
-  const html = `<div id="${currentUser.username}">${message}</div>`;
+  const html = `<div id="${currentUser.username}">${message.msg}</div><div id="${currentUser.username}">${message.sent}</div>`;
   messages.innerHTML += html;
 }
 const inviteButton = document.querySelector(".invite-button");
@@ -179,7 +179,7 @@ inviteButton.addEventListener("click", (e) => {
 
 socket.on("response", (inviteCode) => {
   msgForm.id = inviteCode;
-  console.log("INVITE CODE:" + inviteCode);
+  alert("INVITE CODE:" + inviteCode);
 });
 
 const inputBox = document.querySelector(".chat-code-submit");

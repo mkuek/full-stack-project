@@ -91,12 +91,11 @@
         <div class="active-chats">
           <div>Contacts</div>
           <!-- unique to user -->
-          <!-- unique to user -->
           <% conversations.forEach((conversation,index) => {%> 
           <%if(conversation.users.length>1) {%> 
           <% for (let i=0;i<1;i++) {%> 
           <%if(conversation.users[i].username==currentUser.username){ %>
-          <li class="hidden-roomId" id="<%=rooms[i+1].roomName%>">
+          <li class="hidden-roomId" id="<%=rooms[i].roomName%>">
             <%= conversation.users[i+1].username %> </li>
           <%}else if(conversation.users[i+1].username ==currentUser.username){%>
           <li class="hidden-roomId" id="<%=rooms[i].roomName%>">

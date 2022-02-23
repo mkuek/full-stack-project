@@ -290,6 +290,7 @@ io.on("connection", (socket) => {
       }
     }
     updateRoom(currentUser);
+    socket.emit('refresh-page')
     //Send this event to everyone in the room.
     // io.sockets.in(roomID).emit("hello", "hello");
   });
@@ -302,6 +303,7 @@ io.on("connection", (socket) => {
         const conversations = await axios.get(
           `http://localhost:3000/conversations/${roomID}`
         );
+        console.log(conversations.data)
         io.sockets.in(roomID).emit("output-messages", conversations.data);
         return conversations.data;
       } catch (error) {
@@ -309,7 +311,6 @@ io.on("connection", (socket) => {
       }
     }
     getChatHistory(roomID);
-    socket.emit('refresh-page')
     //Send this event to everyone in the room.
     io.sockets.in(roomID).emit("hello-contact", targetUser);
   });
