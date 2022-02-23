@@ -28,7 +28,6 @@ router.get("/login", (req, res) => {
 router.post(
   "/login",
   passport.authenticate("local", {
-    //change redirection to non-bootstrap page
     failureRedirect: "/login",
     failureFlash: true,
   }),
@@ -40,6 +39,16 @@ router.post(
     res.redirect("/");
   }
 );
+
+router.get("/user/:username", async (req, res) => {
+  const id = req.params.username;
+  try {
+    let foundUser = await User.find({ username: id });
+    res.json(foundUser);
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 router.get("/logout", (req, res) => {
   req.logout();

@@ -19,18 +19,14 @@
               <div>Start new chat</div>
             </div>
             <div class="code-submit-dropdown">
-              <input
-                class="chat-code-input"
-                value="0"
-                type="text"
-                name="room"
-              />
-              <button type="submit">submit</button>
+              <input class="chat-code-input" type="text" name="room" />
+              <button class="chat-code-submit" type="submit">submit</button>
             </div>
           </form>
         </div>
         <div class="user-info box">
-          <div class="user-details">
+          <!-- these will be different things, including maybe the actual user ID#, for JS to grab -->
+          <div class="user-details" id="<%= currentUser._id%>">
             <div class="name">
               <% if (typeof currentUser=='undefined') { %>
               <div class="user-image-container">
@@ -80,7 +76,7 @@
         </div>
 
         <form class="chat-input">
-          <input type="text" name="text" class="message-input" />
+          <input type="text" name="msg" class="message-input" />
           <button type="submit" class="message-submit-button">Send</button>
         </form>
       </div>
@@ -88,33 +84,30 @@
         <div class="contact-info box">
           <!-- these will be dirrent things, including maybe the actual user ID#, for JS to grab -->
           <div class="contact-details">
-            <div class="contact-image-container">
-              <img src="<%= currentUser.pic %> " alt="" class="" />
-            </div>
-            <div class="contact-name-flex">
-              <img class="user-icon" src="./images/person_icon.png" alt="" />
-              <div><%= currentUser.username %></div>
-            </div>
-            <div class="contact-email-flex">
-              <img class="envelope" src="./images/envelope.png" alt="" />
-              <div class="email"><%= currentUser.email %></div>
-            </div>
+            <div>Contact Name: <span class="contact-name"></span></div>
+            <div>Contact Email: <span class="contact-email"></span></div>
           </div>
         </div>
-
-        <div class="sideboard-right-bottom box">
-          <div class="invite">
-            <form>
-              <div class="copy-code">
-                <div class="copy-code-headline">Copy invite code</div>
-                <button class="invite-button">
-                  <img src="./images/link_white.png" alt="" />
-                </button>
-                <p>Share this code to create a new group chat</p>
-                <img src="./images/paper_airplane.png" alt="" />
-              </div>
-            </form>
-          </div>
+        <div class="active-chats">
+          <div>Contacts</div>
+          <!-- unique to user -->
+          <!-- unique to user -->
+          <% conversations.forEach((conversation,index) => {%> 
+          <%if(conversation.users.length>1) {%> 
+          <% for (let i=0;i<1;i++) {%> 
+          <%if(conversation.users[i].username==currentUser.username){ %>
+          <li class="hidden-roomId" id="<%=rooms[i+1].roomName%>">
+            <%= conversation.users[i+1].username %> </li>
+          <%}else if(conversation.users[i+1].username ==currentUser.username){%>
+          <li class="hidden-roomId" id="<%=rooms[i].roomName%>">
+            <%= conversation.users[i].username %>
+          </li>
+          <% } else { %> 
+            <% i++ %> 
+            <% } %> 
+            <% } %> 
+            <% } %> 
+            <% })%>
         </div>
       </div>
     </div>
