@@ -149,15 +149,24 @@ socket.on("refresh-page", () => {
   window.location.reload();
 });
 
+let selectedContact = "";
 const contactBoxes = document.querySelectorAll(".hidden-roomId");
 for (let contactBox of contactBoxes) {
   contactBox.addEventListener("click", (e) => {
     let chatID = e.target.id;
-    const targetUser = document.getElementById(chatID).innerText;
-    msgForm.id = chatID;
-    socket.emit("leave-room", chatID, targetUser);
-    socket.emit("get-target-user-info", targetUser);
-    socket.emit("joinRoom-contact", chatID, targetUser);
+    if (selectedContact == chatID) {
+      console.log("same user selected");
+      console.log(`${chatID} and ${selectedContact}`);
+      selectedContact = chatID;
+    } else {
+      console.log(`${chatID} and ${selectedContact}`);
+      selectedContact = chatID;
+      const targetUser = document.getElementById(chatID).innerText;
+      msgForm.id = chatID;
+      socket.emit("leave-room", chatID, targetUser);
+      socket.emit("get-target-user-info", targetUser);
+      socket.emit("joinRoom-contact", chatID, targetUser);
+    }
   });
 }
 const contactPic = document.querySelector(".contact-image-container > img");
