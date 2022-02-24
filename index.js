@@ -245,16 +245,28 @@ io.on("connection", (socket) => {
         "_id"
       ).exec();
       messageArray.room = roomID[0];
-      console.log(messageArray);
+      console.log(`this is the messageArray ${JSON.stringify(messageArray)}`);
       try {
         const updateMessage = new Chat(messageArray);
-        await updateMessage.save();
+        // console.log(updateMessage._id);
+        const newMessage = await updateMessage.save();
+        const senderUsername = await Chat.find({
+          _id: newMessage._id,
+        }).populate("sender");
+        const sender = senderUsername[0].sender;
+        console.log(sender.username);
+        io.emit(
+          "message",
+          messageArray,
+          moment().format("h:mm a"),
+          newMessage._id,
+          sender.username
+        );
       } catch (error) {
         console.log(error);
       }
     }
     findRoomID();
-    io.emit("message", messageArray, moment().format("h:mm a"));
   });
 
   socket.on("get-invite-code", (currentUser) => {
@@ -349,6 +361,22 @@ io.on("connection", (socket) => {
     socket.leave(chatID);
     console.log(chatID);
     io.sockets.in(chatID).emit("goodbye", targetUser);
+  });
+
+  //deletes message from the database
+  socket.on("delete-message", (messageIdentifier) => {
+    console.log(`messageIdentifier is ${messageIdentifier}`);
+    axios
+      .post("http://localhost:3000/deleteMessage", {
+        messageIdentifier: messageIdentifier,
+      })
+      .then((res) => {
+        console.log(`statusCode: ${res.status}`);
+        console.log(res);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   });
 });
 

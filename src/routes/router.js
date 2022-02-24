@@ -26,7 +26,7 @@ async function getConvo(userNum) {
     const conversations = await axios.get(
       `http://localhost:3000/chats/${userNum}`
     );
-    console.log(conversations.data)
+    console.log(conversations.data);
     return conversations.data;
   } catch (error) {
     console.log(error);
@@ -51,6 +51,16 @@ router.get("/", async (req, res, next) => {
   } catch (error) {
     console.log(error);
     res.redirect("/login");
+  }
+});
+
+//!delete chat message from db (on button click)
+router.post("/deleteMessage", async (req, res, next) => {
+  try {
+    const chatID = req.params.id;
+    await Chat.deleteOne({ _id: chatID });
+  } catch (error) {
+    console.log(error);
   }
 });
 

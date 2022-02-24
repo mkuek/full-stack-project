@@ -13,9 +13,22 @@ chatBubbleFlex.addEventListener("click", (e) => {
   console.log("click");
 });
 
+//!deletes message from db
+const body = document.querySelector("body");
+body.addEventListener("click", (e) => {
+  if (e.target.classList.contains("close")) {
+    const messageIdentifier = e.target.id;
+    console.log(messageIdentifier);
+    socket.emit("delete-message", messageIdentifier);
+    console.log("click");
+    const messageToDelete = document.getElementById(messageIdentifier);
+    messageToDelete.remove();
+  }
+});
+
 //appends messages to the chat-window and scrolls down
-socket.on("message", (data, time) => {
-  appendMessages(data, time);
+socket.on("message", (data, time, chatID, username) => {
+  appendMessages(data, time, chatID, username);
   messages.scrollTop = messages.scrollHeight;
 });
 
@@ -50,17 +63,18 @@ msgForm.addEventListener("submit", (e) => {
 });
 
 //writing to the chat window
-function appendMessages(message, time) {
+function appendMessages(message, time, chatID, username) {
   message.sender == currentUser
     ? (sender = "current-user")
     : (sender = "another-user");
 
   !message.sent ? (sent = time) : (sent = message.sent);
-
-  const html = `<div class="message ${sender}" id="${message.sender}">
+  //!changed id ="$message.sender" to createdAt (for deleting)
+  //!i do not think this message object contains the "createdAt" info
+  const html = `<div class="message ${sender}" id="${chatID}">
   <p class="message-username" >
-    ${message.sender}
-    <button id="close"></button>
+    ${username}
+    <button class="close" id="${chatID}"></button>
   </p>
   <p class="message-text">${message.msg}</p>
   <p class="message-time">${sent}</p>
@@ -94,7 +108,6 @@ function copyToClipboard(inviteCode) {
   document.execCommand("copy");
   document.body.removeChild(hiddenInput);
   inviteButton.setAttribute("id", "copied");
-  //!duration of this change is too short (render on page load for a little longer, or (maybe better solution) don't reload page after invite)
   const inviteButtonHeadline = document.querySelector(".copy-code-headline");
   inviteButtonHeadline.textContent = "invite code copied";
 }
