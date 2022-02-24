@@ -1,12 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-
-//   app = express(),
-//   router = express.Router(),
-//   fetchChats = require("../../controllers/rooms");
-
-// router.route("/rooms").get(fetchChats);
-// module.exports = router;
 const moment = require("moment");
 const Room = require("../../models/room");
 const User = require("../../models/user");
@@ -39,15 +32,12 @@ router.post("/rooms/update/:receiver", async (req, res) => {
   console.log("roomname!!!!!!" + roomName);
   console.log("ID!!!!!!" + id);
   const newUser = { _id: id };
-
   try {
-    // const saveRoom = await updateDB.save();
     await Room.findOneAndUpdate(
       { roomName: roomName },
 
       { $push: { users: [id] } }
     );
-
     console.log("room updated");
     res.redirect("/");
   } catch (error) {
@@ -71,13 +61,10 @@ router.get("/chats/:userID", async (req, res) => {
         ) {
           conversations.push(convo[i]);
         } else {
-          // console.log("error");
         }
       }
     }
-    console.log(`conversations: ${JSON.stringify(conversations)}`);
     const rooms = await Room.find({ users: req.params.userID });
-    console.log(`rooms: ${JSON.stringify(rooms)}`);
     res.send({ conversations, rooms });
   } catch (error) {
     console.log(error);
@@ -115,9 +102,7 @@ router.get("/conversations/:id", async (req, res) => {
 //!delete chat message from db (on button click)
 router.post("/deleteMessage", async (req, res, next) => {
   try {
-    console.log(`delete req body: ${req.body.messageIdentifier}`); //id is here
     const chatID = req.body.messageIdentifier;
-    // const chatID = req.params.id;
     await Chat.deleteOne({ _id: chatID });
   } catch (error) {
     console.log(error);

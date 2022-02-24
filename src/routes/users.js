@@ -8,7 +8,6 @@ router.get("/register", (req, res) => {
   res.render("users/register");
 });
 
-//!somewhere here we need to put that src into the database when signing up a new user
 router.post("/register", async (req, res) => {
   try {
     const { username, password, email, pic } = req.body;
