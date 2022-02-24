@@ -54,10 +54,11 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-//delete chat message from db (on button click)
+//!delete chat message from db (on button click)
 router.post("/deleteMessage", async (req, res, next) => {
   try {
-    //delete message from collection chats with messageIdentifier = ${messageIdentifier}
+    const chatID = req.params.id;
+    await Chat.deleteOne({ _id: chatID });
   } catch (error) {
     console.log(error);
   }
