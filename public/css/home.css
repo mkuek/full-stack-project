@@ -339,6 +339,7 @@ body {
 }
 
 .entered-chat-dot {
+  display: none;
   position: relative;
   visibility: hidden;
   opacity: 0;
@@ -352,6 +353,7 @@ body {
 }
 
 #on {
+  display: block;
   visibility: visible;
   opacity: 1;
 }
@@ -391,7 +393,11 @@ body {
   width: 15%;
 }
 
-.contact-name-flex > div {
+.user-icon {
+  margin-top: 0;
+}
+
+.contact-name {
   margin-top: 0;
   margin-left: 0.2em;
   font-size: 1.2rem;
