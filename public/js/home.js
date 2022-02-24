@@ -13,12 +13,10 @@ socket.on("socketId", (socketId) => {
 //disconnects user socket on logout button click
 const logoutButton = document.querySelector(".logout");
 logoutButton.addEventListener("click", (e) => {
+  console.log("click");
   console.log(`socketId: ${userSocketId}`);
-  socket.emit("disconnect", userSocketId);
+  // socket.emit("disconnect", userSocketId);
   socket.disconnect(userSocketId);
-  socket.on("disconnect", function () {
-    console.log("disconnected from socket client side!!!!");
-  });
 });
 
 //opens paste invite code dropdown menu
