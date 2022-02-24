@@ -37,7 +37,7 @@ socket.on("output-messages", (data) => {
   console.log(data);
   if (data.length) {
     data.forEach((message) => {
-      appendMessages(message);
+      appendMessages(message, message.sent, message.chatID, message.username);
     });
   }
   messages.scrollTop = messages.scrollHeight;
