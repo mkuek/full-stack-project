@@ -113,12 +113,12 @@ body {
   border-radius: 0.5em;
   border: 1px solid #1f60f9;
   margin-top: 1.85em;
+  transition: all 200ms;
 }
 
-/* .copy-code button:hover {
-  background-color: white;
-  color: #034dfc;
-} */
+.copy-code button:hover {
+  transform: scale(1.1);
+}
 
 .copy-code button > img {
   width: 32px;
@@ -239,7 +239,7 @@ body {
   position: relative;
   top: 4px;
   margin-left: 11px;
-  width: 9%;
+  width: 7%;
   opacity: 0.9;
 }
 
