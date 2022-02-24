@@ -2,7 +2,6 @@ const socket = io("http://localhost:3000/");
 const messages = document.querySelector(".chat-window");
 const msgForm = document.querySelector(".chat-input");
 const currentUser = document.querySelector(".user-details").id;
-//!is this chat header needed, why not just post message in chat-window (above)
 const chatHeader = document.querySelector(".chat-header");
 
 //opens paste invite code dropdown menu
@@ -43,7 +42,6 @@ socket.on("output-messages", (data) => {
   messages.scrollTop = messages.scrollHeight;
 });
 
-//!not sure if this needs a window autoscroll
 socket.on("disconnected", (data) => {
   appendMessages(data);
 });
@@ -136,10 +134,10 @@ socket.on("hello", () => {
 
 socket.on("welcome", () => {
   const user = document.querySelector(".users-name");
-  chatHeader.innerHTML = `Hi ${user.textContent}! Invite someone to chat by clicking the link below.`;
+  chatHeader.innerHTML = `<div class = "chat-header-div"><span>Hi ${user.textContent}!</span> Invite someone to chat by clicking the link below.<img src = "./images/blue_arrow.png"/></div>`;
   setTimeout(function () {
     chatHeader.remove();
-  }, 7000);
+  }, 7500);
 });
 
 socket.on("goodbye", (data) => {

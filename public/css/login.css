@@ -85,16 +85,16 @@ form input {
 .sign-in-button {
   display: block;
   font-size: 1rem;
-  background-color: #034dfc;
+  background-color: #1f60f9;
   padding: 0.65em 1.2em;
   color: white;
   border-radius: 0.5em;
-  border: 1px solid #034dfc;
+  border: 1px solid #1f60f9;
 }
 
 .sign-in-button:hover {
   background-color: white;
-  color: #034dfc;
+  color: #1f60f9;
 }
 
 .signup-link {
