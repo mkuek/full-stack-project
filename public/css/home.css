@@ -22,7 +22,7 @@ body {
   gap: 1.85em;
   max-width: 1200px;
   min-width: 1000px;
-  min-height: 630px;
+  min-height: 650px;
   height: 82vh; /* not great because bottom not consistent */
   margin: 2.5em auto;
   background-color: #ffffff;
@@ -212,6 +212,7 @@ body {
 
 .hidden-roomId {
   list-style: none;
+  color: #00184f;
 }
 
 .center-flexbox {

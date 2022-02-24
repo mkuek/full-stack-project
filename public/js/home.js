@@ -139,7 +139,7 @@ socket.on("welcome", () => {
   chatHeader.innerHTML = `<div class = "chat-header-div"><span>Hi ${user.textContent}!</span> Invite someone to chat by clicking the link below.<img src = "./images/blue_arrow.png"/></div>`;
   setTimeout(function () {
     chatHeader.remove();
-  }, 7000);
+  }, 7500);
 });
 
 socket.on("goodbye", (data) => {
