@@ -107,7 +107,11 @@ function copyToClipboard(inviteCode) {
   document.body.removeChild(hiddenInput);
   inviteButton.setAttribute("id", "copied");
   const inviteButtonHeadline = document.querySelector(".copy-code-headline");
-  inviteButtonHeadline.textContent = "invite code copied";
+  inviteButtonHeadline.textContent = "Invite code copied";
+  setTimeout(function () {
+    inviteButton.removeAttribute("id");
+    inviteButtonHeadline.textContent = "Copy invite code";
+  }, 3000);
 }
 
 const inputBox = document.querySelector(".chat-code-submit");
@@ -142,6 +146,7 @@ socket.on("goodbye", (data) => {
   const enteredChatDot = document.querySelector(".entered-chat-dot");
   enteredChatDot.removeAttribute("id");
 });
+
 socket.on("refresh-page", () => {
   window.location.reload();
 });
