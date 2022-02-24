@@ -13,7 +13,7 @@ chatBubbleFlex.addEventListener("click", (e) => {
   console.log("click");
 });
 
-//!deletes message from db
+//deletes message from db
 const body = document.querySelector("body");
 body.addEventListener("click", (e) => {
   if (e.target.classList.contains("close")) {
@@ -69,8 +69,6 @@ function appendMessages(message, time, chatID, username) {
     : (sender = "another-user");
 
   !message.sent ? (sent = time) : (sent = message.sent);
-  //!changed id ="$message.sender" to createdAt (for deleting)
-  //!i do not think this message object contains the "createdAt" info
   const html = `<div class="message ${sender}" id="${chatID}">
   <p class="message-username" >
     ${username}
@@ -127,14 +125,21 @@ inputBox.addEventListener("click", (e) => {
 });
 
 //writing things to the chatHeader and chatWindow
-socket.on("hello", (data) => {
-  chatHeader.innerHTML = "Chatting with: " + data;
+socket.on("hello", () => {
+  const enteredChatDot = document.querySelector(".entered-chat-dot");
+  enteredChatDot.setAttribute("id", "on");
 });
-socket.on("welcome", (data) => {
-  chatHeader.innerHTML = data;
+
+socket.on("welcome", () => {
+  const user = document.querySelector(".users-name");
+  chatHeader.innerHTML = `Hi ${user.textContent}! Invite someone to chat by clicking the link below.`;
+  setTimeout(function () {
+    chatHeader.remove();
+  }, 7000);
 });
+
 socket.on("goodbye", (data) => {
-  messages.innerHTML = `User ${data} has left room`;
+  // messages.innerHTML = `User ${data} has left room`;
 });
 socket.on("refresh-page", () => {
   window.location.reload();

@@ -231,11 +231,9 @@ app.use((req, res, next) => {
 });
 
 io.on("connection", (socket) => {
-  console.log("a user connected");
-  socket.emit("welcome", "Hello, Welcome to Worm-Chat!");
+  socket.emit("welcome");
   socket.on("disconnect", () => {
     socket.emit("disconnected", "User has left room");
-    console.log("user disconnected");
   });
 
   socket.on("chatmessage", (messageArray) => {
@@ -245,7 +243,6 @@ io.on("connection", (socket) => {
         "_id"
       ).exec();
       messageArray.room = roomID[0];
-      console.log(`this is the messageArray ${JSON.stringify(messageArray)}`);
       try {
         const updateMessage = new Chat(messageArray);
         // console.log(updateMessage._id);
