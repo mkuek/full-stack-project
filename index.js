@@ -18,136 +18,6 @@ const fetch = require("node-fetch");
 const axios = require("axios");
 
 const chatBot = "Chatbot";
-//setup socket connection
-// io.on("connection", (socket) => {
-//   console.log(`connected (server-side) with socketId ${socket.id}`);
-//   //get invite code when clicked (also sets up a new room)
-//   const inviteCode = uuidV4();
-//   async function getCurrentUser() {
-//     try {
-//       const res = await axios.get("http://localhost:3000/currentuser");
-//       console.log(res);
-//       return res;
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   }
-//   getCurrentUser();
-//   socket.on("get-invite-code", (username, inviteCode) => {
-//     // async function createRoom(userNum, inviteCode) {
-//     //   try {
-//     //     const resp = await axios.post(
-//     //       `http://localhost:3000/rooms/${userNum}`,
-//     //       { roomName: inviteCode }
-//     //     );
-//     //     return resp.data;
-//     //   } catch (error) {
-//     //     console.log(error);
-//     //   }
-//     // }
-//     // createRoom("620fd991022538b6555934e3", inviteCode);
-//     //!add this invite code (roomID) to the user's own (i.e. add roomID to username being passed = will need to pass an id (not a username))
-//   });
-
-//   //user object variable
-//   let user = {};
-//   //join room (gets triggered when url is pasted)
-//   socket.on("joinRoom", ({ username, roomID, roomChange }) => {
-//     console.log(`line 49, server: ${roomID}`);
-//     //!update database with users RoomID (after inputting invite code), then make a post request to ("/) to redirect to home page and re-render sidebar
-//     async () => {
-//       try {
-//         const res = await fetch("http://localhost:3000/", {
-//           method: "POST",
-//           body: "",
-//         });
-//       } catch (error) {
-//         console.log(error);
-//       }
-//     };
-//     // makes user object (w/id, username, room), and joins the selected room
-//     user = userJoinObject(socket.id, username, roomID);
-//     //this socket joins this particular room
-
-//     console.log(`line 63`);
-//     console.log(user);
-//     console.log(user.roomID);
-//     console.log(user.id);
-//     // console.log(socket.rooms);
-//     socket.join(user.roomID);
-//     console.log(socket.rooms); //confirms that socket is in the room
-
-//     //send user socket.id info to client (to disconnect from a socket when changing rooms)
-//     socket.emit("userSocketId", user);
-//     //!these messages seem to not be emitting after a room change
-//     socket.emit(
-//       "message",
-//       formatMessage(
-//         chatBot,
-//         `Hi ${user.username}, welcome! You've entered a chat with ...`
-//       ),
-//       user.roomID,
-//       roomChange
-//     );
-
-//     //broadcasting (sends message to all in room except the user connecting) when a user connects
-//     socket.broadcast
-//       .to(user.roomID)
-//       .emit(
-//         "message",
-//         formatMessage(chatBot, `${user.username} has joined the conversation`)
-//       ),
-//       user.roomID,
-//       roomChange;
-//   });
-
-//   //receives chat message, formats it, and sends it to all clients in the same room
-//   socket.on("chatMessage", (msg, currentRoom) => {
-//     console.log(msg);
-//     //!post request - save chat to database
-//     console.log(`line 92 chat to room id: ${currentRoom}`); //undefined currently (need to get selected roomID in here)
-//     console.log(`line 92 chat to room using username: ${user.username}`);
-//     // io.sockets
-//     //   .to(currentRoom)
-//     //   .emit("message", formatMessage(user.username, msg), currentRoom);
-//     io.to(currentRoom).emit(
-//       "message",
-//       formatMessage(user.username, msg),
-//       currentRoom
-//     );
-//     console.log(msg);
-//   });
-
-//   //disconnects the user (socket)
-//   socket.on("disconnectSocket", function (userInfoForReset) {
-//     // console.log("before disconnect");
-//     // socket.disconnect(userInfoForReset.id);
-//     // console.log("after disconnect");
-//     socket.leave(user.roomID);
-//   });
-
-//   //notification (server-side) that user has been disconnected
-//   socket.on("disconnect", () => {
-//     console.log("socket disconnected - confirmed server side");
-//   });
-
-//   // io.sockets.sockets.forEach((socket) => {
-//   //   // If given socket id is exist in list of all sockets, kill it
-//   //   if (userInfoForReset.id);
-//   //   socket.disconnect(true);
-//   // });
-//   // io.sockets.connected[userInfoForReset.id].disconnect();
-//   //io.sockets.sockets[].disconnect();
-
-//   // //removes user from the users array
-//   // // userLeave(socket.id);
-//   // //10a
-//   // io.to(user.room).emit(
-//   //   "message",
-//   //   formatMessage(chatBot, `${user.username} has left the chat`)
-//   // );
-//   //});
-// });
 
 const bodyParser = require("body-parser");
 app.use(express.urlencoded({ extended: true }));
@@ -231,8 +101,14 @@ app.use((req, res, next) => {
 });
 
 io.on("connection", (socket) => {
+  console.log(`socket.id ${socket.id}`);
+  socket.emit("socketId", socket.id);
+
   socket.emit("welcome");
+
   socket.on("disconnect", () => {
+    socket.disconnect(socket.id);
+    console.log("after disconnect");
     socket.emit("disconnected", "User has left room");
   });
 
