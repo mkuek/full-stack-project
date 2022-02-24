@@ -33,7 +33,7 @@ socket.on("message", (data, time, chatID, username) => {
 
 //displays stored messages in chat-window
 socket.on("output-messages", (data) => {
-  console.log(data);
+  messages.innerHTML = "";
   if (data.length) {
     data.forEach((message) => {
       appendMessages(message, message.sent, message.chatID, message.username);
@@ -149,17 +149,15 @@ socket.on("refresh-page", () => {
   window.location.reload();
 });
 
+//clicking contacts
 let selectedContact = "";
 const contactBoxes = document.querySelectorAll(".hidden-roomId");
 for (let contactBox of contactBoxes) {
   contactBox.addEventListener("click", (e) => {
     let chatID = e.target.id;
     if (selectedContact == chatID) {
-      console.log("same user selected");
-      console.log(`${chatID} and ${selectedContact}`);
       selectedContact = chatID;
     } else {
-      console.log(`${chatID} and ${selectedContact}`);
       selectedContact = chatID;
       const targetUser = document.getElementById(chatID).innerText;
       msgForm.id = chatID;
@@ -169,6 +167,7 @@ for (let contactBox of contactBoxes) {
     }
   });
 }
+
 const contactPic = document.querySelector(".contact-image-container > img");
 const contactName = document.querySelector(".contact-name");
 const contactEmail = document.querySelector(".contact-email");
