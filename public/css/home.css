@@ -81,18 +81,18 @@ body {
 }
 
 .code-input-form button {
-  background-color: #034dfc;
+  background-color: #1f60f9;
   margin-top: 1.7em;
   font-size: 0.9rem;
   padding: 0.6em 1.15em;
   color: white;
   border-radius: 0.5em;
-  border: 1px solid #034dfc;
+  border: 1px solid #1f60f9;
 }
 
 .code-input-form button:hover {
   background-color: white;
-  color: #034dfc;
+  color: #1f60f9;
 }
 
 .copy-code {
@@ -107,11 +107,11 @@ body {
 }
 
 .copy-code button {
-  background-color: #034dfc;
+  background-color: #1f60f9;
   padding: 0.01em 1.5em;
   color: white;
   border-radius: 0.5em;
-  border: 1px solid #034dfc;
+  border: 1px solid #1f60f9;
   margin-top: 1.85em;
 }
 
@@ -129,15 +129,16 @@ body {
   border: 1px solid lightgreen;
 }
 .copy-code p {
-  margin-top: 1em;
+  margin-top: 1.15em;
   font-size: 1.1em;
   margin-bottom: 0;
   line-height: 1.4em;
 }
 
-.copy-code img {
+.paper-airplane {
   width: 40%;
   float: right;
+  margin-top: 0.7em;
 }
 
 .user-info {
@@ -350,16 +351,16 @@ body {
   font-size: 0.99rem;
   margin-left: 1.6em;
   margin-right: 3.3%;
-  background-color: #034dfc;
+  background-color: #1f60f9;
   padding: 0.56em 1.2em;
   color: white;
   border-radius: 0.5em;
-  border: 1px solid #034dfc;
+  border: 1px solid #1f60f9;
 }
 
 .message-submit-button:hover {
   background-color: white;
-  color: #034dfc;
+  color: #1f60f9;
 }
 
 .right-flexbox {
