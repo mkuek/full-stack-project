@@ -241,19 +241,6 @@ body {
   margin-right: 3%;
 }
 
-.own-message {
-  background-color: #c3cee6;
-  max-width: 75%;
-  float: right;
-  margin-left: 27%;
-}
-
-.other-message {
-  background-color: rgb(237, 177, 177);
-  max-width: 75%;
-  margin-right: 27%;
-}
-
 .message-username {
   margin: 0;
 }
@@ -268,7 +255,7 @@ body {
   line-height: 1.5em;
 }
 
-#close {
+.close {
   position: relative;
   border: none;
   float: right;
@@ -282,12 +269,12 @@ body {
   margin: 0;
 }
 
-#close:hover {
+.close:hover {
   background-color: rgba(130, 130, 130, 0.1);
 }
 
-#close:before,
-#close:after {
+.close:before,
+.close:after {
   position: absolute;
   left: calc(50% - 0.0625em);
   width: 0.125em;
@@ -298,7 +285,7 @@ body {
   content: "";
 }
 
-#close:after {
+.close:after {
   transform: rotate(-45deg);
 }
 

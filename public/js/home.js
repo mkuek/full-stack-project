@@ -13,6 +13,18 @@ chatBubbleFlex.addEventListener("click", (e) => {
   console.log("click");
 });
 
+//!deletes message from db
+const body = document.querySelector("body");
+body.addEventListener("click", (e) => {
+  if (e.target.classList.contains("close")) {
+    const messageIdentifier = e.target.id;
+    socket.emit("delete-message", messageIdentifier);
+    console.log("click");
+    //delete the element (setting innerHTML to "", or deleteElement dom command(?))
+    //element with messageIdentifier.innerHTML = ""
+  }
+});
+
 //appends messages to the chat-window and scrolls down
 socket.on("message", (data, time) => {
   appendMessages(data, time);
@@ -60,7 +72,7 @@ function appendMessages(message, time) {
   const html = `<div class="message ${sender}" id="${message.sender}">
   <p class="message-username" >
     ${message.sender}
-    <button id="close"></button>
+    <button class="close"></button>
   </p>
   <p class="message-text">${message.msg}</p>
   <p class="message-time">${sent}</p>

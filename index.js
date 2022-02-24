@@ -350,6 +350,22 @@ io.on("connection", (socket) => {
     console.log(chatID);
     io.sockets.in(chatID).emit("goodbye", targetUser);
   });
+
+  //deletes message from the database
+  socket.on("delete-message", (messageIdentifier) => {
+    console.log(`messageIdentifier is ${messageIdentifier}`);
+    axios
+      .post("http://localhost:3000/deleteMessage", {
+        messageIdentifier: messageIdentifier,
+      })
+      .then((res) => {
+        console.log(`statusCode: ${res.status}`);
+        console.log(res);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  });
 });
 
 app.use("/", router);
