@@ -4,6 +4,23 @@ const msgForm = document.querySelector(".chat-input");
 const currentUser = document.querySelector(".user-details").id;
 const chatHeader = document.querySelector(".chat-header");
 
+//stores users socketId
+let userSocketId = "";
+socket.on("socketId", (socketId) => {
+  userSocketId = socketId;
+});
+
+//disconnects user socket on logout button click
+const logoutButton = document.querySelector(".logout");
+logoutButton.addEventListener("click", (e) => {
+  console.log(`socketId: ${userSocketId}`);
+  socket.emit("disconnect", userSocketId);
+  socket.disconnect(userSocketId);
+  socket.on("disconnect", function () {
+    console.log("disconnected from socket client side!!!!");
+  });
+});
+
 //opens paste invite code dropdown menu
 const chatBubbleFlex = document.querySelector(".chat-bubble-flex");
 chatBubbleFlex.addEventListener("click", (e) => {
@@ -42,9 +59,9 @@ socket.on("output-messages", (data) => {
   messages.scrollTop = messages.scrollHeight;
 });
 
-socket.on("disconnected", (data) => {
-  appendMessages(data);
-});
+// socket.on("disconnected", (data) => {
+//   appendMessages(data);
+// });
 
 msgForm.addEventListener("submit", (e) => {
   e.preventDefault();
