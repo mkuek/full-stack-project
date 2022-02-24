@@ -61,6 +61,7 @@ router.get("/chats/:userID", async (req, res) => {
   try {
     const convo = await Room.find().populate("users");
     let conversations = [];
+
     for (let i = 0; i < convo.length; i++) {
       for (let j = 0; j < convo[i].users.length; j++) {
         console.log(convo[i].users[j]);
@@ -74,7 +75,9 @@ router.get("/chats/:userID", async (req, res) => {
         }
       }
     }
+    console.log(`conversations: ${JSON.stringify(conversations)}`);
     const rooms = await Room.find({ users: req.params.userID });
+    console.log(`rooms: ${JSON.stringify(rooms)}`);
     res.send({ conversations, rooms });
   } catch (error) {
     console.log(error);
