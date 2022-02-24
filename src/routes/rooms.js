@@ -84,7 +84,7 @@ router.get("/chats/:userID", async (req, res) => {
 router.get("/conversations/:id", async (req, res) => {
   const conversationID = req.params.id;
   try {
-    const conversations = await Chat.find().populate("room");
+    const conversations = await Chat.find().populate("room").populate("sender");
     let found = [];
     for (let i = 0; i < conversations.length; i++) {
       if (
@@ -95,7 +95,9 @@ router.get("/conversations/:id", async (req, res) => {
         found.push({
           sent: moment(conversations[i].createdAt).format("h:mm a"),
           msg: conversations[i].msg,
-          sender: conversations[i].sender,
+          sender: conversations[i].sender._id,
+          username: conversations[i].sender.username,
+          chatID: conversations[i]._id,
         });
       } else {
         i++;
