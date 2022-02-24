@@ -139,7 +139,8 @@ socket.on("welcome", () => {
 });
 
 socket.on("goodbye", (data) => {
-  // messages.innerHTML = `User ${data} has left room`;
+  const enteredChatDot = document.querySelector(".entered-chat-dot");
+  enteredChatDot.removeAttribute("id");
 });
 socket.on("refresh-page", () => {
   window.location.reload();
