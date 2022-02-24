@@ -84,17 +84,23 @@ body {
 }
 
 .code-input-form input {
-  padding: 0.1rem;
+  padding: 0.4rem;
   font-size: 1rem;
   width: 95%;
 }
 
 .code-input-form button {
   background-color: #034dfc;
-  padding: 0.65em 1.2em;
+  font-size: 0.9rem;
+  padding: 0.6em 1.15em;
   color: white;
   border-radius: 0.5em;
   border: 1px solid #034dfc;
+}
+
+.code-input-form button:hover {
+  background-color: white;
+  color: #034dfc;
 }
 
 .copy-code {
@@ -167,7 +173,7 @@ body {
 
 .user-name-flex > img,
 .user-email-flex > img {
-  width: 15%;
+  width: 11%;
 }
 
 .user-name-flex > div {
@@ -196,13 +202,15 @@ body {
 .active-chats {
   flex: 1;
   padding: 1.2em;
+  font-size: 1.2rem;
 }
 
-.chatroom {
-  /* display: block; */
+.active-chats div {
+  font-weight: bold;
 }
+
 .hidden-roomId {
-  border: 1px solid red;
+  list-style: none;
 }
 
 .center-flexbox {
@@ -229,7 +237,7 @@ body {
   margin-top: 0;
   position: relative;
   top: 4px;
-  margin-left: 10px;
+  margin-left: 11px;
   width: 9%;
   opacity: 0.9;
 }
@@ -417,7 +425,7 @@ body {
 
 .contact-name-flex > img,
 .contact-email-flex > img {
-  width: 15%;
+  width: 11%;
 }
 
 .user-icon {
