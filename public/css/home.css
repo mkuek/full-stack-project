@@ -212,6 +212,28 @@ body {
   margin-top: 0;
 }
 
+.chat-header-div {
+  font-size: 2.2rem;
+  font-weight: bold;
+  line-height: 1.1em;
+  letter-spacing: 1px;
+  color: rgba(78, 98, 115, 0.5);
+}
+
+.chat-header-div > span {
+  color: rgba(19, 23, 26, 0.7);
+  font-size: 2.3rem;
+}
+
+.chat-header-div > img {
+  margin-top: 0;
+  position: relative;
+  top: 4px;
+  margin-left: 10px;
+  width: 9%;
+  opacity: 0.9;
+}
+
 .chat-window {
   overflow: scroll;
   flex: 1;

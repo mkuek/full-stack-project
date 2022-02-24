@@ -136,7 +136,7 @@ socket.on("hello", () => {
 
 socket.on("welcome", () => {
   const user = document.querySelector(".users-name");
-  chatHeader.innerHTML = `Hi ${user.textContent}! Invite someone to chat by clicking the link below.`;
+  chatHeader.innerHTML = `<div class = "chat-header-div"><span>Hi ${user.textContent}!</span> Invite someone to chat by clicking the link below.<img src = "./images/arrow.png"/></div>`;
   setTimeout(function () {
     chatHeader.remove();
   }, 7000);
