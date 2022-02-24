@@ -112,4 +112,16 @@ router.get("/conversations/:id", async (req, res) => {
   }
 });
 
+//!delete chat message from db (on button click)
+router.post("/deleteMessage", async (req, res, next) => {
+  try {
+    console.log(`delete req body: ${req.body.messageIdentifier}`); //id is here
+    const chatID = req.body.messageIdentifier;
+    // const chatID = req.params.id;
+    await Chat.deleteOne({ _id: chatID });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 module.exports = router;
