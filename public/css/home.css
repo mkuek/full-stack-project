@@ -338,7 +338,25 @@ body {
   flex: 2;
 }
 
-.contact-info {
+.entered-chat-dot {
+  position: relative;
+  visibility: hidden;
+  opacity: 0;
+  width: 0.75em;
+  height: 0.75em;
+  right: 40px;
+  bottom: 150px;
+  border-radius: 50%;
+  background-color: rgb(127, 229, 127);
+  transition: all 700ms;
+}
+
+#on {
+  visibility: visible;
+  opacity: 1;
+}
+
+#visible .contact-info {
   text-align: center;
 }
 
