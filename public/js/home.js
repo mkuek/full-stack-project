@@ -13,7 +13,6 @@ socket.on("socketId", (socketId) => {
 //disconnects user socket on logout button click
 const logoutButton = document.querySelector(".logout");
 logoutButton.addEventListener("click", (e) => {
-  console.log(`socketId: ${userSocketId}`);
   socket.emit("disconnect", userSocketId);
   socket.disconnect(userSocketId);
   socket.on("disconnect", function () {
@@ -26,7 +25,6 @@ const chatBubbleFlex = document.querySelector(".chat-bubble-flex");
 chatBubbleFlex.addEventListener("click", (e) => {
   const codeSubmitDropdown = document.querySelector(".code-submit-dropdown");
   codeSubmitDropdown.setAttribute("id", "visible");
-  console.log("click");
 });
 
 //deletes message from db
@@ -34,7 +32,6 @@ const body = document.querySelector("body");
 body.addEventListener("click", (e) => {
   if (e.target.classList.contains("close")) {
     const messageIdentifier = e.target.id;
-    console.log(messageIdentifier);
     socket.emit("delete-message", messageIdentifier);
     console.log("click");
     const messageToDelete = document.getElementById(messageIdentifier);
@@ -69,7 +66,6 @@ msgForm.addEventListener("submit", (e) => {
   };
   console.log(message);
   socket.emit("chatmessage", message);
-  console.log("submit from msgform", msgForm.msg.value);
   msgForm.msg.value = "";
 });
 
@@ -102,7 +98,6 @@ inviteButton.addEventListener("click", (e) => {
 //receive invite code generated on server and copy it to the clipboard
 socket.on("response", (inviteCode) => {
   console.log("response has been sent");
-  console.log(`invite code received ${inviteCode}`);
   msgForm.id = inviteCode;
   // alert("INVITE CODE:" + inviteCode);
   copyToClipboard(inviteCode);

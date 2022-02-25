@@ -46,14 +46,12 @@ router.post("/rooms/update/:receiver", async (req, res) => {
 
 router.get("/chats/:userID", async (req, res) => {
   const currentUser = req.user;
-  console.log(req.params.userID);
   try {
     const convo = await Room.find().populate("users");
     let conversations = [];
 
     for (let i = 0; i < convo.length; i++) {
       for (let j = 0; j < convo[i].users.length; j++) {
-        console.log(convo[i].users[j]);
         if (
           typeof (convo[i].users[j] !== "undefined") &&
           convo[i].users[j]._id.toString() == req.params.userID

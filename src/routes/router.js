@@ -10,7 +10,6 @@ async function getConvo(userNum) {
     const conversations = await axios.get(
       `https://chatworm.herokuapp.com/chats/${userNum}`
     );
-    console.log(conversations.data);
     return conversations.data;
   } catch (error) {
     console.log(error);
