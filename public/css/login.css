@@ -71,8 +71,8 @@ body {
 
 form > div {
   font-size: 1.7rem;
-  width: auto;
 }
+
 form * + * {
   margin-top: 2.1rem;
 }
@@ -83,28 +83,14 @@ form input {
   font-size: 1rem;
 }
 
-.buttons {
-  display: flex;
-  height: auto;
-  width: 80%;
-  margin-top: 0;
-  align-items: flex-end;
-  justify-content: flex-start;
-}
-.button2 {
-  margin: 0;
-  align-items: flex-start;
-  padding-left: 1.5rem;
-}
-
 .sign-in-button {
+  display: block;
   font-size: 1rem;
   background-color: #1f60f9;
   padding: 0.65em 1.2em;
   color: white;
   border-radius: 0.5em;
   border: 1px solid #1f60f9;
-  width: auto;
 }
 
 .sign-in-button:hover {

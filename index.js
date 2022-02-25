@@ -105,7 +105,6 @@ io.on("connection", (socket) => {
           _id: newMessage._id,
         }).populate("sender");
         const sender = senderUsername[0].sender;
-        console.log(sender.username);
         io.emit(
           "message",
           messageArray,
@@ -182,7 +181,6 @@ io.on("connection", (socket) => {
         const conversations = await axios.get(
           `https://chatworm.herokuapp.com/conversations/${roomID}`
         );
-        console.log(conversations.data);
         io.sockets.in(roomID).emit("output-messages", conversations.data);
         return conversations.data;
       } catch (error) {
@@ -216,14 +214,12 @@ io.on("connection", (socket) => {
 
   //deletes message from the database
   socket.on("delete-message", (messageIdentifier) => {
-    console.log(`messageIdentifier is ${messageIdentifier}`);
     axios
       .post("https://chatworm.herokuapp.com/deleteMessage", {
         messageIdentifier: messageIdentifier,
       })
       .then((res) => {
         console.log(`statusCode: ${res.status}`);
-        console.log(res);
       })
       .catch((error) => {
         console.error(error);
