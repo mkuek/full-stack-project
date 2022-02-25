@@ -25,12 +25,24 @@
             placeholder="Password"
             required
           />
-          <button class="sign-in-button" type="submit">Sign in</button>
-        </form>
-        <form style="margin: 0" action="/login" method="post">
-          <input type="text" name="username" value="Demo" hidden />
-          <input type="password" name="password" value="demo" required hidden />
-          <button class="sign-in-button" type="submit">Demo</button>
+          <div class="buttons">
+            <div class="button1">
+              <button class="sign-in-button" type="submit">Sign in</button>
+            </div>
+            <div class="button2">
+              <form action="/login" method="post">
+                <input type="text" name="username" value="Demo" hidden />
+                <input
+                  type="password"
+                  name="password"
+                  value="demo"
+                  required
+                  hidden
+                />
+                <button class="sign-in-button" type="submit">Demo</button>
+              </form>
+            </div>
+          </div>
         </form>
         <a class="signup-link" href="/signup">Create an account</a>
       </div>
