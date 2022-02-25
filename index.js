@@ -39,7 +39,6 @@ const User = require("./models/user");
 const Chat = require("./models/chat");
 const Room = require("./models/room");
 const moment = require("moment");
-require("dotenv").config();
 //DB MODEL
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const res = require("express/lib/response");
