@@ -59,11 +59,6 @@ router.get("/currentuser", async (req, res, next) => {
     console.log(error);
   }
 });
-//check username and password (hard coded for now, this will happen with a database query below)
-const usernameA = "Matthew";
-const passwordA = 1234;
-const usernameB = "John";
-const passwordB = 1234;
 
 //ERROR HANDLING
 app.use((err, req, res, next) => {

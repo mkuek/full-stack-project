@@ -29,8 +29,7 @@ router.post("/rooms/:sender", async (req, res) => {
 router.post("/rooms/update/:receiver", async (req, res) => {
   const id = req.params.receiver;
   roomName = req.body.roomName;
-  console.log("roomname!!!!!!" + roomName);
-  console.log("ID!!!!!!" + id);
+
   const newUser = { _id: id };
   try {
     await Room.findOneAndUpdate(

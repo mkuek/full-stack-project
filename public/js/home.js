@@ -59,10 +59,6 @@ socket.on("output-messages", (data) => {
   messages.scrollTop = messages.scrollHeight;
 });
 
-// socket.on("disconnected", (data) => {
-//   appendMessages(data);
-// });
-
 msgForm.addEventListener("submit", (e) => {
   e.preventDefault();
 

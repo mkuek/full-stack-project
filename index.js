@@ -11,13 +11,8 @@ const http = require("http");
 const server = http.createServer(app);
 const io = socketio(server);
 
-const formatMessage = require("./modules/formatMessage");
-const userJoinObject = require("./modules/manageUsers");
 const router = require("./src/routes/router");
-const fetch = require("node-fetch");
 const axios = require("axios");
-
-const chatBot = "Chatbot";
 
 const bodyParser = require("body-parser");
 app.use(express.urlencoded({ extended: true }));
@@ -55,23 +50,6 @@ mongoose.connect(uri);
 mongoose.connection.on("connected", () => {
   console.log("connected to MongoAtlas");
 });
-
-// const { MongoClient, ServerApiVersion } = require("mongodb");
-// const res = require("express/lib/response");
-// const uri =
-//   "mongodb+srv://chatApp:chatApp123@cluster0.t7h9m.mongodb.net/chat-app?retryWrites=true&w=majority";
-// mongoose.connect(uri);
-
-// mongoose.connection.on("connected", () => {
-//   console.log("connected to MongoAtlas");
-// });
-// mongoose.connect("mongodb://localhost:27017/chat-app");
-
-// const db = mongoose.connection;
-// db.on("error", console.error.bind(console, "connection error:"));
-// db.once("open", () => {
-//   console.log("Database connected");
-// });
 
 const sessionConfig = {
   secret: "thisshouldbeabettersecret!",

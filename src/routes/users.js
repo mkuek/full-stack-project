@@ -54,8 +54,6 @@ router.get("/logout", (req, res) => {
   req.logout();
   req.flash("success", "logged out");
   res.redirect("/login");
-  // socket.disconnect(userInfoForReset.id);
-  // console.log("after disconnect");
 });
 
 module.exports = router;
