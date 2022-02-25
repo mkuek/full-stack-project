@@ -8,7 +8,7 @@ const axios = require("axios");
 async function getConvo(userNum) {
   try {
     const conversations = await axios.get(
-      `http://localhost:3000/chats/${userNum}`
+      `https://chatworm.herokuapp.com/chats/${userNum}`
     );
     console.log(conversations.data);
     return conversations.data;

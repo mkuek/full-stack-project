@@ -125,7 +125,7 @@ io.on("connection", (socket) => {
     async function createRoom(userNum, inviteCode) {
       try {
         const resp = await axios.post(
-          `http://localhost:3000/rooms/${userNum}`,
+          `https://chatworm.herokuapp.com/rooms/${userNum}`,
           { roomName: inviteCode }
         );
         return resp.data;
@@ -143,7 +143,7 @@ io.on("connection", (socket) => {
     async function updateRoom(currentUser) {
       try {
         const resp = await axios.post(
-          `http://localhost:3000/rooms/update/${currentUser}`,
+          `https://chatworm.herokuapp.com/rooms/update/${currentUser}`,
           { roomName: roomID }
         );
         return resp.data;
@@ -163,7 +163,7 @@ io.on("connection", (socket) => {
     async function updateRoom(currentUser) {
       try {
         const resp = await axios.post(
-          `http://localhost:3000/rooms/update/${currentUser}`,
+          `https://chatworm.herokuapp.com/rooms/update/${currentUser}`,
           { roomName: roomID }
         );
         return resp.data;
@@ -180,7 +180,7 @@ io.on("connection", (socket) => {
     async function getChatHistory(roomID) {
       try {
         const conversations = await axios.get(
-          `http://localhost:3000/conversations/${roomID}`
+          `https://chatworm.herokuapp.com/conversations/${roomID}`
         );
         console.log(conversations.data);
         io.sockets.in(roomID).emit("output-messages", conversations.data);
@@ -198,7 +198,7 @@ io.on("connection", (socket) => {
     async function getTargetUser(username) {
       try {
         const targetInfo = await axios.get(
-          `http://localhost:3000/user/${username}`
+          `https://chatworm.herokuapp.com/user/${username}`
         );
         socket.emit("target-user-info", targetInfo.data[0]);
       } catch (error) {
@@ -218,7 +218,7 @@ io.on("connection", (socket) => {
   socket.on("delete-message", (messageIdentifier) => {
     console.log(`messageIdentifier is ${messageIdentifier}`);
     axios
-      .post("http://localhost:3000/deleteMessage", {
+      .post("https://chatworm.herokuapp.com/deleteMessage", {
         messageIdentifier: messageIdentifier,
       })
       .then((res) => {
