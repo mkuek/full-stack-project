@@ -80,6 +80,10 @@ body {
   width: 90%;
 }
 
+.code-input-form div {
+  cursor: pointer;
+}
+
 .code-input-form button {
   background-color: #1f60f9;
   margin-top: 1.7em;
@@ -88,11 +92,13 @@ body {
   color: white;
   border-radius: 0.5em;
   border: 1px solid #1f60f9;
+  cursor: pointer;
 }
 
 .code-input-form button:hover {
   background-color: white;
   color: #1f60f9;
+  cursor: pointer;
 }
 
 .copy-code {
@@ -114,10 +120,12 @@ body {
   border: 1px solid #1f60f9;
   margin-top: 1.85em;
   transition: all 200ms;
+  cursor: pointer;
 }
 
 .copy-code button:hover {
   transform: scale(1.1);
+  cursor: pointer;
 }
 
 .copy-code button > img {
@@ -204,15 +212,23 @@ body {
   flex: 1;
   padding: 1.2em;
   font-size: 1.2rem;
+  border-radius: 0.5em;
+  border: 1px solid #eceef2;
 }
 
 .active-chats div {
   font-weight: bold;
+  padding: 0.2em;
 }
 
 .hidden-roomId {
   list-style: none;
   color: #00184f;
+  cursor: pointer;
+  background-color: #eceef2;
+  border-radius: 0.5em;
+  padding: 0.5em;
+  margin: auto;
 }
 
 .center-flexbox {
@@ -357,11 +373,13 @@ body {
   color: white;
   border-radius: 0.5em;
   border: 1px solid #1f60f9;
+  cursor: pointer;
 }
 
 .message-submit-button:hover {
   background-color: white;
   color: #1f60f9;
+  cursor: pointer;
 }
 
 .right-flexbox {
