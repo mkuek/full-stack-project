@@ -1,6 +1,6 @@
 const express = require("express"),
   app = express(),
-  port = 3000;
+  port = 5000;
 
 //calling the v4 function(renamed as uuidV4) makes unique id
 const { v4: uuidV4 } = require("uuid");
@@ -44,27 +44,16 @@ require("dotenv").config();
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const res = require("express/lib/response");
 const { emit } = require("process");
-// const uri =
-//   "mongodb+srv://chatApp:chatApp123@cluster0.t7h9m.mongodb.net/chat-app?retryWrites=true&w=majority";
-// mongoose.connect(uri);
+const uri =
+  "mongodb+srv://chatApp:chatApp123@cluster0.t7h9m.mongodb.net/chat-app?retryWrites=true&w=majority";
+mongoose.connect(process.env.MONGODB_URI || uri);
 
-// mongoose.connection.on("connected", () => {
-//   console.log("connected to MongoAtlas");
-// });
-
-mongoose
-  .connect(
-    process.env.MONGODB_URI, //  <--- UPDATE
-    { useNewUrlParser: true }
-  )
-  .then((x) =>
-    console
-      .log("Connected to the DB")
-      .catch((err) => console.error("Error while connecting to DB", err))
-  );
+mongoose.connection.on("connected", () => {
+  console.log("connected to MongoAtlas");
+});
 
 const sessionConfig = {
-  secret: process.env.SESSION_SECRET,
+  secret: process.env.SESSION_SECRET || "thisshouldbeabettersecret!",
   resave: false,
   saveUninitialized: true,
   cookie: {
