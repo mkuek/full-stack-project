@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node index.js",
     "db:create": "createdb chat_app_database",
     "db:destroy": "dropdb chat_app_database",
     "db:init": "psql -U postgres -d chat_app_database -a -f init.sql",
@@ -15,6 +15,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": "14.x"
+  },
   "dependencies": {
     "axios": "^0.26.0",
     "body-parser": "^1.19.1",

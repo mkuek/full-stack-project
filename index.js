@@ -39,20 +39,32 @@ const User = require("./models/user");
 const Chat = require("./models/chat");
 const Room = require("./models/room");
 const moment = require("moment");
+require("dotenv").config();
 //DB MODEL
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const res = require("express/lib/response");
 const { emit } = require("process");
-const uri =
-  "mongodb+srv://chatApp:chatApp123@cluster0.t7h9m.mongodb.net/chat-app?retryWrites=true&w=majority";
-mongoose.connect(uri);
+// const uri =
+//   "mongodb+srv://chatApp:chatApp123@cluster0.t7h9m.mongodb.net/chat-app?retryWrites=true&w=majority";
+// mongoose.connect(uri);
 
-mongoose.connection.on("connected", () => {
-  console.log("connected to MongoAtlas");
-});
+// mongoose.connection.on("connected", () => {
+//   console.log("connected to MongoAtlas");
+// });
+
+mongoose
+  .connect(
+    process.env.MONGODB_URI, //  <--- UPDATE
+    { useNewUrlParser: true }
+  )
+  .then((x) =>
+    console
+      .log("Connected to the DB")
+      .catch((err) => console.error("Error while connecting to DB", err))
+  );
 
 const sessionConfig = {
-  secret: "thisshouldbeabettersecret!",
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {

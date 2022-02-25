@@ -1,7 +1,6 @@
 const express = require("express"),
   app = express(),
-  router = express.Router(),
-  buildUserMessagesObject = require("../../modules/userMessages.js");
+  router = express.Router();
 const passport = require("passport");
 const User = require("../../models/user");
 const Rooms = require("../../models/room");
