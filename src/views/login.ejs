@@ -16,7 +16,7 @@
       </div>
       <div class="right-flexbox">
         <div class="greeting">Welcome to chat-worm!</div>
-        <form action="http://localhost:3000/login" method="post">
+        <form action="/login" method="post">
           <div>Login</div>
           <input type="text" name="username" placeholder="Username" required />
           <input
@@ -27,9 +27,7 @@
           />
           <button class="sign-in-button" type="submit">Sign in</button>
         </form>
-        <a class="signup-link" href="http://localhost:3000/signup"
-          >Create an account</a
-        >
+        <a class="signup-link" href="/signup">Create an account</a>
       </div>
     </div>
     <script src="./js/login.js"></script>

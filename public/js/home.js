@@ -1,4 +1,4 @@
-const socket = io("http://localhost:3000/");
+const socket = io("/");
 const messages = document.querySelector(".chat-window");
 const msgForm = document.querySelector(".chat-input");
 const currentUser = document.querySelector(".user-details").id;
