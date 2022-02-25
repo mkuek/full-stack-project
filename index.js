@@ -1,6 +1,6 @@
 const express = require("express"),
   app = express(),
-  port = 5000;
+  port = process.env.PORT || 3000;
 
 //calling the v4 function(renamed as uuidV4) makes unique id
 const { v4: uuidV4 } = require("uuid");
