@@ -24,7 +24,7 @@ Removed sections:
   <p>
     This is a full stack messaging application. Intended audience is for several people seeking to establish contact with one another. Chat rooms can be established and are given a unique invitation code that can be distributed to interested members. Users can then join the room with the appropriate invitation code to establish the unique chat room. Information such as user information, chat history, and chat rooms are stored to a cloud based database. Chat history is preserved between sessions and are reestablished upon logging in.
   </p>
-
+</div>
 <!-- About the Project -->
 
 ## About the Project
@@ -118,13 +118,13 @@ Create new user or use Demo account to log into application
 In order to demonstrate chat functionality, open a separate browser or a private broswer window. From there, another account can be signed into and chatting can begin.
 
 Copy an invite code in the bottom right of the window using the button. Invite code can be pasted into another session or window to establish the chat room.
-<img src=".readmeImages/inviteCode.gif"/>
+<img src="./readmeImages/inviteCode.gif"/>
 
 Established chat rooms are displayed in the lower left section of the page. Chat rooms can be joined by clicking on the indicated contact. Upon joining the room, the relavent information of the user someone is chatting with appears in the upper right section of the page.
-<img serc="./readmeImages/joinExisting>
+<img src="./readmeImages/joinExisting.gif"/>
 
 Once the chat room is established, chatting between users can begin.
-<img serc="./readmeImages/messaging>
+<img src="./readmeImages/messaging.gif"/>
 
 <!-- Contributing -->
 
